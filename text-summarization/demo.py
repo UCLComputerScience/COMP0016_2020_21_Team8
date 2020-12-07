@@ -3,12 +3,12 @@
 from __future__ import absolute_import
 from __future__ import division, print_function, unicode_literals
 
-from sumy.sumy.parsers.html import HtmlParser
-from sumy.sumy.parsers.plaintext import PlaintextParser
-from sumy.sumy.nlp.tokenizers import Tokenizer
-from sumy.sumy.summarizers.lsa import LsaSummarizer as Summarizer
-from sumy.sumy.nlp.stemmers import Stemmer
-from sumy.sumy.utils import get_stop_words
+from sumy.parsers.html import HtmlParser
+from sumy.parsers.plaintext import PlaintextParser
+from sumy.nlp.tokenizers import Tokenizer
+from sumy.summarizers.lsa import LsaSummarizer as Summarizer
+from sumy.nlp.stemmers import Stemmer
+from sumy.utils import get_stop_words
 
 
 LANGUAGE = "english"
