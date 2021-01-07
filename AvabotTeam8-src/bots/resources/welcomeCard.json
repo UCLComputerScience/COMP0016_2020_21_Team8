@@ -13,7 +13,7 @@
       "spacing": "medium",
       "size": "default",
       "weight": "bolder",
-      "text": "Welcome to AvaBot!",
+      "text": "Welcome to Bot Framework!",
       "wrap": true,
       "maxLines": 0
     },

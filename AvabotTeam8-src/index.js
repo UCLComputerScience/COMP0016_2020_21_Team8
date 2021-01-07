@@ -26,6 +26,9 @@ const { MainDialog } = require('./dialogs/mainDialog');
 const { BookingDialog } = require('./dialogs/bookingDialog');
 const BOOKING_DIALOG = 'bookingDialog';
 
+// The bot.
+const { QnABot } = require('./bots/QnABot');
+
 // Create adapter.
 // See https://aka.ms/about-bot-adapter to learn more about adapters.
 const adapter = new BotFrameworkAdapter({
@@ -79,7 +82,11 @@ const luisRecognizer = new FlightBookingRecognizer(luisConfig);
 // Create the main dialog.
 const bookingDialog = new BookingDialog(BOOKING_DIALOG);
 const dialog = new MainDialog(luisRecognizer, bookingDialog);
-const bot = new DialogAndWelcomeBot(conversationState, userState, dialog);
+// Use QnA maker here instead of LUIS
+// const bot = new DialogAndWelcomeBot(conversationState, userState, dialog);
+
+// Create the main dialog.
+const bot = new QnABot();
 
 // Create HTTP server
 const server = restify.createServer();
