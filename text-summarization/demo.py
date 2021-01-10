@@ -20,7 +20,8 @@ def summary(path):
     content = ""
     count = read_file.readPdf(path,"a.txt") 
     line = min(20,count*5) 
-    content += "The document is summarized in " + str(line) + " sentences:\n"
+    content += "The document is summarized in " + str(line) + " sentences:" + "\n"
+    content += " " + "\n"
     # or for plain text files
     parser = PlaintextParser.from_file("a.txt", Tokenizer(LANGUAGE))
     # parser = PlaintextParser.from_string("Check this out.", Tokenizer(LANGUAGE))
@@ -33,11 +34,12 @@ def summary(path):
         content += str(sentence) + "\n"
         content += " " + "\n"
     os.remove("a.txt")
+    os.remove("AvabotTeam8-src/bots/text.pdf")
     return content
 
 
 if __name__ == "__main__":
-    content = summary("text-summarization/text.pdf")
+    content = summary("AvabotTeam8-src/bots/text.pdf")
     print (content)
     
 
