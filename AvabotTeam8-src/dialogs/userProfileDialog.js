@@ -1,0 +1,267 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+const path = require('path');
+const axios = require('axios');
+const fs = require('fs');
+const execSync = require('child_process').execSync;
+const {
+    AttachmentPrompt,
+    ChoiceFactory,
+    ChoicePrompt,
+    ComponentDialog,
+    ConfirmPrompt,
+    DialogSet,
+    DialogTurnStatus,
+    TextPrompt,
+    WaterfallDialog
+} = require('botbuilder-dialogs');
+
+const ATTACHMENT_PROMPT = 'ATTACHMENT_PROMPT';
+const CHOICE_PROMPT = 'CHOICE_PROMPT';
+const CONFIRM_PROMPT = 'CONFIRM_PROMPT';
+const USER_PROFILE = 'USER_PROFILE';
+const WATERFALL_DIALOG = 'WATERFALL_DIALOG';
+
+class UserProfileDialog extends ComponentDialog {
+    constructor(userState) {
+        super('userProfileDialog');
+
+        this.userProfile = userState.createProperty(USER_PROFILE);
+
+        this.addDialog(new TextPrompt('TextPrompt'));
+        this.addDialog(new ChoicePrompt(CHOICE_PROMPT));
+        this.addDialog(new ConfirmPrompt(CONFIRM_PROMPT));
+        this.addDialog(new AttachmentPrompt(ATTACHMENT_PROMPT, this.picturePromptValidator));
+
+        this.addDialog(new WaterfallDialog(WATERFALL_DIALOG, [
+            this.startStep.bind(this),
+            this.chooseStep.bind(this),
+            this.docStep.bind(this),
+            this.dealStep.bind(this)
+        ]));
+
+        this.initialDialogId = WATERFALL_DIALOG;
+    }
+
+    /**
+     * The run method handles the incoming activity (in the form of a TurnContext) and passes it through the dialog system.
+     * If no dialog is active, it will start the default dialog.
+     * @param {*} turnContext
+     * @param {*} accessor
+     */
+    async run(turnContext, accessor) {
+        const dialogSet = new DialogSet(accessor);
+        dialogSet.add(this);
+
+        const dialogContext = await dialogSet.createContext(turnContext);
+        const results = await dialogContext.continueDialog();
+        if (results.status === DialogTurnStatus.empty) {
+            await dialogContext.beginDialog(this.id);
+        }
+    }
+
+    async startStep(step) {
+        // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
+        // Running a prompt here means the next WaterfallStep will be run when the user's response is received.
+        return await step.prompt(CHOICE_PROMPT, {
+            prompt: 'What can I do for you?',
+            choices: ChoiceFactory.toChoices(['ask a question', 'process a document'])
+        });
+    }
+
+    async chooseStep(step) {
+        console.log('|'+step.result.value+'|');
+        const choice = step.result.value;
+        if (choice == 'ask a question') {
+            return await stepContext.beginDialog('answerDialog');
+        }
+        else {
+            var promptOptions = {
+                prompt: 'Please attach a document in pdf.',
+                retryPrompt: 'That was not a document that I can help, please try again.'
+            };
+
+            return await step.prompt(ATTACHMENT_PROMPT, promptOptions);
+        }
+    }
+
+    async docStep(step) {
+        if (step.result && step.result.length > 0) {
+            await this.handleIncomingAttachment(step.context);
+            return await step.prompt(CHOICE_PROMPT, {
+                prompt: 'How can I help with the document?',
+                choices: ChoiceFactory.toChoices(['summarize it', 'create a form', 'ask me about it'])
+            });
+        }
+        else{
+            return await step.endDialog();
+        }
+
+    }
+
+    async handleIncomingAttachment(turnContext) {
+        // Prepare Promises to download each attachment and then execute each Promise.
+        const promises = await turnContext.activity.attachments.map(this.downloadAttachmentAndWrite);
+        const successfulSaves = await Promise.all(promises);
+
+        // Replies back to the user with information about where the attachment is stored on the bot's server,
+        // and what the name of the saved file is.
+        async function replyForReceivedAttachments(localAttachmentData) {
+            if (localAttachmentData) {
+                // Because the TurnContext was bound to this function, the bot can call
+                // `TurnContext.sendActivity` via `this.sendActivity`;
+                await this.sendActivity(`Attachment "${localAttachmentData.fileName}" ` +
+                    `has been received.`);
+
+            } else {
+                await this.sendActivity('Attachment was not successfully saved to disk.');
+            }
+        }
+
+        // Prepare Promises to reply to the user with information about saved attachments.
+        // The current TurnContext is bound so `replyForReceivedAttachments` can also send replies.
+        const replyPromises = successfulSaves.map(replyForReceivedAttachments.bind(turnContext));
+        await Promise.all(replyPromises);
+    }
+
+    async downloadAttachmentAndWrite(attachment) {
+        // Retrieve the attachment via the attachment's contentUrl.
+        const url = attachment.contentUrl;
+
+        // Local file path for the bot to save the attachment.
+        const localFileName = path.join(__dirname, 'text.pdf');
+
+        try {
+            // arraybuffer is necessary for images
+            const response = await axios.get(url, { responseType: 'arraybuffer' });
+            // If user uploads JSON file, this prevents it from being written as "{"type":"Buffer","data":[123,13,10,32,32,34,108..."
+            if (response.headers['content-type'] === 'application/json') {
+                response.data = JSON.parse(response.data, (key, value) => {
+                    return value && value.type === 'Buffer' ? Buffer.from(value.data) : value;
+                });
+            }
+            fs.writeFile(localFileName, response.data, (fsError) => {
+                if (fsError) {
+                    throw fsError;
+                }
+            });
+        } catch (error) {
+            console.error(error);
+            return undefined;
+        }
+        // If no error was thrown while writing to disk, return the attachment's name
+        // and localFilePath for the response back to the user.
+        return {
+            fileName: attachment.name,
+            localPath: localFileName
+        };
+    }
+
+
+
+    async dealStep(step) {
+        console.log(step.result.value);
+        const choice = step.result.value;
+        if (choice == 'summarize it'){
+            await this.sumText(step);
+        }
+        else {
+            return await step.endDialog();
+        }
+
+        return await step.endDialog();
+    }
+    async sumText(step) {
+        const output = execSync('python3 text-summarization/demo.py')
+        await step.context.sendActivity(output.toString());
+    }
+
+    // async pictureStep(step) {
+    //     step.values.age = step.result;
+
+    //     const msg = step.values.age === -1 ? 'No age given.' : `I have your age as ${step.values.age}.`;
+
+    //     // We can send messages to the user at any point in the WaterfallStep.
+    //     await step.context.sendActivity(msg);
+
+    //     if (step.context.activity.channelId === Channels.msteams) {
+    //         // This attachment prompt example is not designed to work for Teams attachments, so skip it in this case
+    //         await step.context.sendActivity('Skipping attachment prompt in Teams channel...');
+    //         return await step.next(undefined);
+    //     } else {
+    //         // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
+    //         var promptOptions = {
+    //             prompt: 'Please attach a profile picture (or type any message to skip).',
+    //             retryPrompt: 'The attachment must be a jpeg/png image file.'
+    //         };
+
+    //         return await step.prompt(ATTACHMENT_PROMPT, promptOptions);
+    //     }
+    // }
+
+    // async confirmStep(step) {
+    //     step.values.picture = step.result && step.result[0];
+
+    //     // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
+    //     return await step.prompt(CONFIRM_PROMPT, { prompt: 'Is this okay?' });
+    // }
+
+    // async summaryStep(step) {
+    //     if (step.result) {
+    //         // Get the current profile object from user state.
+    //         const userProfile = await this.userProfile.get(step.context, new UserProfile());
+
+    //         userProfile.transport = step.values.transport;
+    //         userProfile.name = step.values.name;
+    //         userProfile.age = step.values.age;
+    //         userProfile.picture = step.values.picture;
+
+    //         let msg = `I have your mode of transport as ${userProfile.transport} and your name as ${userProfile.name}`;
+    //         if (userProfile.age !== -1) {
+    //             msg += ` and your age as ${userProfile.age}`;
+    //         }
+
+    //         msg += '.';
+    //         await step.context.sendActivity(msg);
+    //         if (userProfile.picture) {
+    //             try {
+    //                 await step.context.sendActivity(MessageFactory.attachment(userProfile.picture, 'This is your profile picture.'));
+    //             } catch {
+    //                 await step.context.sendActivity('A profile picture was saved but could not be displayed here.');
+    //             }
+    //         }
+    //     } else {
+    //         await step.context.sendActivity('Thanks. Your profile will not be kept.');
+    //     }
+
+    //     // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is the end.
+    //     return await step.endDialog();
+    // }
+
+    async picturePromptValidator(promptContext) {
+        if (promptContext.recognized.succeeded) {
+            var attachments = promptContext.recognized.value;
+            var validImages = [];
+
+            attachments.forEach(attachment => {
+                console.log(attachment.contentType);
+                if (attachment.contentType === 'application/pdf') {
+                    validImages.push(attachment);
+                }
+            });
+
+            promptContext.recognized.value = validImages;
+
+            // If none of the attachments are valid images, the retry prompt should be sent.
+            return !!validImages.length;
+        } else {
+            await promptContext.context.sendActivity('No attachments received, please try again.');
+
+            // We can return true from a validator function even if Recognized.Succeeded is false.
+            return false;
+        }
+    }
+}
+
+module.exports.UserProfileDialog = UserProfileDialog;

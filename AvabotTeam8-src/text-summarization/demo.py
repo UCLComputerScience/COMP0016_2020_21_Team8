@@ -11,10 +11,12 @@ from sumy.nlp.stemmers import Stemmer
 from sumy.utils import get_stop_words
 import os
 import read_file
+import installPunkt
 
 LANGUAGE = "english"
 
 def summary(path):
+    installPunkt.downloadPunkt()
     # url = "https://en.wikipedia.org/wiki/Automatic_summarization"
     # parser = HtmlParser.from_url(url, Tokenizer(LANGUAGE))
     content = ""
@@ -34,12 +36,12 @@ def summary(path):
         content += str(sentence) + "\n"
         content += " " + "\n"
     os.remove("a.txt")
-    os.remove("AvabotTeam8-src/bots/text.pdf")
+    os.remove("dialogs/text.pdf")
     return content
 
 
 if __name__ == "__main__":
-    content = summary("AvabotTeam8-src/bots/text.pdf")
+    content = summary("dialogs/text.pdf")
     print (content)
     
 
