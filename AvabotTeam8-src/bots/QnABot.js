@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-const { ActivityHandler } = require('botbuilder');
+const { ActivityHandler, MessageFactory } = require('botbuilder');
+const { ActionTypes } = require('botframework-schema');
 const { QnAMaker } = require('botbuilder-ai');
 const path = require('path');
 const axios = require('axios');
 const fs = require('fs');
-const exec = require('child_process').exec;
 const execSync = require('child_process').execSync;
 
 class QnABot extends ActivityHandler {
@@ -28,7 +28,7 @@ class QnABot extends ActivityHandler {
             const membersAdded = context.activity.membersAdded;
             for (let cnt = 0; cnt < membersAdded.length; cnt++) {
                 if (membersAdded[cnt].id !== context.activity.recipient.id) {
-                    await context.sendActivity('Welcome to the QnA Maker sample! Ask me a question and I will try to answer it.');
+                    await this.sendSuggestedActions(context);
                 }
             }
 
@@ -38,23 +38,14 @@ class QnABot extends ActivityHandler {
 
         // When a user sends a message, perform a call to the QnA Maker service to retrieve matching Question and Answer pairs.
         this.onMessage(async (context, next) => {
-            if (!process.env.QnAKnowledgebaseId || !process.env.QnAEndpointKey || !process.env.QnAEndpointHostName) {
-                const unconfiguredQnaMessage = 'NOTE: \r\n' +
-                    'QnA Maker is not configured. To enable all capabilities, add `QnAKnowledgebaseId`, `QnAEndpointKey` and `QnAEndpointHostName` to the .env file. \r\n' +
-                    'You may visit www.qnamaker.ai to create a QnA Maker knowledge base.';
+            const replyText = context.activity.text;
+            if (replyText == 'ask me a question') {
+                if (!process.env.QnAKnowledgebaseId || !process.env.QnAEndpointKey || !process.env.QnAEndpointHostName) {
+                    const unconfiguredQnaMessage = 'NOTE: \r\n' +
+                        'QnA Maker is not configured. To enable all capabilities, add `QnAKnowledgebaseId`, `QnAEndpointKey` and `QnAEndpointHostName` to the .env file. \r\n' +
+                        'You may visit www.qnamaker.ai to create a QnA Maker knowledge base.';
 
-                await context.sendActivity(unconfiguredQnaMessage);
-            } else {
-                const replyText = context.activity.text;
-                if (context.activity.attachments && context.activity.attachments.length > 0) {
-                    // The user sent an attachment and the bot should handle the incoming attachment.
-                    await this.handleIncomingAttachment(context);
-                    const output = execSync('cd ..;python3 text-summarization/demo.py')
-                    await context.sendActivity(output.toString());
-                }
-                else if (replyText.includes('read doc')) {
-                    await context.sendActivity('please upload the doc in pdf');
-
+                    await context.sendActivity(unconfiguredQnaMessage);
                 }
                 else {
                     console.log('Calling QnA Maker');
@@ -68,14 +59,31 @@ class QnABot extends ActivityHandler {
                     } else {
                         await context.sendActivity('No QnA Maker answers were found.');
                     }
+
                 }
 
+            }
+            else if (replyText == 'send me a document, I will try to help') {
+                await context.sendActivity('Please upload the doc in pdf.');
 
+            }
+            else {
+                if (context.activity.attachments && context.activity.attachments.length > 0) {
+                    // The user sent an attachment and the bot should handle the incoming attachment.
+                    await this.handleIncomingAttachment(context);
+                    await this.sumText(context);
+                }
             }
 
             // By calling next() you ensure that the next BotHandler is run.
             await next();
         });
+    }
+
+
+    async sumText(context) {
+        const output = execSync('python3 text-summarization/demo.py')
+        await context.sendActivity(output.toString());
     }
 
     async handleIncomingAttachment(turnContext) {
@@ -159,6 +167,24 @@ class QnABot extends ActivityHandler {
             contentType: 'image/png',
             contentUrl: attachmentUri
         };
+    }
+
+    async sendSuggestedActions(turnContext) {
+        const cardActions = [
+            {
+                type: ActionTypes.PostBack,
+                title: 'ask me a question',
+                value: 'ask me a question',
+            },
+            {
+                type: ActionTypes.PostBack,
+                title: 'send me a document, I will try to help',
+                value: 'send me a document, I will try to help',
+            },
+        ];
+
+        var reply = MessageFactory.suggestedActions(cardActions, 'What can I do for you?');
+        await turnContext.sendActivity(reply);
     }
 
 
