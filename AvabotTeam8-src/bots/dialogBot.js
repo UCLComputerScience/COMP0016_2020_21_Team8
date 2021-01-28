@@ -12,15 +12,6 @@ class DialogBot extends ActivityHandler {
      */
     constructor(conversationState, userState, dialog) {
         super();
-        try {
-            this.qnaMaker = new QnAMaker({
-                knowledgeBaseId: process.env.QnAKnowledgebaseId,
-                endpointKey: process.env.QnAEndpointKey,
-                host: process.env.QnAEndpointHostName
-            });
-        } catch (err) {
-            console.warn(`QnAMaker Exception: ${err} Check your QnAMaker configuration in .env`);
-        }
         if (!conversationState) throw new Error('[DialogBot]: Missing parameter. conversationState is required');
         if (!userState) throw new Error('[DialogBot]: Missing parameter. userState is required');
         if (!dialog) throw new Error('[DialogBot]: Missing parameter. dialog is required');
