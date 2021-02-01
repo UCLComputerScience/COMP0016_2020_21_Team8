@@ -28,6 +28,7 @@ def readPdf(pdfpath, txtpath):
         device=PDFPageAggregator(rsrcmgr,laparams=laparams)  
         # 创建一个PDF解释器对象  
         interpreter=PDFPageInterpreter(rsrcmgr,device)  
+
         # 处理每一页
         with open(txtpath,'w') as f:  
             count = 0
@@ -38,9 +39,10 @@ def readPdf(pdfpath, txtpath):
                 # 接受该页面的LTPage对象  
                 layout=device.get_result()  
                 for x in layout:  
-                    if(isinstance(x,LTTextBoxHorizontal)):  
+                    if(isinstance(x, LTTextBoxHorizontal)):  
                         pageContent += x.get_text()
                 content += pageContent.strip() + " "
                 count+=1
+
             f.write(content)
         return count
