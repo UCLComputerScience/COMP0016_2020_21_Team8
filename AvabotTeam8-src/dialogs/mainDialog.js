@@ -16,6 +16,7 @@ const {
     TextPrompt,
     WaterfallDialog
 } = require('botbuilder-dialogs');
+const { AnswerDialog, ANSWER_DIALOG } = require('./answerDialog');
 
 const ATTACHMENT_PROMPT = 'ATTACHMENT_PROMPT';
 const CHOICE_PROMPT = 'CHOICE_PROMPT';
@@ -23,12 +24,13 @@ const CONFIRM_PROMPT = 'CONFIRM_PROMPT';
 const USER_PROFILE = 'USER_PROFILE';
 const WATERFALL_DIALOG = 'WATERFALL_DIALOG';
 
-class UserProfileDialog extends ComponentDialog {
+class MainDialog extends ComponentDialog {
     constructor(userState) {
-        super('userProfileDialog');
+        super('mainDialog');
 
         this.userProfile = userState.createProperty(USER_PROFILE);
 
+        this.addDialog(new AnswerDialog());
         this.addDialog(new TextPrompt('TextPrompt'));
         this.addDialog(new ChoicePrompt(CHOICE_PROMPT));
         this.addDialog(new ConfirmPrompt(CONFIRM_PROMPT));
@@ -74,7 +76,7 @@ class UserProfileDialog extends ComponentDialog {
         console.log('|'+step.result.value+'|');
         const choice = step.result.value;
         if (choice == 'ask a question') {
-            return await stepContext.beginDialog('answerDialog');
+            return await step.beginDialog(ANSWER_DIALOG);
         }
         else {
             var promptOptions = {
@@ -177,68 +179,6 @@ class UserProfileDialog extends ComponentDialog {
         await step.context.sendActivity(output.toString());
     }
 
-    // async pictureStep(step) {
-    //     step.values.age = step.result;
-
-    //     const msg = step.values.age === -1 ? 'No age given.' : `I have your age as ${step.values.age}.`;
-
-    //     // We can send messages to the user at any point in the WaterfallStep.
-    //     await step.context.sendActivity(msg);
-
-    //     if (step.context.activity.channelId === Channels.msteams) {
-    //         // This attachment prompt example is not designed to work for Teams attachments, so skip it in this case
-    //         await step.context.sendActivity('Skipping attachment prompt in Teams channel...');
-    //         return await step.next(undefined);
-    //     } else {
-    //         // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
-    //         var promptOptions = {
-    //             prompt: 'Please attach a profile picture (or type any message to skip).',
-    //             retryPrompt: 'The attachment must be a jpeg/png image file.'
-    //         };
-
-    //         return await step.prompt(ATTACHMENT_PROMPT, promptOptions);
-    //     }
-    // }
-
-    // async confirmStep(step) {
-    //     step.values.picture = step.result && step.result[0];
-
-    //     // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
-    //     return await step.prompt(CONFIRM_PROMPT, { prompt: 'Is this okay?' });
-    // }
-
-    // async summaryStep(step) {
-    //     if (step.result) {
-    //         // Get the current profile object from user state.
-    //         const userProfile = await this.userProfile.get(step.context, new UserProfile());
-
-    //         userProfile.transport = step.values.transport;
-    //         userProfile.name = step.values.name;
-    //         userProfile.age = step.values.age;
-    //         userProfile.picture = step.values.picture;
-
-    //         let msg = `I have your mode of transport as ${userProfile.transport} and your name as ${userProfile.name}`;
-    //         if (userProfile.age !== -1) {
-    //             msg += ` and your age as ${userProfile.age}`;
-    //         }
-
-    //         msg += '.';
-    //         await step.context.sendActivity(msg);
-    //         if (userProfile.picture) {
-    //             try {
-    //                 await step.context.sendActivity(MessageFactory.attachment(userProfile.picture, 'This is your profile picture.'));
-    //             } catch {
-    //                 await step.context.sendActivity('A profile picture was saved but could not be displayed here.');
-    //             }
-    //         }
-    //     } else {
-    //         await step.context.sendActivity('Thanks. Your profile will not be kept.');
-    //     }
-
-    //     // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is the end.
-    //     return await step.endDialog();
-    // }
-
     async picturePromptValidator(promptContext) {
         if (promptContext.recognized.succeeded) {
             var attachments = promptContext.recognized.value;
@@ -264,4 +204,4 @@ class UserProfileDialog extends ComponentDialog {
     }
 }
 
-module.exports.UserProfileDialog = UserProfileDialog;
+module.exports.MainDialog = MainDialog;

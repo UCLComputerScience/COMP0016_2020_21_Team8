@@ -14,7 +14,7 @@ const { BotFrameworkAdapter, ConversationState, MemoryStorage, UserState } = req
 
 // Import our custom bot class that provides a turn handling function.
 const { DialogBot } = require('./bots/dialogBot');
-const { UserProfileDialog } = require('./dialogs/userProfileDialog');
+const { MainDialog } = require('./dialogs/mainDialog');
 
 // Create the adapter. See https://aka.ms/about-bot-adapter to learn more about using information from
 // the .bot file when configuring your adapter.
@@ -56,7 +56,7 @@ const conversationState = new ConversationState(memoryStorage);
 const userState = new UserState(memoryStorage);
 
 // Create the main dialog.
-const dialog = new UserProfileDialog(userState);
+const dialog = new MainDialog(userState);
 const bot = new DialogBot(conversationState, userState, dialog);
 
 // Create HTTP server.
