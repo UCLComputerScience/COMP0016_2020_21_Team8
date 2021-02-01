@@ -4,4 +4,7 @@
 
 azure-functions
 
-farm-haystack
+numpy
+nltk
+pdfminer
+sumy
