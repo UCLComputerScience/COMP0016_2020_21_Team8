@@ -18,6 +18,7 @@ const {
     WaterfallDialog
 } = require('botbuilder-dialogs');
 const { AnswerDialog, ANSWER_DIALOG } = require('./answerDialog');
+const { SumDialog, SUM_DIALOG } = require('./sumDialog');
 
 const ATTACHMENT_PROMPT = 'ATTACHMENT_PROMPT';
 const CHOICE_PROMPT = 'CHOICE_PROMPT';
@@ -32,6 +33,7 @@ class MainDialog extends ComponentDialog {
         this.userProfile = userState.createProperty(USER_PROFILE);
 
         this.addDialog(new AnswerDialog());
+        this.addDialog(new SumDialog(this.initialDialogId));
         this.addDialog(new TextPrompt('TextPrompt'));
         this.addDialog(new ChoicePrompt(CHOICE_PROMPT));
         this.addDialog(new ConfirmPrompt(CONFIRM_PROMPT));
@@ -41,7 +43,8 @@ class MainDialog extends ComponentDialog {
             this.startStep.bind(this),
             this.chooseStep.bind(this),
             this.docStep.bind(this),
-            this.dealStep.bind(this)
+            this.dealStep.bind(this),
+            this.repeatStep.bind(this)
         ]));
 
         this.initialDialogId = WATERFALL_DIALOG;
@@ -169,11 +172,16 @@ class MainDialog extends ComponentDialog {
         const choice = step.result.value;
         if (choice == 'summarize it'){
             await this.sumText(step);
+            return await step.beginDialog(SUM_DIALOG);
         }
         else {
             await step.context.sendActivity('More functions to be updating...');
         }
 
+        return await step.replaceDialog(this.initialDialogId, { restartMsg: 'What else can I do for you?' });
+    }
+
+    async repeatStep(step) {
         return await step.replaceDialog(this.initialDialogId, { restartMsg: 'What else can I do for you?' });
     }
 
