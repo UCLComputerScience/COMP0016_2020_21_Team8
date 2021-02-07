@@ -4,7 +4,8 @@
 const path = require('path');
 const axios = require('axios');
 const fs = require('fs');
-const execSync = require('child_process').execSync;
+const fse = require("fs-extra");
+var FormData = require("form-data");
 const {
     AttachmentPrompt,
     ChoiceFactory,
@@ -175,8 +176,19 @@ class MainDialog extends ComponentDialog {
         return await step.replaceDialog(this.initialDialogId);
     }
     async sumText(step) {
-        const output = execSync('python3 text-summarization/demo.py')
-        await step.context.sendActivity(output.toString());
+        var form = new FormData();
+        const FileName = path.join(__dirname, 'text.pdf');
+        form.append("file", fse.createReadStream(FileName));
+       
+        let r = await axios({
+          method: "post",
+          url: "https://textsumapi.azurewebsites.net/api/textsumapi",
+          data: form,
+          headers: form.getHeaders()
+        }).then(v => v.data);
+       
+        console.log(r); // ok
+        await step.context.sendActivity(r);
     }
 
     async picturePromptValidator(promptContext) {
