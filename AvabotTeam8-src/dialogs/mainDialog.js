@@ -67,8 +67,9 @@ class MainDialog extends ComponentDialog {
     async startStep(step) {
         // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
         // Running a prompt here means the next WaterfallStep will be run when the user's response is received.
+        const msg = step.options.restartMsg ? step.options.restartMsg : 'What can I do for you?';
         return await step.prompt(CHOICE_PROMPT, {
-            prompt: 'What can I do for you?',
+            prompt: msg,
             choices: ChoiceFactory.toChoices(['ask a question', 'process a document'])
         });
     }
@@ -173,8 +174,9 @@ class MainDialog extends ComponentDialog {
             await step.context.sendActivity('More functions to be updating...');
         }
 
-        return await step.replaceDialog(this.initialDialogId);
+        return await step.replaceDialog(this.initialDialogId, { restartMsg: 'What else can I do for you?' });
     }
+
     async sumText(step) {
         var form = new FormData();
         const FileName = path.join(__dirname, 'text.pdf');
