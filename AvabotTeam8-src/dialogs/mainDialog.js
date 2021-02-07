@@ -169,10 +169,10 @@ class MainDialog extends ComponentDialog {
             await this.sumText(step);
         }
         else {
-            return await step.endDialog();
+            await step.context.sendActivity('More functions to be updating...');
         }
 
-        return await step.endDialog();
+        return await step.replaceDialog(this.initialDialogId);
     }
     async sumText(step) {
         const output = execSync('python3 text-summarization/demo.py')
