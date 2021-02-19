@@ -227,7 +227,7 @@ class MainDialog extends ComponentDialog {
         console.log(r); // ok
         return r;
     }
-    // TODO: process a query to the qa system by sending the qa system url a GET request
+    // TODO: process a query to the qa system by sending the qa system a GET request
     async processQuery(step, query, url) {
         let r = await axios({
             method: "get",
