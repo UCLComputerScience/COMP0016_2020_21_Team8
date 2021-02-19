@@ -4,8 +4,6 @@
 const path = require('path');
 const axios = require('axios');
 const fs = require('fs');
-const fse = require("fs-extra");
-var FormData = require("form-data");
 const {
     AttachmentPrompt,
     ChoiceFactory,
@@ -18,7 +16,7 @@ const {
     WaterfallDialog
 } = require('botbuilder-dialogs');
 const { AnswerDialog, ANSWER_DIALOG } = require('./answerDialog');
-const { SumDialog, SUM_DIALOG } = require('./sumDialog');
+const { DocDialog, DOC_DIALOG } = require('./docDialog');
 
 const ATTACHMENT_PROMPT = 'ATTACHMENT_PROMPT';
 const CHOICE_PROMPT = 'CHOICE_PROMPT';
@@ -36,17 +34,16 @@ class MainDialog extends ComponentDialog {
         this.userProfile = userState.createProperty(USER_PROFILE);
 
         this.addDialog(new AnswerDialog());
-        this.addDialog(new SumDialog(this.initialDialogId));
+        this.addDialog(new DocDialog(this.initialDialogId));
         this.addDialog(new TextPrompt('TextPrompt'));
         this.addDialog(new ChoicePrompt(CHOICE_PROMPT));
         this.addDialog(new ConfirmPrompt(CONFIRM_PROMPT));
-        this.addDialog(new AttachmentPrompt(ATTACHMENT_PROMPT, this.picturePromptValidator));
+        this.addDialog(new AttachmentPrompt(ATTACHMENT_PROMPT, this.promptValidator));
 
         this.addDialog(new WaterfallDialog(WATERFALL_DIALOG, [
             this.startStep.bind(this),
             this.chooseStep.bind(this),
             this.docStep.bind(this),
-            this.dealStep.bind(this),
             this.repeatStep.bind(this)
         ]));
 
@@ -76,19 +73,26 @@ class MainDialog extends ComponentDialog {
         const msg = step.options.restartMsg ? step.options.restartMsg : 'What can I do for you?';
         return await step.prompt(CHOICE_PROMPT, {
             prompt: msg,
-            choices: ChoiceFactory.toChoices(['ask a question', 'process a document'])
+            choices: ChoiceFactory.toChoices(['ask a question', 'process a document', , 'process an image'])
         });
     }
 
     async chooseStep(step) {
-        console.log('|'+step.result.value+'|');
         const choice = step.result.value;
         if (choice == 'ask a question') {
             return await step.beginDialog(ANSWER_DIALOG);
         }
-        else {
+        else if (choice == 'process a document') {
             var promptOptions = {
                 prompt: 'Please attach a document in pdf.',
+                retryPrompt: 'That was not a document that I can help, please try again.'
+            };
+
+            return await step.prompt(ATTACHMENT_PROMPT, promptOptions);
+        }
+        else {
+            var promptOptions = {
+                prompt: 'Please attach an image.',
                 retryPrompt: 'That was not a document that I can help, please try again.'
             };
 
@@ -98,6 +102,7 @@ class MainDialog extends ComponentDialog {
 
     async docStep(step) {
         if (step.result && step.result.length > 0) {
+<<<<<<< HEAD
             await this.handleIncomingAttachment(step.context);
 
             // TODO: Send the file to both Summarizer and QASystem to be preprocessed
@@ -107,12 +112,26 @@ class MainDialog extends ComponentDialog {
                 prompt: 'How can I help with the document?',
                 choices: ChoiceFactory.toChoices(['summarize it', 'create a form', 'ask me about it'])
             });
+=======
+            console.log(step.result[0].contentType);
+            var type = step.result[0].contentType;
+            if (type === 'application/pdf') {
+                await this.handleIncomingAttachment(step.context);
+                return await step.beginDialog(DOC_DIALOG);
+            }
+            else {
+                await this.handleIncomingAttachment(step.context);
+                return await step.context.sendActivity('More functions to be updating...');
+            }
+            
+>>>>>>> main
         }
         else{
             return await step.endDialog();
         }
     }
 
+<<<<<<< HEAD
     async dealStep(step, r) {
         console.log(step.result.value);
         const choice = step.result.value;
@@ -134,6 +153,11 @@ class MainDialog extends ComponentDialog {
         return await step.replaceDialog(this.initialDialogId, { restartMsg: 'What else can I do for you?' });
     }
 
+=======
+    }    
+    
+    
+>>>>>>> main
     async repeatStep(step) {
         return await step.replaceDialog(this.initialDialogId, { restartMsg: 'What else can I do for you?' });
     }
@@ -164,11 +188,17 @@ class MainDialog extends ComponentDialog {
     }
 
     async downloadAttachmentAndWrite(attachment) {
+        var name = 'text.' + attachment.contentType.toString().split('/')[1];
+        console.log(name);
         // Retrieve the attachment via the attachment's contentUrl.
         const url = attachment.contentUrl;
 
         // Local file path for the bot to save the attachment.
+<<<<<<< HEAD
         const localFileName = path.join(__dirname, 'tmp.pdf');
+=======
+        const localFileName = path.join(__dirname, name);
+>>>>>>> main
 
         try {
             // arraybuffer is necessary for images
@@ -196,6 +226,7 @@ class MainDialog extends ComponentDialog {
         };
     }
 
+<<<<<<< HEAD
     async sumText(step) {
         var form = new FormData();
         const FileName = path.join(__dirname, TEMP_PDF_NAME);
@@ -239,21 +270,29 @@ class MainDialog extends ComponentDialog {
             console.log(r); // ok
     }
     async picturePromptValidator(promptContext) {
+=======
+
+
+    async promptValidator(promptContext) {
+>>>>>>> main
         if (promptContext.recognized.succeeded) {
+            var docType = promptContext.options.prompt;
             var attachments = promptContext.recognized.value;
-            var validImages = [];
+            var validDoc = [];
 
             attachments.forEach(attachment => {
-                console.log(attachment.contentType);
-                if (attachment.contentType === 'application/pdf') {
-                    validImages.push(attachment);
+                if (docType === 'Please attach a document in pdf.' && attachment.contentType === 'application/pdf') { //|| attachment.contentType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'|| attachment.contentType === 'application/msword'
+                    validDoc.push(attachment);
+                }
+                else if (docType === 'Please attach an image.' && (attachment.contentType === 'image/jpeg' || attachment.contentType === 'image/png')) {
+                    validDoc.push(attachment);
                 }
             });
 
-            promptContext.recognized.value = validImages;
+            promptContext.recognized.value = validDoc;
 
             // If none of the attachments are valid images, the retry prompt should be sent.
-            return !!validImages.length;
+            return !!validDoc.length;
         } else {
             await promptContext.context.sendActivity('No attachments received, please try again.');
 
@@ -262,7 +301,10 @@ class MainDialog extends ComponentDialog {
         }
     }
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> main
 }
 
 module.exports.MainDialog = MainDialog;
