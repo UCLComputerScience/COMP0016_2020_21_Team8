@@ -21,7 +21,8 @@ class DocDialog extends ComponentDialog {
         this.addDialog(new ChoicePrompt(CHOICE_PROMPT));
         this.addDialog(new WaterfallDialog(WATERFALL_DIALOG, [
             this.beginStep.bind(this),
-            this.dealStep.bind(this)
+            this.dealStep.bind(this),
+            this.answerStep.bind(this)
         ]));
 
         this.initialDialogId = WATERFALL_DIALOG;
@@ -52,12 +53,18 @@ class DocDialog extends ComponentDialog {
             await step.context.sendActivity('More functions to be updating...');
         }
         else if (choice == 'ask me about it') {
-            await step.context.sendActivity('More functions to be updating...');
+            return await step.prompt(TEXT_PROMPT, {prompt : 'What is the question?'});
         }
         else {
             return await step.endDialog();
         }
 
+        return await step.replaceDialog(this.initialDialogId, { restartMsg: 'What else can I do for you?' });
+    }
+
+    async answerStep(step) {
+        //answer matching API
+        await step.context.sendActivity('More functions to be updating...');
         return await step.replaceDialog(this.initialDialogId, { restartMsg: 'What else can I do for you?' });
     }
 
