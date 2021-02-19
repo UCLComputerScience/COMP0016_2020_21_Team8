@@ -25,6 +25,9 @@ const CHOICE_PROMPT = 'CHOICE_PROMPT';
 const CONFIRM_PROMPT = 'CONFIRM_PROMPT';
 const USER_PROFILE = 'USER_PROFILE';
 const WATERFALL_DIALOG = 'WATERFALL_DIALOG';
+const TEMP_PDF_NAME = 'tmp.pdf'
+const SUMTEXT_URL = 'https://textsumapi.azurewebsites.net/api/textsumapi';
+const QASYSTEM_URL = 'https://51.11.38.199:5000/';
 
 class MainDialog extends ComponentDialog {
     constructor(userState) {
@@ -96,7 +99,11 @@ class MainDialog extends ComponentDialog {
     async docStep(step) {
         if (step.result && step.result.length > 0) {
             await this.handleIncomingAttachment(step.context);
-            return await step.prompt(CHOICE_PROMPT, {
+
+            // TODO: Send the file to both Summarizer and QASystem to be preprocessed
+            const summary = this.sendRequest(step, SUMTEXT_URL);
+            await this.sendRequest(step, QASYSTEM_URL); // The processing of QA System is much longer then Summarizer, so wait for this process to be finished
+            await step.prompt(CHOICE_PROMPT, {
                 prompt: 'How can I help with the document?',
                 choices: ChoiceFactory.toChoices(['summarize it', 'create a form', 'ask me about it'])
             });
@@ -104,7 +111,31 @@ class MainDialog extends ComponentDialog {
         else{
             return await step.endDialog();
         }
+    }
 
+    async dealStep(step, r) {
+        console.log(step.result.value);
+        const choice = step.result.value;
+        if (choice == 'summarize it') {
+            // TODO: If user asking for summary, send the result directly
+            // await this.sumText(step);
+            // return await step.beginDialog(SUM_DIALOG);
+            await step.context.sendActivity(r); 
+        }
+        else if (choice == 'ask a question') {
+            // TODO When user ask a questions, send the question to endpoint by GET request
+            // const resFromQA = await this.processQuery(step);
+            // await step.context.sendActivity(resFromQA);
+            await step.context.sendActivity('More functions to be updating...');
+        }
+        else {
+            await step.context.sendActivity('More functions to be updating...');
+        }
+        return await step.replaceDialog(this.initialDialogId, { restartMsg: 'What else can I do for you?' });
+    }
+
+    async repeatStep(step) {
+        return await step.replaceDialog(this.initialDialogId, { restartMsg: 'What else can I do for you?' });
     }
 
     async handleIncomingAttachment(turnContext) {
@@ -137,7 +168,7 @@ class MainDialog extends ComponentDialog {
         const url = attachment.contentUrl;
 
         // Local file path for the bot to save the attachment.
-        const localFileName = path.join(__dirname, 'text.pdf');
+        const localFileName = path.join(__dirname, 'tmp.pdf');
 
         try {
             // arraybuffer is necessary for images
@@ -165,29 +196,9 @@ class MainDialog extends ComponentDialog {
         };
     }
 
-
-
-    async dealStep(step) {
-        console.log(step.result.value);
-        const choice = step.result.value;
-        if (choice == 'summarize it'){
-            await this.sumText(step);
-            return await step.beginDialog(SUM_DIALOG);
-        }
-        else {
-            await step.context.sendActivity('More functions to be updating...');
-        }
-
-        return await step.replaceDialog(this.initialDialogId, { restartMsg: 'What else can I do for you?' });
-    }
-
-    async repeatStep(step) {
-        return await step.replaceDialog(this.initialDialogId, { restartMsg: 'What else can I do for you?' });
-    }
-
     async sumText(step) {
         var form = new FormData();
-        const FileName = path.join(__dirname, 'text.pdf');
+        const FileName = path.join(__dirname, TEMP_PDF_NAME);
         form.append("file", fse.createReadStream(FileName));
        
         let r = await axios({
@@ -200,7 +211,33 @@ class MainDialog extends ComponentDialog {
         console.log(r); // ok
         await step.context.sendActivity(r);
     }
-
+    // TODO: Abstraction of sending a request to a given url
+    async sendRequest(step, url) {
+        var form = new FormData();
+        const FileName = path.join(__dirname, TEMP_PDF_NAME);
+        form.append("file", fse.createReadStream(FileName));
+        console.log("send request to " + url);
+        let r = await axios({
+          method: "post",
+          url: url,
+          data: form,
+          headers: form.getHeaders()
+        }).then(v => v.data);
+       
+        console.log(r); // ok
+        return r;
+    }
+    // TODO: process a query to the qa system by sending the qa system url a GET request
+    async processQuery(step, query, url) {
+        let r = await axios({
+            method: "get",
+            url: url + '?' + query,
+            data: form,
+            headers: form.getHeaders()
+          }).then(v => v.data);
+         
+            console.log(r); // ok
+    }
     async picturePromptValidator(promptContext) {
         if (promptContext.recognized.succeeded) {
             var attachments = promptContext.recognized.value;
@@ -224,6 +261,8 @@ class MainDialog extends ComponentDialog {
             return false;
         }
     }
+
+    
 }
 
 module.exports.MainDialog = MainDialog;
