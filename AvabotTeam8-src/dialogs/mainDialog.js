@@ -127,27 +127,29 @@ class MainDialog extends ComponentDialog {
     }
 
     async sendReq(path) {
-        var form = new FormData();
-        form.append("file", fse.createReadStream(path));
+        var form1 = new FormData();
+        form1.append("file", fse.createReadStream(path));
+        var form2 = new FormData();
+        form2.append("file", fse.createReadStream(path));
 
         let reqArr = [axios({
             method: "post",
             url: "https://textsumapi.azurewebsites.net/api/textsumapi",
-            data: form,
-            headers: form.getHeaders()
+            data: form1,
+            headers: form1.getHeaders()
         }), axios({
             method: "post",
             url: "http://51.11.182.5:5000",
-            data: form,
-            headers: form.getHeaders()
+            data: form2,
+            headers: form2.getHeaders()
         })];
         var output = [];
         await Promise.allSettled(reqArr).then(results => {
             results.forEach(result => {
-                //console.log(result.status);
+                console.log(result.status);
                 if (result.status == 'fulfilled') {
                     output.push(result.value.data);
-                    //console.log(result.value.data);
+                    console.log('first: '+result.value.data);
                 } else {
                     output.push(0);
                 }
