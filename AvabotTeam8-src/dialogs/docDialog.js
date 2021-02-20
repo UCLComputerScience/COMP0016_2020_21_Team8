@@ -75,7 +75,7 @@ class DocDialog extends ComponentDialog {
                 var success = 1;
                 await axios({
                     method: "post",
-                    url: "http://51.11.38.199:5000",
+                    url: "http://51.11.182.5:5000",
                     data: form,
                     headers: form.getHeaders()
                 })
@@ -87,6 +87,7 @@ class DocDialog extends ComponentDialog {
                         console.log('re-preprocessing failed');
                     });
                 if (success) {
+                    this.query = 1;
                     return await step.prompt(TEXT_PROMPT, {prompt : 'What is the question?'});
                 }
                 else {
