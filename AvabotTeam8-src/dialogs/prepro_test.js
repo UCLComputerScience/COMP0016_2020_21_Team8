@@ -7,6 +7,19 @@ var form = new FormData();
 const FileName = path.join(__dirname, 'text.pdf');
 form.append("file", fse.createReadStream(FileName));
 
+// axios({
+//     method: "post",
+//     url: "https://textsumapi.azurewebsites.net/api/textsumapi",
+//     data: form,
+//     headers: form.getHeaders()
+// })
+//     .then(function (response) {
+//         console.log(response.data);
+//     })
+//     .catch(function (error) {
+//         console.log(error);
+//     });
+
 axios({
     method: "post",
     url: "http://51.11.38.199:5000",

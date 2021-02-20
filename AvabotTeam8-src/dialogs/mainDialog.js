@@ -4,6 +4,8 @@
 const path = require('path');
 const axios = require('axios');
 const fs = require('fs');
+const fse = require("fs-extra");
+var FormData = require("form-data");
 const {
     AttachmentPrompt,
     ChoiceFactory,
@@ -102,24 +104,61 @@ class MainDialog extends ComponentDialog {
             console.log(step.result[0].contentType);
             var type = step.result[0].contentType;
             if (type === 'application/pdf') {
-                await this.handleIncomingAttachment(step.context);
-                return await step.beginDialog(DOC_DIALOG);
+                var path = await this.handleIncomingAttachment(step.context);
+                console.log('path: ' + path);
+                var req_results = await this.sendReq(path);
+                return await step.beginDialog(DOC_DIALOG, { sum: req_results[0], query: req_results[1], filepath: path });
             }
             else {
                 await this.handleIncomingAttachment(step.context);
                 return await step.context.sendActivity('More functions to be updating...');
             }
-            
+
         }
-        else{
+        else {
             return await step.endDialog();
         }
 
-    }    
-    
-    
+    }
+
+
     async repeatStep(step) {
         return await step.replaceDialog(this.initialDialogId, { restartMsg: 'What else can I do for you?' });
+    }
+
+    async sendReq(path) {
+        var form = new FormData();
+        form.append("file", fse.createReadStream(path));
+
+        let reqArr = [axios({
+            method: "post",
+            url: "https://textsumapi.azurewebsites.net/api/textsumapi",
+            data: form,
+            headers: form.getHeaders()
+        }), axios({
+            method: "post",
+            url: "http://51.11.38.199:5000",
+            data: form,
+            headers: form.getHeaders()
+        })];
+        var output = [];
+        await Promise.allSettled(reqArr).then(results => {
+            results.forEach(result => {
+                //console.log(result.status);
+                if (result.status == 'fulfilled') {
+                    output.push(result.value.data);
+                    //console.log(result.value.data);
+                } else {
+                    output.push(0);
+                }
+
+            })
+
+        })
+
+        console.log("完成啦！");
+        console.log(output);
+        return output;
     }
 
     async handleIncomingAttachment(turnContext) {
@@ -139,12 +178,15 @@ class MainDialog extends ComponentDialog {
             } else {
                 await this.sendActivity('Attachment was not successfully saved to disk.');
             }
+            return localAttachmentData.localPath
         }
 
         // Prepare Promises to reply to the user with information about saved attachments.
         // The current TurnContext is bound so `replyForReceivedAttachments` can also send replies.
         const replyPromises = successfulSaves.map(replyForReceivedAttachments.bind(turnContext));
-        await Promise.all(replyPromises);
+        let r = await Promise.all(replyPromises).then(result => result[0]);
+        return r
+
     }
 
     async downloadAttachmentAndWrite(attachment) {
