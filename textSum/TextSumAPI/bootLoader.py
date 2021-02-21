@@ -48,8 +48,8 @@ def summary(path):
     return content
 
 
-if __name__ == "__main__":
-    content = summary("text-summarizationFortest/test.pdf")
-    print (content)
+# if __name__ == "__main__":
+#     content = summary("text-summarizationFortest/test.pdf")
+#     print (content)
     
 

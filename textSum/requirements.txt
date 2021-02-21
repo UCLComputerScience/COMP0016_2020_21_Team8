@@ -7,4 +7,5 @@ azure-functions
 numpy
 nltk
 pdfminer
+pdftitle
 sumy
