@@ -54,48 +54,26 @@ class DocDialog extends ComponentDialog {
         console.log(step.result.value);
         const choice = step.result.value;
         if (choice == 'summarize it') {
-            if (this.sum){
+            if (this.sum) {
                 await step.context.sendActivity(this.sum);
             }
             else {
                 await step.context.sendActivity('Summarization failed.');
             }
-            
+
         }
         else if (choice == 'extract form') {
             await step.context.sendActivity('More functions to be updating...');
         }
         else if (choice == 'ask me about it') {
-            if(this.query){
-                return await step.prompt(TEXT_PROMPT, {prompt : 'What is the question?'});
+            if (this.query) {
+                return await step.prompt(TEXT_PROMPT, { prompt: 'What is the question?' });
             }
-            else{
-                var form = new FormData();
-                form.append("file", fse.createReadStream(this.filepath));
-                var success = 1;
-                await axios({
-                    method: "post",
-                    url: "http://51.11.182.5:5000",
-                    data: form,
-                    headers: form.getHeaders()
-                })
-                    .then(function (response) {
-                        console.log(response.data);
-                    })
-                    .catch(function (error) {
-                        success = 0;
-                        console.log('re-preprocessing failed');
-                    });
-                if (success) {
-                    this.query = 1;
-                    return await step.prompt(TEXT_PROMPT, {prompt : 'What is the question?'});
-                }
-                else {
-                    await step.context.sendActivity('QA system preprocessing failed.');
-                }
+            else {
+                await step.context.sendActivity('QA system preprocessing failed.');
             }
-            
         }
+
         else {
             return await step.endDialog();
         }

@@ -92,11 +92,12 @@ class MainDialog extends ComponentDialog {
         else {
             var promptOptions = {
                 prompt: 'Please attach an image.',
-                retryPrompt: 'That was not a document that I can help, please try again.'
+                retryPrompt: 'That was not an image that I can help, please try again.'
             };
 
             return await step.prompt(ATTACHMENT_PROMPT, promptOptions);
         }
+
     }
 
     async docStep(step) {
@@ -106,6 +107,7 @@ class MainDialog extends ComponentDialog {
             if (type === 'application/pdf') {
                 var path = await this.handleIncomingAttachment(step.context);
                 console.log('path: ' + path);
+                await step.context.sendActivity('Processing the document, please wait');
                 var req_results = await this.sendReq(path);
                 return await step.beginDialog(DOC_DIALOG, { sum: req_results[0], query: req_results[1], filepath: path });
             }
@@ -116,7 +118,7 @@ class MainDialog extends ComponentDialog {
 
         }
         else {
-            return await step.endDialog();
+            return await step.replaceDialog(this.initialDialogId, { restartMsg: 'What else can I do for you?' });
         }
 
     }
