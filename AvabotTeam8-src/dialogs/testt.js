@@ -7,7 +7,7 @@ var form = new FormData();
 const FileName = path.join(__dirname, 'text.pdf');
 form.append("file", fse.createReadStream(FileName));
 
-axios.get('http://51.11.38.199:5000?query="How is our gamming industry?')
+axios.get('http://51.11.182.5:5000?query="How is our gamming industry?')
 
     .then(function (response) {
         console.log(response.data);
