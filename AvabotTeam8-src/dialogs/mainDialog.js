@@ -4,6 +4,8 @@
 const path = require('path');
 const axios = require('axios');
 const fs = require('fs');
+const fse = require("fs-extra");
+var FormData = require("form-data");
 const {
     AttachmentPrompt,
     ChoiceFactory,
@@ -23,9 +25,6 @@ const CHOICE_PROMPT = 'CHOICE_PROMPT';
 const CONFIRM_PROMPT = 'CONFIRM_PROMPT';
 const USER_PROFILE = 'USER_PROFILE';
 const WATERFALL_DIALOG = 'WATERFALL_DIALOG';
-const TEMP_PDF_NAME = 'tmp.pdf'
-const SUMTEXT_URL = 'https://textsumapi.azurewebsites.net/api/textsumapi';
-const QASYSTEM_URL = 'https://51.11.38.199:5000/';
 
 class MainDialog extends ComponentDialog {
     constructor(userState) {
@@ -93,73 +92,77 @@ class MainDialog extends ComponentDialog {
         else {
             var promptOptions = {
                 prompt: 'Please attach an image.',
-                retryPrompt: 'That was not a document that I can help, please try again.'
+                retryPrompt: 'That was not an image that I can help, please try again.'
             };
 
             return await step.prompt(ATTACHMENT_PROMPT, promptOptions);
         }
+
     }
 
     async docStep(step) {
         if (step.result && step.result.length > 0) {
-<<<<<<< HEAD
-            await this.handleIncomingAttachment(step.context);
-
-            // TODO: Send the file to both Summarizer and QASystem to be preprocessed
-            const summary = this.sendRequest(step, SUMTEXT_URL);
-            await this.sendRequest(step, QASYSTEM_URL); // The processing of QA System is much longer then Summarizer, so wait for this process to be finished
-            await step.prompt(CHOICE_PROMPT, {
-                prompt: 'How can I help with the document?',
-                choices: ChoiceFactory.toChoices(['summarize it', 'create a form', 'ask me about it'])
-            });
-=======
             console.log(step.result[0].contentType);
             var type = step.result[0].contentType;
             if (type === 'application/pdf') {
-                await this.handleIncomingAttachment(step.context);
-                return await step.beginDialog(DOC_DIALOG);
+                var path = await this.handleIncomingAttachment(step.context);
+                console.log('path: ' + path);
+                await step.context.sendActivity('Processing the document, please wait');
+                var req_results = await this.sendReq(path);
+                return await step.beginDialog(DOC_DIALOG, { sum: req_results[0], query: req_results[1], filepath: path });
             }
             else {
                 await this.handleIncomingAttachment(step.context);
                 return await step.context.sendActivity('More functions to be updating...');
             }
-            
->>>>>>> main
-        }
-        else{
-            return await step.endDialog();
-        }
-    }
 
-<<<<<<< HEAD
-    async dealStep(step, r) {
-        console.log(step.result.value);
-        const choice = step.result.value;
-        if (choice == 'summarize it') {
-            // TODO: If user asking for summary, send the result directly
-            // await this.sumText(step);
-            // return await step.beginDialog(SUM_DIALOG);
-            await step.context.sendActivity(r); 
-        }
-        else if (choice == 'ask a question') {
-            // TODO When user ask a questions, send the question to endpoint by GET request
-            // const resFromQA = await this.processQuery(step);
-            // await step.context.sendActivity(resFromQA);
-            await step.context.sendActivity('More functions to be updating...');
         }
         else {
-            await step.context.sendActivity('More functions to be updating...');
+            return await step.replaceDialog(this.initialDialogId, { restartMsg: 'What else can I do for you?' });
         }
+
+    }
+
+
+    async repeatStep(step) {
         return await step.replaceDialog(this.initialDialogId, { restartMsg: 'What else can I do for you?' });
     }
 
-=======
-    }    
-    
-    
->>>>>>> main
-    async repeatStep(step) {
-        return await step.replaceDialog(this.initialDialogId, { restartMsg: 'What else can I do for you?' });
+    async sendReq(path) {
+        var form1 = new FormData();
+        form1.append("file", fse.createReadStream(path));
+        var form2 = new FormData();
+        form2.append("file", fse.createReadStream(path));
+
+        let reqArr = [axios({
+            method: "post",
+            url: "https://textsumapi.azurewebsites.net/api/textsumapi",
+            data: form1,
+            headers: form1.getHeaders()
+        }), axios({
+            method: "post",
+            url: "http://51.11.182.5:5000",
+            data: form2,
+            headers: form2.getHeaders()
+        })];
+        var output = [];
+        await Promise.allSettled(reqArr).then(results => {
+            results.forEach(result => {
+                console.log(result.status);
+                if (result.status == 'fulfilled') {
+                    output.push(result.value.data);
+                    console.log('first: '+result.value.data);
+                } else {
+                    output.push(0);
+                }
+
+            })
+
+        })
+
+        console.log("完成啦！");
+        console.log(output);
+        return output;
     }
 
     async handleIncomingAttachment(turnContext) {
@@ -179,12 +182,15 @@ class MainDialog extends ComponentDialog {
             } else {
                 await this.sendActivity('Attachment was not successfully saved to disk.');
             }
+            return localAttachmentData.localPath
         }
 
         // Prepare Promises to reply to the user with information about saved attachments.
         // The current TurnContext is bound so `replyForReceivedAttachments` can also send replies.
         const replyPromises = successfulSaves.map(replyForReceivedAttachments.bind(turnContext));
-        await Promise.all(replyPromises);
+        let r = await Promise.all(replyPromises).then(result => result[0]);
+        return r
+
     }
 
     async downloadAttachmentAndWrite(attachment) {
@@ -194,11 +200,7 @@ class MainDialog extends ComponentDialog {
         const url = attachment.contentUrl;
 
         // Local file path for the bot to save the attachment.
-<<<<<<< HEAD
-        const localFileName = path.join(__dirname, 'tmp.pdf');
-=======
         const localFileName = path.join(__dirname, name);
->>>>>>> main
 
         try {
             // arraybuffer is necessary for images
@@ -226,55 +228,9 @@ class MainDialog extends ComponentDialog {
         };
     }
 
-<<<<<<< HEAD
-    async sumText(step) {
-        var form = new FormData();
-        const FileName = path.join(__dirname, TEMP_PDF_NAME);
-        form.append("file", fse.createReadStream(FileName));
-       
-        let r = await axios({
-          method: "post",
-          url: "https://textsumapi.azurewebsites.net/api/textsumapi",
-          data: form,
-          headers: form.getHeaders()
-        }).then(v => v.data);
-       
-        console.log(r); // ok
-        await step.context.sendActivity(r);
-    }
-    // TODO: Abstraction of sending a request to a given url
-    async sendRequest(step, url) {
-        var form = new FormData();
-        const FileName = path.join(__dirname, TEMP_PDF_NAME);
-        form.append("file", fse.createReadStream(FileName));
-        console.log("send request to " + url);
-        let r = await axios({
-          method: "post",
-          url: url,
-          data: form,
-          headers: form.getHeaders()
-        }).then(v => v.data);
-       
-        console.log(r); // ok
-        return r;
-    }
-    // TODO: process a query to the qa system by sending the qa system a GET request
-    async processQuery(step, query, url) {
-        let r = await axios({
-            method: "get",
-            url: url + '?' + query,
-            data: form,
-            headers: form.getHeaders()
-          }).then(v => v.data);
-         
-            console.log(r); // ok
-    }
-    async picturePromptValidator(promptContext) {
-=======
 
 
     async promptValidator(promptContext) {
->>>>>>> main
         if (promptContext.recognized.succeeded) {
             var docType = promptContext.options.prompt;
             var attachments = promptContext.recognized.value;
@@ -301,10 +257,6 @@ class MainDialog extends ComponentDialog {
         }
     }
 
-<<<<<<< HEAD
-    
-=======
->>>>>>> main
 }
 
 module.exports.MainDialog = MainDialog;

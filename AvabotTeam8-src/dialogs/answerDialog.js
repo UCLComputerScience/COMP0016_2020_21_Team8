@@ -50,16 +50,24 @@ class AnswerDialog extends ComponentDialog {
         }
         else {
             console.log('Calling QnA Maker');
-            const qnaResults = await this.qnaMaker.getAnswers(stepContext.context);
-            var msg = '';
-            // If an answer was received from QnA Maker, send the answer back to the user.
-            if (qnaResults[0]) {
-                msg = qnaResults[0].answer;
+            try {
+                const qnaResults = await this.qnaMaker.getAnswers(stepContext.context);
+                var msg = '';
+                // If an answer was received from QnA Maker, send the answer back to the user.
+                if (qnaResults[0]) {
+                    msg = qnaResults[0].answer;
 
-                // If no answers were returned from QnA Maker, reply with help.
-            } else {
-                msg = 'No QnA Maker answers were found.';
+                    // If no answers were returned from QnA Maker, reply with help.
+                } else {
+                    msg = 'No QnA Maker answers were found.';
+                }
             }
+            catch (error) {
+                await stepContext.context.sendActivity('Sorry, QnA maker is currently unavailable.');
+                return await stepContext.endDialog();
+
+            }
+
 
         }
         return await stepContext.replaceDialog(this.initialDialogId, { restartMsg: msg });
