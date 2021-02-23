@@ -56,7 +56,7 @@ const conversationState = new ConversationState(memoryStorage);
 const userState = new UserState(memoryStorage);
 
 // Create the main dialog.
-const dialog = new MainDialog(userState);
+const dialog = new MainDialog();
 const bot = new DialogBot(conversationState, userState, dialog);
 
 // Create HTTP server.

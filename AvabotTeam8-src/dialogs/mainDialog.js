@@ -23,14 +23,11 @@ const { DocDialog, DOC_DIALOG } = require('./docDialog');
 const ATTACHMENT_PROMPT = 'ATTACHMENT_PROMPT';
 const CHOICE_PROMPT = 'CHOICE_PROMPT';
 const CONFIRM_PROMPT = 'CONFIRM_PROMPT';
-const USER_PROFILE = 'USER_PROFILE';
 const WATERFALL_DIALOG = 'WATERFALL_DIALOG';
 
 class MainDialog extends ComponentDialog {
-    constructor(userState) {
+    constructor() {
         super('mainDialog');
-
-        this.userProfile = userState.createProperty(USER_PROFILE);
 
         this.addDialog(new AnswerDialog());
         this.addDialog(new DocDialog(this.initialDialogId));
@@ -72,7 +69,7 @@ class MainDialog extends ComponentDialog {
         const msg = step.options.restartMsg ? step.options.restartMsg : 'What can I do for you?';
         return await step.prompt(CHOICE_PROMPT, {
             prompt: msg,
-            choices: ChoiceFactory.toChoices(['ask a question', 'process a document', , 'process an image'])
+            choices: ChoiceFactory.toChoices(['ask a question', 'process a document', , 'recognize an image'])
         });
     }
 
@@ -101,7 +98,7 @@ class MainDialog extends ComponentDialog {
     }
 
     async docStep(step) {
-        if (step.result && step.result.length > 0) {
+        if (step.result && step.result[0].contentUrl) {
             console.log(step.result[0].contentType);
             var type = step.result[0].contentType;
             if (type === 'application/pdf') {
@@ -109,18 +106,39 @@ class MainDialog extends ComponentDialog {
                 console.log('path: ' + path);
                 await step.context.sendActivity('Processing the document, please wait');
                 var req_results = await this.sendReq(path);
-                return await step.beginDialog(DOC_DIALOG, { sum: req_results[0], query: req_results[1], filepath: path });
+                return await step.beginDialog(DOC_DIALOG, { sum: req_results[0], query: req_results[1], form: req_results[2], filepath: path });
             }
             else {
-                await this.handleIncomingAttachment(step.context);
-                return await step.context.sendActivity('More functions to be updating...');
+                var image_result = '';
+                var path = await this.handleIncomingAttachment(step.context);
+                await step.context.sendActivity('Processing the image, please wait');
+                var form = new FormData();
+                form.append("file", fse.createReadStream(path));
+                await axios({
+                    method: "post",
+                    url: 'http://avabotformrecog.azurewebsites.net/api/FormRecogFunction?type=BusinessCard',
+                    data: form,
+                    headers: form.getHeaders()
+                })
+                    .then(function (response) {
+                        var a = response.data;
+                        a.forEach(line => {
+                            image_result += line + '\n';
+                        });
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                if (image_result){
+                    await step.context.sendActivity(image_result);
+                }
+                else{
+                    await step.context.sendActivity('Image recognition failed');
+                }
             }
 
         }
-        else {
-            return await step.replaceDialog(this.initialDialogId, { restartMsg: 'What else can I do for you?' });
-        }
-
+        return await step.next()
     }
 
 
@@ -133,6 +151,8 @@ class MainDialog extends ComponentDialog {
         form1.append("file", fse.createReadStream(path));
         var form2 = new FormData();
         form2.append("file", fse.createReadStream(path));
+        var form3 = new FormData();
+        form3.append("file", fse.createReadStream(path));
 
         let reqArr = [axios({
             method: "post",
@@ -144,6 +164,11 @@ class MainDialog extends ComponentDialog {
             url: "http://51.11.182.5:5000",
             data: form2,
             headers: form2.getHeaders()
+        }), axios({
+            method: "post",
+            url: "https://avabotformrecog.azurewebsites.net/api/FormRecogFunction?type=Layout",
+            data: form3,
+            headers: form3.getHeaders()
         })];
         var output = [];
         await Promise.allSettled(reqArr).then(results => {
@@ -151,7 +176,7 @@ class MainDialog extends ComponentDialog {
                 console.log(result.status);
                 if (result.status == 'fulfilled') {
                     output.push(result.value.data);
-                    console.log('first: '+result.value.data);
+                    console.log('first: ' + result.value.data);
                 } else {
                     output.push(0);
                 }
@@ -250,10 +275,10 @@ class MainDialog extends ComponentDialog {
             // If none of the attachments are valid images, the retry prompt should be sent.
             return !!validDoc.length;
         } else {
-            await promptContext.context.sendActivity('No attachments received, please try again.');
+            await promptContext.context.sendActivity('No attachments received.');
 
             // We can return true from a validator function even if Recognized.Succeeded is false.
-            return false;
+            return true;
         }
     }
 

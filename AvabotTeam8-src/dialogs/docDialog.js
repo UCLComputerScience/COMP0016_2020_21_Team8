@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-const path = require('path');
-const axios = require('axios');
-const fse = require("fs-extra");
-var FormData = require("form-data");
 const { ComponentDialog, ChoiceFactory, ChoicePrompt, TextPrompt, WaterfallDialog } = require('botbuilder-dialogs');
 const DOC_DIALOG = 'DOC_DIALOG';
 const WATERFALL_DIALOG = 'WATERFALL_DIALOG';
@@ -36,16 +32,17 @@ class DocDialog extends ComponentDialog {
         if (stepContext.options.restartMsg) {
             return await stepContext.prompt(CHOICE_PROMPT, {
                 prompt: 'Anything else for the document?',
-                choices: ChoiceFactory.toChoices(['summarize it', 'extract form', 'ask me about it', 'no'])
+                choices: ChoiceFactory.toChoices(['summarize it', 'extract table', 'QnA about it', 'no'])
             });
         }
         else {
-            this.sum = stepContext.options.sum ? stepContext.options.sum : '';
-            this.query = stepContext.options.query ? stepContext.options.query : '';
-            this.filepath = stepContext.options.filepath ? stepContext.options.filepath : '';
+            this.sum = stepContext.options.sum ? stepContext.options.sum : this.sum;
+            this.query = stepContext.options.query ? stepContext.options.query : this.query;
+            this.form = stepContext.options.form ? stepContext.options.form : this.form;
+            this.filepath = stepContext.options.filepath ? stepContext.options.filepath : this.filepath;
             return await stepContext.prompt(CHOICE_PROMPT, {
                 prompt: 'How can I help with the document?',
-                choices: ChoiceFactory.toChoices(['summarize it', 'extract form', 'ask me about it'])
+                choices: ChoiceFactory.toChoices(['summarize it', 'extract table', 'QnA about it'])
             });
         }
     }
@@ -62,10 +59,15 @@ class DocDialog extends ComponentDialog {
             }
 
         }
-        else if (choice == 'extract form') {
-            await step.context.sendActivity('More functions to be updating...');
+        else if (choice == 'extract table') {
+            if (this.form) {
+                await step.context.sendActivity(this.form);
+            }
+            else {
+                await step.context.sendActivity('Form recognition failed.');
+            }
         }
-        else if (choice == 'ask me about it') {
+        else if (choice == 'QnA about it') {
             if (this.query) {
                 return await step.prompt(TEXT_PROMPT, { prompt: 'What is the question?' });
             }
@@ -109,6 +111,9 @@ class DocDialog extends ComponentDialog {
     //     console.log(r); // ok
     //     await step.context.sendActivity(r);
     // }
+    set a(n){
+        this.sum = n;
+    }
 }
 
 module.exports.DocDialog = DocDialog;

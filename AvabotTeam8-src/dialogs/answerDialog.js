@@ -40,35 +40,22 @@ class AnswerDialog extends ComponentDialog {
     }
 
     async answerStep(stepContext) {
-        if (!process.env.QnAKnowledgebaseId || !process.env.QnAEndpointKey || !process.env.QnAEndpointHostName) {
-            const unconfiguredQnaMessage = 'NOTE: \r\n' +
-                'QnA Maker is not configured. To enable all capabilities, add `QnAKnowledgebaseId`, `QnAEndpointKey` and `QnAEndpointHostName` to the .env file. \r\n' +
-                'You may visit www.qnamaker.ai to create a QnA Maker knowledge base.';
+        console.log('Calling QnA Maker');
+        try {
+            const qnaResults = await this.qnaMaker.getAnswers(stepContext.context);
+            var msg = '';
+            // If an answer was received from QnA Maker, send the answer back to the user.
+            if (qnaResults[0]) {
+                msg = qnaResults[0].answer;
 
-            await stepContext.context.sendActivity(unconfiguredQnaMessage);
-            return await stepContext.endDialog();
+                // If no answers were returned from QnA Maker, reply with help.
+            } else {
+                msg = 'No QnA Maker answers were found.';
+            }
         }
-        else {
-            console.log('Calling QnA Maker');
-            try {
-                const qnaResults = await this.qnaMaker.getAnswers(stepContext.context);
-                var msg = '';
-                // If an answer was received from QnA Maker, send the answer back to the user.
-                if (qnaResults[0]) {
-                    msg = qnaResults[0].answer;
-
-                    // If no answers were returned from QnA Maker, reply with help.
-                } else {
-                    msg = 'No QnA Maker answers were found.';
-                }
-            }
-            catch (error) {
-                await stepContext.context.sendActivity('Sorry, QnA maker is currently unavailable.');
-                return await stepContext.endDialog();
-
-            }
-
-
+        catch (error) {
+            await stepContext.context.sendActivity('Sorry, QnA maker is currently unavailable.');
+            return await stepContext.endDialog();
         }
         return await stepContext.replaceDialog(this.initialDialogId, { restartMsg: msg });
     }
