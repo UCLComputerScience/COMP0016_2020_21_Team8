@@ -14,9 +14,9 @@ class AnswerDialog extends ComponentDialog {
         super(ANSWER_DIALOG);
         try {
             this.qnaMaker = new QnAMaker({
-                knowledgeBaseId: process.env.QnAKnowledgebaseId,
-                endpointKey: process.env.QnAEndpointKey,
-                host: process.env.QnAEndpointHostName
+                knowledgeBaseId: '63a07915-3939-4f7e-845a-d8d4df62f969',
+                endpointKey: 'dbdf58ac-5aa6-484d-944c-1aba8572a210',
+                host: 'https://avabotqnamakerengine.azurewebsites.net/qnamaker'
             });
         } catch (err) {
             console.warn(`QnAMaker Exception: ${err} Check your QnAMaker configuration in .env`);
@@ -54,6 +54,7 @@ class AnswerDialog extends ComponentDialog {
             }
         }
         catch (error) {
+            console.log(error);
             await stepContext.context.sendActivity('Sorry, QnA maker is currently unavailable.');
             return await stepContext.endDialog();
         }

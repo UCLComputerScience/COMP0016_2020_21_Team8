@@ -24,16 +24,17 @@ const url2 = 'https://avabotformrecog.azurewebsites.net/api/FormRecogFunction?ty
 
 axios({
     method: "post",
-    url: 'http://avabotformrecog.azurewebsites.net/api/FormRecogFunction?type=BusinessCard',
+    url: 'http://avabotformrecog.azurewebsites.net/api/FormRecogFunction?type=Layout',
     data: form,
     headers: form.getHeaders()
 })
     .then(function (response) {
-        var a = response.data;
         var b = '';
+        var a = response.data;
         a.forEach(line => {
-            b+=line;
+            b += line + '\n';
         });
+        
         console.log(b);
     })
     .catch(function (error) {

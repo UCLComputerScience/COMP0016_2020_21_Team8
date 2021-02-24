@@ -1,6 +1,7 @@
 const { DialogTestClient, DialogTestLogger } = require('botbuilder-testing');
 const { MainDialog } = require('../dialogs/mainDialog');
 const assert = require('assert');
+const { MessageFactory, CardFactory } = require('botbuilder');
 
 
 describe('MainDialog', () => {
@@ -34,6 +35,60 @@ describe('MainDialog', () => {
 
             });
         });
+    });
+
+    it('tests sendNoPdf', async () => {
+        const sut = new MainDialog();
+        const client = new DialogTestClient('test', sut, null, [new DialogTestLogger()]);
+
+        let reply = await client.sendActivity('hi');
+        const message = MessageFactory.attachment(
+            CardFactory.heroCard(
+                'White T-Shirt',
+                ['https://example.com/whiteShirt.jpg'],
+                ['buy']
+            )
+        );
+        reply = await client.sendActivity('process a document');
+        reply = await client.sendActivity(message);
+        assert.strictEqual(reply.text, 'That was not a document that I can help, please try again.')
+
+    });
+
+    it('tests sendNoImage', async () => {
+        const sut = new MainDialog();
+        const client = new DialogTestClient('test', sut, null, [new DialogTestLogger()]);
+
+        let reply = await client.sendActivity('hi');
+        const message = MessageFactory.attachment(
+            CardFactory.heroCard(
+                'White T-Shirt',
+                ['https://example.com/whiteShirt.jpg'],
+                ['buy']
+            )
+        );
+        reply = await client.sendActivity('recognize an image');
+        reply = await client.sendActivity(message);
+        assert.strictEqual(reply.text, 'That was not an image that I can help, please try again.')
+
+    });
+
+    it('tests sendNoImage', async () => {
+        const sut = new MainDialog();
+        const client = new DialogTestClient('test', sut, null, [new DialogTestLogger()]);
+
+        let reply = await client.sendActivity('hi');
+        const message = MessageFactory.attachment(
+            CardFactory.heroCard(
+                'White T-Shirt',
+                ['https://example.com/whiteShirt.jpg'],
+                ['buy']
+            )
+        );
+        reply = await client.sendActivity('recognize an image');
+        reply = await client.sendActivity(message);
+        assert.strictEqual(reply.text, 'That was not an image that I can help, please try again.')
+
     });
 
     it('tests docMissing', async () => {

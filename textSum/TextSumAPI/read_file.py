@@ -31,8 +31,11 @@ def readPdf(pdfpath, txtpath):
         interpreter = PDFPageInterpreter(rsrcmgr, device)
         # 处理每一页
 
-        title = pdftitle.get_title_from_file(pdfpath)
-        if title is None:
+        try:
+            title = pdftitle.get_title_from_file(pdfpath)
+            if title is None:
+                title = 'n/a'
+        except:
             title = 'n/a'
 
         with open(txtpath, 'w') as f:
@@ -49,4 +52,6 @@ def readPdf(pdfpath, txtpath):
                 content += pageContent.strip() + " "
                 count += 1
             f.write(content)
+            if content.isspace():
+                count = 0
         return (title, count)

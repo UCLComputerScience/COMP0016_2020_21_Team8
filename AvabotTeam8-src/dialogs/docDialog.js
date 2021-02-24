@@ -61,7 +61,18 @@ class DocDialog extends ComponentDialog {
         }
         else if (choice == 'extract table') {
             if (this.form) {
-                await step.context.sendActivity(this.form);
+                if (this.form != 'No Table Found') {
+                    var b = '';
+                    this.form.forEach(line => {
+                        b += line;
+                    });
+                    console.log(b);
+                    await step.context.sendActivity(b);
+                }
+                else{
+                    await step.context.sendActivity(this.form);             
+                }
+
             }
             else {
                 await step.context.sendActivity('Form recognition failed.');
@@ -111,8 +122,14 @@ class DocDialog extends ComponentDialog {
     //     console.log(r); // ok
     //     await step.context.sendActivity(r);
     // }
-    set a(n){
+    set a(n) {
         this.sum = n;
+    }
+    set b(n) {
+        this.query = n;
+    }
+    set c(n) {
+        this.form = n;
     }
 }
 

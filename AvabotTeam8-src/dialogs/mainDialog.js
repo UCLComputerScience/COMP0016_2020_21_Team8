@@ -129,10 +129,10 @@ class MainDialog extends ComponentDialog {
                     .catch(function (error) {
                         console.log(error);
                     });
-                if (image_result){
+                if (image_result) {
                     await step.context.sendActivity(image_result);
                 }
-                else{
+                else {
                     await step.context.sendActivity('Image recognition failed');
                 }
             }
@@ -198,15 +198,8 @@ class MainDialog extends ComponentDialog {
         // Replies back to the user with information about where the attachment is stored on the bot's server,
         // and what the name of the saved file is.
         async function replyForReceivedAttachments(localAttachmentData) {
-            if (localAttachmentData) {
-                // Because the TurnContext was bound to this function, the bot can call
-                // `TurnContext.sendActivity` via `this.sendActivity`;
-                await this.sendActivity(`Attachment "${localAttachmentData.fileName}" ` +
-                    `has been received.`);
-
-            } else {
-                await this.sendActivity('Attachment was not successfully saved to disk.');
-            }
+            await this.sendActivity(`Attachment "${localAttachmentData.fileName}" ` +
+                `has been received.`);
             return localAttachmentData.localPath
         }
 
@@ -230,12 +223,6 @@ class MainDialog extends ComponentDialog {
         try {
             // arraybuffer is necessary for images
             const response = await axios.get(url, { responseType: 'arraybuffer' });
-            // If user uploads JSON file, this prevents it from being written as "{"type":"Buffer","data":[123,13,10,32,32,34,108..."
-            if (response.headers['content-type'] === 'application/json') {
-                response.data = JSON.parse(response.data, (key, value) => {
-                    return value && value.type === 'Buffer' ? Buffer.from(value.data) : value;
-                });
-            }
             fs.writeFile(localFileName, response.data, (fsError) => {
                 if (fsError) {
                     throw fsError;
