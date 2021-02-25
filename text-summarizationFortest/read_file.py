@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import re
 from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfdocument import PDFDocument
 from pdfminer.pdfpage import PDFPage
@@ -71,7 +72,10 @@ def readPdf(pdfpath, txtpath):
                 layout = device.get_result()
                 for x in layout:
                     if(isinstance(x, LTTextBoxHorizontal)):
-                        pageContent += x.get_text()
+                        text = x.get_text()
+                        if re.search('[a-zA-Z]', text) == None or (text[0].isupper() and len(text)<=43):
+                            continue
+                        pageContent += text
                 content += pageContent.strip() + " "
                 count += 1
             print(len(content))
@@ -94,5 +98,5 @@ def readDocx(docxpath, txtpath):
 
 if __name__ == "__main__":
 
-    print(readDocx('text-summarizationFortest/test.docx','text-summarizationFortest/test.txt'))
-    print(readPdf('text-summarizationFortest/test.pdf','text-summarizationFortest/test1.txt'))
+    #print(readDocx('text-summarizationFortest/test.docx','text-summarizationFortest/test.txt'))
+    print(readPdf('text-summarizationFortest/remote-working-security-faq.pdf','text-summarizationFortest/test1.txt'))
