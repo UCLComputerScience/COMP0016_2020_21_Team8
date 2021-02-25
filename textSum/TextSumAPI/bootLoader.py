@@ -24,6 +24,8 @@ def summary(path):
     tup = read_file.readPdf(path, outputTextPath) 
     title = tup[0]
     count = tup[1]
+    if count == 0:
+        return "Sorry, summarization failed, the document was not text based."
     line = min(20,count*5) 
     content += "Title: " + title + "\n"
     content += " " + "\n"
