@@ -113,6 +113,20 @@ describe('MainDialog', () => {
 
     });
 
+    it('tests downloadAttach', async () => {
+        const sut = new MainDialog();
+        let a = await sut.downloadAttachmentAndWrite({contentType: 'a/b', contentUrl: 'url'});
+        assert.strictEqual(a, undefined);
+
+    });
+
+    it('tests docStep', async () => {
+        const sut = new MainDialog();
+        let a = await sut.docStep({result: [{contentUrl:'url'}], activity: '', next: function (){return}}).catch(function (error){});
+        assert.strictEqual(a, undefined);
+
+    });
+
 
 });
 
