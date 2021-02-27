@@ -6,8 +6,6 @@ var assertChai = require('chai').assert;
 
 describe('AnswerDialog', () => {
     it('tests beginStep', async () => {
-        //const mockRecognizer = new MockFlightBookingRecognizer(false);
-        //const mockBookingDialog = new MockBookingDialogWithPrompt();
         const sut = new AnswerDialog();
         const client = new DialogTestClient('test', sut, null, [new DialogTestLogger()]);
 
@@ -16,8 +14,6 @@ describe('AnswerDialog', () => {
     });
 
     it('tests answerStep', async () => {
-        //const mockRecognizer = new MockFlightBookingRecognizer(false);
-        //const mockBookingDialog = new MockBookingDialogWithPrompt();
         const sut = new AnswerDialog();
         const client = new DialogTestClient('test', sut, null, [new DialogTestLogger()]);
 
@@ -27,8 +23,6 @@ describe('AnswerDialog', () => {
     });
 
     it('tests answerStepNoAnswer', async () => {
-        //const mockRecognizer = new MockFlightBookingRecognizer(false);
-        //const mockBookingDialog = new MockBookingDialogWithPrompt();
         const sut = new AnswerDialog();
         const client = new DialogTestClient('test', sut, null, [new DialogTestLogger()]);
 
@@ -37,5 +31,13 @@ describe('AnswerDialog', () => {
         assertChai.typeOf(reply.text, 'string')
     });
 
+    it('tests noQnaMaker', async () => {
+        const sut = new AnswerDialog();
+        const client = new DialogTestClient('test', sut, null, [new DialogTestLogger()]);
+        sut.a = undefined;
+        await client.sendActivity('hi');
+        let reply = await client.sendActivity('Hi');
+        assertChai.typeOf(reply.text, 'string')
+    });
 
 });

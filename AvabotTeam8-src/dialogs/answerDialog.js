@@ -60,6 +60,10 @@ class AnswerDialog extends ComponentDialog {
         }
         return await stepContext.replaceDialog(this.initialDialogId, { restartMsg: msg });
     }
+
+    set a(n) {
+        this.qnaMaker = n;
+    }
 }
 
 module.exports.AnswerDialog = AnswerDialog;

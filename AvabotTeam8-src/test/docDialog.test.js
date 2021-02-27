@@ -3,7 +3,7 @@ const { DocDialog } = require('../dialogs/docDialog');
 const assert = require('assert');
 
 
-describe('MainDialog', () => {
+describe('DocDialog', () => {
     var client;
     var sut;
 
@@ -67,6 +67,12 @@ describe('MainDialog', () => {
         reply = client.getNextReply();
         assert.strictEqual(reply.text, 'Anything else for the document?\n\n   1. summarize it\n   2. extract table\n   3. QnA about it\n   4. no');
 
+    });
+
+    it('tests Begin', async () => {
+        const w = new DocDialog('WATERFALL_DIALOG');
+        await w.beginStep({options:{sum:'sum',query:'query',form:'form',filepath:'path'},prompt: function(){return}})
+        assert.strictEqual(w.sum, 'sum');
     });
 
     

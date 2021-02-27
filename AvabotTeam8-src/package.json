@@ -9,7 +9,7 @@
         "start": "node ./index.js",
         "watch": "nodemon ./index.js",
         "lint": "eslint .",
-        "test": "mocha test --exit",
+        "test": "mocha test --exit --timeout 20000",
         "cover": "./node_modules/.bin/nyc npm run test",
         "coverage": "./node_modules/.bin/nyc --reporter lcov npm run test"
     },

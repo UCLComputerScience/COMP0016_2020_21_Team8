@@ -99,44 +99,42 @@ class MainDialog extends ComponentDialog {
 
     async docStep(step) {
         if (step.result && step.result[0].contentUrl) {
-            console.log(step.result[0].contentType);
             var type = step.result[0].contentType;
-            if (type === 'application/pdf') {
-                var path = await this.handleIncomingAttachment(step.context);
-                console.log('path: ' + path);
-                await step.context.sendActivity('Processing the document, please wait');
-                var req_results = await this.sendReq(path);
-                return await step.beginDialog(DOC_DIALOG, { sum: req_results[0], query: req_results[1], form: req_results[2], filepath: path });
-            }
-            else {
-                var image_result = '';
-                var path = await this.handleIncomingAttachment(step.context);
-                await step.context.sendActivity('Processing the image, please wait');
-                var form = new FormData();
-                form.append("file", fse.createReadStream(path));
-                await axios({
-                    method: "post",
-                    url: 'http://avabotformrecog.azurewebsites.net/api/FormRecogFunction?type=BusinessCard',
-                    data: form,
-                    headers: form.getHeaders()
-                })
-                    .then(function (response) {
-                        var a = response.data;
-                        a.forEach(line => {
-                            image_result += line + '\n';
-                        });
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-                if (image_result) {
-                    await step.context.sendActivity(image_result);
+            var path = await this.handleIncomingAttachment(step.context);
+            if (path) {
+                if (type === 'application/pdf') {
+                    await step.context.sendActivity('Processing the document, please wait');
+                    var req_results = await this.sendReq(path);
+                    return await step.beginDialog(DOC_DIALOG, { sum: req_results[0], query: req_results[1], form: req_results[2], filepath: path });
                 }
                 else {
-                    await step.context.sendActivity('Image recognition failed');
+                    var image_result = '';
+                    await step.context.sendActivity('Processing the image, please wait');
+                    var form = new FormData();
+                    form.append("file", fse.createReadStream(path));
+                    await axios({
+                        method: "post",
+                        url: 'http://avabotformrecog.azurewebsites.net/api/FormRecogFunction?type=BusinessCard',
+                        data: form,
+                        headers: form.getHeaders()
+                    })
+                        .then(function (response) {
+                            var a = response.data;
+                            a.forEach(line => {
+                                image_result += line + '\n';
+                            });
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    if (image_result) {
+                        await step.context.sendActivity(image_result);
+                    }
+                    else {
+                        await step.context.sendActivity('Image recognition failed');
+                    }
                 }
             }
-
         }
         return await step.next()
     }
@@ -156,7 +154,7 @@ class MainDialog extends ComponentDialog {
 
         let reqArr = [axios({
             method: "post",
-            url: "https://textsumapi.azurewebsites.net/api/textsumapi",
+            url: "https://textsumapi.azurewebsites.net/api/TextSummary",
             data: form1,
             headers: form1.getHeaders()
         }), axios({
@@ -198,9 +196,17 @@ class MainDialog extends ComponentDialog {
         // Replies back to the user with information about where the attachment is stored on the bot's server,
         // and what the name of the saved file is.
         async function replyForReceivedAttachments(localAttachmentData) {
-            await this.sendActivity(`Attachment "${localAttachmentData.fileName}" ` +
-                `has been received.`);
-            return localAttachmentData.localPath
+            if (localAttachmentData) {
+                // Because the TurnContext was bound to this function, the bot can call
+                // `TurnContext.sendActivity` via `this.sendActivity`;
+                await this.sendActivity(`Attachment "${localAttachmentData.fileName}" ` +
+                    `has been received.`);
+                return localAttachmentData.localPath
+
+            } else {
+                await this.sendActivity('Attachment was not successfully received.');
+                return undefined;
+            }
         }
 
         // Prepare Promises to reply to the user with information about saved attachments.
