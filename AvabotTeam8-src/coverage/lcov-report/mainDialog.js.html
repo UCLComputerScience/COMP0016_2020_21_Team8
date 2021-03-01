@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.6% </span>
+                <span class="strong">93.86% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>101/114</span>
+                <span class='fraction'>107/114</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82.86% </span>
+                <span class="strong">88.57% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>29/35</span>
+                <span class='fraction'>31/35</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">84.21% </span>
+                <span class="strong">94.74% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>16/19</span>
+                <span class='fraction'>18/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.5% </span>
+                <span class="strong">93.81% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>100/113</span>
+                <span class='fraction'>106/113</span>
             </div>
         
             
@@ -457,19 +457,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -511,10 +511,10 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -735,17 +735,17 @@ class MainDialog extends ComponentDialog {
                         data: form,
                         headers: form.getHeaders()
                     })
-                        .then(<span class="fstat-no" title="function not covered" >fu</span>nction (response) {
-                            var a = <span class="cstat-no" title="statement not covered" >response.data;</span>
-<span class="cstat-no" title="statement not covered" >                            a.forEach(<span class="fstat-no" title="function not covered" >li</span>ne =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >                                image_result += line + '\n';</span>
+                        .then(function (response) {
+                            var a = response.data;
+                            a.forEach(line =&gt; {
+                                image_result += line + '\n';
                             });
                         })
                         .catch(function (error) {
                             console.log(error);
                         });
-                    <span class="missing-if-branch" title="if path not taken" >I</span>if (image_result) {
-<span class="cstat-no" title="statement not covered" >                        await step.context.sendActivity(image_result);</span>
+                    if (image_result) {
+                        await step.context.sendActivity(image_result);
                     }
                     else {
                         await step.context.sendActivity('Image recognition failed');
@@ -789,9 +789,9 @@ class MainDialog extends ComponentDialog {
         await Promise.allSettled(reqArr).then(results =&gt; {
             results.forEach(result =&gt; {
                 console.log(result.status);
-                <span class="missing-if-branch" title="if path not taken" >I</span>if (result.status == 'fulfilled') {
-<span class="cstat-no" title="statement not covered" >                    output.push(result.value.data);</span>
-<span class="cstat-no" title="statement not covered" >                    console.log('first: ' + result.value.data);</span>
+                if (result.status == 'fulfilled') {
+                    output.push(result.value.data);
+                    console.log('first: ' + result.value.data);
                 } else {
                     output.push(0);
                 }
@@ -901,7 +901,7 @@ module.exports.MainDialog = MainDialog;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat Feb 27 2021 07:43:10 GMT+0000 (格林尼治标准时间)
+                at Sun Feb 28 2021 14:57:11 GMT+0000 (格林尼治标准时间)
             </div>
         </div>
         <script src="prettify.js"></script>

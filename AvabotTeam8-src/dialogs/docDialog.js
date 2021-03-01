@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+const axios = require('axios');
 const { ComponentDialog, ChoiceFactory, ChoicePrompt, TextPrompt, WaterfallDialog } = require('botbuilder-dialogs');
 const DOC_DIALOG = 'DOC_DIALOG';
 const WATERFALL_DIALOG = 'WATERFALL_DIALOG';
@@ -95,15 +96,14 @@ class DocDialog extends ComponentDialog {
     }
 
     async answerStep(step) {
-        // var question = step.result;
-        // console.log('question: ' + question);
-        // let answer = await axios.get('http://51.11.38.199:5000?query="'+question)
-        // .then(v => v.data)
-        // .catch(function (error) {
-        //     console.log(error);
-        // });
-        // await step.context.sendActivity(answer);
-        await step.context.sendActivity('More functions to be updating...');
+        var question = step.result;
+        console.log('question: ' + question);
+        let answer = await axios.get('http://20.77.57.60:5000?query='+question)//http://20.77.57.60:5000?query=Who is the founder of UCL?
+        .then(v => 'answer: ' + v.data.answer + '\n' + 'context: ' + v.data.context)
+        .catch(function (error) {
+            console.log(error);
+        });
+        await step.context.sendActivity(answer);
         return await step.replaceDialog(this.initialDialogId, { restartMsg: 'What else can I do for you?' });
     }
 

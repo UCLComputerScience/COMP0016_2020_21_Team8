@@ -159,7 +159,7 @@ class MainDialog extends ComponentDialog {
             headers: form1.getHeaders()
         }), axios({
             method: "post",
-            url: "http://51.11.182.5:5000",
+            url: "http://20.77.57.60:5000",
             data: form2,
             headers: form2.getHeaders()
         }), axios({
