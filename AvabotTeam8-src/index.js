@@ -13,7 +13,7 @@ require('dotenv').config({ path: ENV_FILE });
 const { BotFrameworkAdapter, ConversationState, MemoryStorage, UserState } = require('botbuilder');
 
 // Import our custom bot class that provides a turn handling function.
-const { DialogBot } = require('./bots/dialogBot');
+const { AvaBot } = require('./bots/avaBot');
 const { MainDialog } = require('./dialogs/mainDialog');
 
 // Create the adapter. See https://aka.ms/about-bot-adapter to learn more about using information from
@@ -57,7 +57,7 @@ const userState = new UserState(memoryStorage);
 
 // Create the main dialog.
 const dialog = new MainDialog();
-const bot = new DialogBot(conversationState, userState, dialog);
+const bot = new AvaBot(conversationState, userState, dialog);
 
 // Create HTTP server.
 const server = restify.createServer();
