@@ -11,10 +11,8 @@ const {
     ChoiceFactory,
     ChoicePrompt,
     ComponentDialog,
-    ConfirmPrompt,
     DialogSet,
     DialogTurnStatus,
-    TextPrompt,
     WaterfallDialog
 } = require('botbuilder-dialogs');
 const { AnswerDialog, ANSWER_DIALOG } = require('./answerDialog');
@@ -22,7 +20,6 @@ const { DocDialog, DOC_DIALOG } = require('./docDialog');
 
 const ATTACHMENT_PROMPT = 'ATTACHMENT_PROMPT';
 const CHOICE_PROMPT = 'CHOICE_PROMPT';
-const CONFIRM_PROMPT = 'CONFIRM_PROMPT';
 const WATERFALL_DIALOG = 'WATERFALL_DIALOG';
 
 class MainDialog extends ComponentDialog {
@@ -31,9 +28,7 @@ class MainDialog extends ComponentDialog {
 
         this.addDialog(new AnswerDialog());
         this.addDialog(new DocDialog(this.initialDialogId));
-        this.addDialog(new TextPrompt('TextPrompt'));
         this.addDialog(new ChoicePrompt(CHOICE_PROMPT));
-        this.addDialog(new ConfirmPrompt(CONFIRM_PROMPT));
         this.addDialog(new AttachmentPrompt(ATTACHMENT_PROMPT, this.promptValidator));
 
         this.addDialog(new WaterfallDialog(WATERFALL_DIALOG, [
@@ -101,10 +96,14 @@ class MainDialog extends ComponentDialog {
         if (step.result && step.result[0].contentUrl) {
             var type = step.result[0].contentType;
             var path = await this.handleIncomingAttachment(step.context);
+            console.log(path);
             if (path) {
                 if (type === 'application/pdf') {
                     await step.context.sendActivity('Processing the document, please wait');
                     var req_results = await this.sendReq(path);
+                    try {
+                      fs.unlinkSync(path);
+                    } catch (error) {}
                     return await step.beginDialog(DOC_DIALOG, { sum: req_results[0], query: req_results[1], form: req_results[2], filepath: path });
                 }
                 else {
@@ -127,6 +126,9 @@ class MainDialog extends ComponentDialog {
                         .catch(function (error) {
                             console.log(error);
                         });
+                    try {
+                      fs.unlinkSync(path);
+                    } catch (error) {}
                     if (image_result) {
                         await step.context.sendActivity(image_result);
                     }
@@ -182,8 +184,7 @@ class MainDialog extends ComponentDialog {
             })
 
         })
-
-        console.log("完成啦！");
+        console.log("finished!");
         console.log(output);
         return output;
     }
@@ -218,8 +219,7 @@ class MainDialog extends ComponentDialog {
     }
 
     async downloadAttachmentAndWrite(attachment) {
-        var name = 'text.' + attachment.contentType.toString().split('/')[1];
-        console.log(name);
+        var name = attachment.name;
         // Retrieve the attachment via the attachment's contentUrl.
         const url = attachment.contentUrl;
 
@@ -241,7 +241,7 @@ class MainDialog extends ComponentDialog {
         // If no error was thrown while writing to disk, return the attachment's name
         // and localFilePath for the response back to the user.
         return {
-            fileName: attachment.name,
+            fileName: name,
             localPath: localFileName
         };
     }

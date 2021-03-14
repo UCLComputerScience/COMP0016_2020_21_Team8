@@ -10,7 +10,21 @@ describe('AnswerDialog', () => {
         const client = new DialogTestClient('test', sut, null, [new DialogTestLogger()]);
 
         const reply = await client.sendActivity('hi');
-        assert.strictEqual(reply.text, 'Feel free to ask any questions you have.');
+        assert.strictEqual(reply.text, 'Welcome! You can go on ask questions, or click `quit` to quit the QnA mode whenever feeling like so.');
+    });
+
+    it("tests quit", async () => {
+      const sut = new AnswerDialog();
+      const client = new DialogTestClient("test", sut, null, [
+        new DialogTestLogger(),
+      ]);
+      await client.sendActivity("hi");
+      await client.sendActivity("quit");
+      let reply = await client.sendActivity("quit");
+      assert.strictEqual(
+        reply.text,
+        "Welcome! You can go on ask questions, or click `quit` to quit the QnA mode whenever feeling like so."
+      );
     });
 
     it('tests answerStep', async () => {

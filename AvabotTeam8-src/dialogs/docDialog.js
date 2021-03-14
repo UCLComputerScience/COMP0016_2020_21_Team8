@@ -99,7 +99,7 @@ class DocDialog extends ComponentDialog {
         var question = step.result;
         console.log('question: ' + question);
         let answer = await axios.get('http://20.77.57.60:5000?query='+question)//http://20.77.57.60:5000?query=Who is the founder of UCL?
-        .then(v => 'answer: ' + v.data.answer + '\n' + 'context: ' + v.data.context)
+        .then(v => 'answer: ' + v.data.answer + ' \r\n' + 'context: ' + v.data.context)
         .catch(function (error) {
             console.log(error);
         });

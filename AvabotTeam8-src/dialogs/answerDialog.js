@@ -3,7 +3,8 @@
 
 const { ComponentDialog, TextPrompt, WaterfallDialog } = require('botbuilder-dialogs');
 const { QnAMaker } = require('botbuilder-ai');
-const { MessageFactory, InputHints } = require('botbuilder');
+const { MessageFactory } = require('botbuilder');
+const { ActionTypes } = require("botframework-schema");
 
 const ANSWER_DIALOG = 'ANSWER_DIALOG';
 const WATERFALL_DIALOG = 'WATERFALL_DIALOG';
@@ -32,14 +33,26 @@ class AnswerDialog extends ComponentDialog {
     }
 
     async beginStep(stepContext) {
-        const msg = stepContext.options.restartMsg ? stepContext.options.restartMsg : 'Feel free to ask any questions you have.';
-        const promptOptions = MessageFactory.text(msg, msg, InputHints.ExpectingInput);
+        const msg = stepContext.options.restartMsg ? stepContext.options.restartMsg : 'Welcome! You can go on ask questions, or click `quit` to quit the QnA mode whenever feeling like so.';
+        const cardActions = [
+          {
+            type: ActionTypes.PostBack,
+            title: "quit",
+            value: "quit",
+          },
+        ];
+        const message = MessageFactory.suggestedActions(
+          cardActions,msg
+        );
 
         // Ask the user to enter their name.
-        return await stepContext.prompt(TEXT_PROMPT, promptOptions);
+        return await stepContext.prompt(TEXT_PROMPT, message);
     }
 
     async answerStep(stepContext) {
+        if (stepContext.result == 'quit') {
+            return await stepContext.endDialog();
+        }
         console.log('Calling QnA Maker');
         try {
             const qnaResults = await this.qnaMaker.getAnswers(stepContext.context);
