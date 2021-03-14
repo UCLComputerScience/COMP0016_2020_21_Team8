@@ -77,3 +77,9 @@
     
 Note: for passing all the tests, make sure the APIs used by the bot are working properly.
 
+## Development
+
+To develop your own bot application, see [Azure Bot Service](https://azure.microsoft.com/en-gb/services/bot-services/) for creating Web App Bot resource and configure the `AvabotTeam8-src/.env` file with your AppId and AppPassword. </br>
+To learn more about deploying a bot to Azure, see [Deploy your bot to Azure](https://aka.ms/azuredeployment) for a complete list of deployment instructions.
+
+
