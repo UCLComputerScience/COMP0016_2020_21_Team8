@@ -27,22 +27,30 @@
 ### Run the bot
 
 - Clone the repository
+
     ```bash
     git clone https://github.com/UCLComputerScience/COMP0016_2020_21_Team8.git
     ```
+    
 - Make sure `MicrosoftAppId`, `MicrosoftAppPassword`, `QnAKnowledgebaseId`, `QnAEndpointKey`, and `QnAEndpointHostName` are correctly configured in `AvabotTeam8-src/.env` file
 - In a terminal, navigate to `AvabotTeam8-src`
+    
     ```bash
     cd AvabotTeam8-src
     ```
+    
 - Install modules
+    
     ```bash
     npm install
     ```
+    
 - Run the bot
+    
     ```bash
     npm start
     ```
+    
 - Launch Bot Framework Emulator
 - File -> Open Bot
 - Browse and choose `myBot.bot` in this repository
@@ -50,16 +58,22 @@
 ## Test
 - In a terminal, navigate to `AvabotTeam8-src`
 - Run test by
-  ```bash
+    
+    ```bash
     npm run test
     ```
+    
 - Run test with coverage by
-  ```bash
+    
+    ```bash
     npm run cover
     ```
+    
 - Run test and generate a coverage report by
-  ```bash
+    
+    ```bash
     npm run coverage
     ```
+    
 Note: for passing all the tests, make sure the APIs used by the bot are working properly.
 
