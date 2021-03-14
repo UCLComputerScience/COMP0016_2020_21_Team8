@@ -1,72 +1,65 @@
-# core-bot
+# AvaBot Deployment Manual 
 
-Demonstrate the core capabilities of the Microsoft Bot Framework
+ AvaBot has been created using [MS Bot Framework](https://dev.botframework.com), it can
 
-This bot has been created using [Bot Framework](https://dev.botframework.com), it shows how to:
-
-- Use [LUIS](https://www.luis.ai) to implement core AI capabilities
-- Implement a multi-turn conversation using Dialogs
-- Handle user interruptions for such things as `Help` or `Cancel`
-- Prompt for and validate requests for information from the user
-- Demonstrate how to handle any unexpected errors
+* Answer general questions, Avanade-related questions, and UCL-related questions
+* Summarize a document
+* Extract table data from a document
+* Answer questions about a document
+* Recognize images of business-card pattern
 
 ## Prerequisites
 
-This template **requires** prerequisites in order to run.
+- [Git](https://git-scm.com/)
+- [Node.js](https://nodejs.org)
+- [ngrok](https://ngrok.com/)
+- [Bot Framework Emulator](https://github.com/microsoft/botframework-emulator)
 
-### Overview
+## Build and Run
+### Configure Bot Framework Emulator
+- Install the latest Bot Framework Emulator from [here](https://github.com/Microsoft/BotFramework-Emulator/releases)
+- Launch Bot Framework Emulator
+- Go to Settings on the left bottom of the window
+- Enter Path of ngrok
+- Tick `Bypass ngrok for local address` box
+- Tick `Run ngrok when the Emulator starts up` box
 
-This bot uses [LUIS](https://www.luis.ai), an AI based cognitive service, to implement language understanding.
+### Run the bot
 
-- [Node.js](https://nodejs.org) version 10.14 or higher
-
+- Clone the repository
     ```bash
-    # determine node version
-    node --version
+    git clone https://github.com/UCLComputerScience/COMP0016_2020_21_Team8.git
     ```
-
-# To run the bot locally
-- Download the bot code from the Build blade in the Azure Portal (make sure you click "Yes" when asked "Include app settings in the downloaded zip file?").
-    - If you clicked "No" you will need to copy all the Application Settings properties from your App Service to your local .env file.
+- Make sure `MicrosoftAppId`, `MicrosoftAppPassword`, `QnAKnowledgebaseId`, `QnAEndpointKey`, and `QnAEndpointHostName` are correctly configured in `AvabotTeam8-src/.env` file
+- In a terminal, navigate to `AvabotTeam8-src`
+    ```bash
+    cd AvabotTeam8-src
+    ```
 - Install modules
-
     ```bash
     npm install
     ```
 - Run the bot
-
     ```bash
     npm start
     ```
-
-## Testing the bot using Bot Framework Emulator
-
-[Bot Framework Emulator](https://github.com/microsoft/botframework-emulator) is a desktop application that allows bot developers to test and debug their bots on localhost or running remotely through a tunnel.
-
-- Install the Bot Framework Emulator version 4.9.0 or greater from [here](https://github.com/Microsoft/BotFramework-Emulator/releases)
-
-### Connect to the bot using Bot Framework Emulator
-
 - Launch Bot Framework Emulator
 - File -> Open Bot
-- Enter a Bot URL of `http://localhost:3978/api/messages`
+- Browse and choose `myBot.bot` in this repository
 
-# Deploy the bot to Azure
-After creating the bot and testing it locally, you can deploy it to Azure to make it accessible from anywhere.
-To learn how, see [Deploy your bot to Azure](https://aka.ms/azuredeployment) for a complete set of deployment instructions.
+## Test
+- In a terminal, navigate to `AvabotTeam8-src`
+- Run test by
+  ```bash
+    npm run test
+    ```
+- Run test with coverage by
+  ```bash
+    npm run cover
+    ```
+- Run test and generate a coverage report by
+  ```bash
+    npm run coverage
+    ```
+Note: for passing all the tests, make sure the APIs used by the bot are working properly.
 
-## Further reading
-
-- [Bot Framework Documentation](https://docs.botframework.com)
-- [Bot Basics](https://docs.microsoft.com/azure/bot-service/bot-builder-basics?view=azure-bot-service-4.0)
-- [Dialogs](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-concept-dialog?view=azure-bot-service-4.0)
-- [Gathering Input Using Prompts](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-prompts?view=azure-bot-service-4.0&tabs=javascript)
-- [Activity processing](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-concept-activity-processing?view=azure-bot-service-4.0)
-- [Azure Bot Service Introduction](https://docs.microsoft.com/azure/bot-service/bot-service-overview-introduction?view=azure-bot-service-4.0)
-- [Azure Bot Service Documentation](https://docs.microsoft.com/azure/bot-service/?view=azure-bot-service-4.0)
-- [Azure CLI](https://docs.microsoft.com/cli/azure/?view=azure-cli-latest)
-- [Azure Portal](https://portal.azure.com)
-- [Language Understanding using LUIS](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/)
-- [Channels and Bot Connector Service](https://docs.microsoft.com/en-us/azure/bot-service/bot-concepts?view=azure-bot-service-4.0)
-- [Restify](https://www.npmjs.com/package/restify)
-- [dotenv](https://www.npmjs.com/package/dotenv)
