@@ -1,6 +1,9 @@
 # COMP0016_2020_21_Team8
-project: Avanade2 COVID19 changes     
-Some further information about the project:        
-How might COVID-19 change and accelerate collaboration in distributed teams?  
+## Overview
+  Project Title: Avanade2 COVID19 changes</br> 
+  Team Number: 8 </br>
+  Team Member: Zihan Zhu, Chaozy Zhu, Davit Mirzoyan 
+## Document
+- See AvaBot Deployment Manual [here](https://github.com/UCLComputerScience/COMP0016_2020_21_Team8/blob/main/AvabotTeam8-src/README.md)
+  
 
-Test github page
