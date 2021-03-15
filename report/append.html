@@ -15,8 +15,14 @@
     <link href="css/plugins.css" rel="stylesheet" />
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="type/icons.css" />
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+    <link rel="stylesheet" href="highlight/styles/atom-one-light.css" />
+    <script src="highlight/highlight.pack.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -69,20 +75,7 @@
                   <span class="icon flaticon-menu"></span>
                 </div>
                 <nav class="main-menu navbar-expand-md navbar-light">
-                  <div class="navbar-header">
-                    <!-- Togg le Button -->
-                    <button
-                      class="navbar-toggler"
-                      type="button"
-                      data-toggle="collapse"
-                      data-target="#navbarSupportedContent"
-                      aria-controls="navbarSupportedContent"
-                      aria-expanded="false"
-                      aria-label="Toggle navigation"
-                    >
-                      <span class="icon flaticon-menu"></span>
-                    </button>
-                  </div>
+
                   <div
                     class="collapse navbar-collapse clearfix"
                     id="navbarSupportedContent"
@@ -105,7 +98,7 @@
                       <li class="dropdown">
                         <a
                           href="javascript:void(0)"
-                          onclick="window.open('forms.html','_self')"
+                          onclick="window.open('require.html','_self')"
                           >Requirements</a
                         >
                         <ul>
@@ -216,166 +209,84 @@
           </nav>
         </div>
         <!-- End Mobile Menu -->
-        <!-- Quote Section -->
       </header>
       <!-- End Main Header -->
       <!-- Page Title -->
       <div class="page-title-area">
         <div class="container">
           <div class="page-title-content">
-            <h2>SYSTEM DESIGN</h2>
+            <h2>APPENDIX</h2>
             <ul>
               <li><a href="index.html">Home</a></li>
               <li><i class="ti-angle-right"></i></li>
-              <li>System design</li>
+              <li>Appendix</li>
             </ul>
           </div>
         </div>
       </div>
       <!-- End Page Title -->
       <!-- Start About Section -->
-      <section class="tabs-sec inner-content-wrapper text-center">
+            <section class="tabs-sec inner-content-wrapper text-center">
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-xl-10">
-              <h4 class="mb-4">System Architecture</h4>
+              <h4 class="mb-4">Documents & Manuals</h4>
               <!-- Bootstrap tabs-->
               <div class="tabs-custom tabs-horizontal tabs-line" id="tabs-1">
                 <!-- Nav tabs-->
                 <!-- Tab panes-->
-                <div class="tab-content system-diagram">
-                  <p>
-                    AvaBot application system consists of several components.
-                    Users can interact with AvaBot on web-chat and multiple
-                    applications to which it channels. The bot source code is
-                    deployed to Azure Cloud by using Azure Bot Service. AvaBot
-                    is connected to a QnA Maker with rich knowledge base that
-                    allows it to answer a variety of questions. Document
-                    processing functionalities are integrated to AvaBot by APIs,
-                    which can be accessed by performing http requests. Due to
-                    the high complexity and dependency on environment, QA system
-                    has been placed to a virtual machine in order to optimize
-                    its performance.
-                  </p>
-                  <a href="images/system.png" class="image-popup">
-                    <div class="gallery-image">
-                      <img src="images/system.png" />
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row justify-content-center">
-            <div class="col-xl-10">
-              <h4 class="mb-4">Activity Processing Sequence</h4>
-              <!-- Bootstrap tabs-->
-              <div class="tabs-custom tabs-horizontal tabs-line" id="tabs-1">
-                <!-- Nav tabs-->
-                <!-- Tab panes-->
-                <div class="tab-content system-diagram">
-                  <p>
-                    AvaBot communicates with users by using activity objects,
-                    the sequence diagram below shows how it works. Some concepts
-                    from the Bot Framework SDK could aid in the understanding
-                    the user-bot communication mechanism:
-                  </p>
-                  <div class="col-xl-12 techtable">
-                    <div class="card">
-                      <div class="card-body">
-                        <div class="table-responsive">
-                          <table class="table table-hover mb-0 text-md-nowrap">
-                            <thead>
-                              <tr>
-                                <th>term</th>
-                                <th>definition</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th scope="row">Activity</th>
-                                <td>
-                                  an activity is every interaction between the
-                                  user (or a channel) and the bot.
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Turn</th>
-                                <td>
-                                  a turn consists of the user's incoming
-                                  activity to the bot and any activity the bot
-                                  sends back to the user as an immediate
-                                  response.
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Adapter</th>
-                                <td>
-                                  the adapter has a process activity method for
-                                  starting a turn, it also formats and sends
-                                  response activities.
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="row">TurnContext</th>
-                                <td>
-                                  the turn context object provides information
-                                  about the activity needed to process the
-                                  activity.
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
+                <div class="tab-content">
+                  <div class="row">
+                    <div class="col-xs-12 col-sm-4">
+                      <div class="fun-fact gray-default">
+                        <i class="lnr lnr-pencil"></i>
+                        <span class="fun-fact-block-value"><a href="https://chaozyhaha.wordpress.com/blog/" target="_blank">Development Blog</a></span>
+                        <span class="fun-fact-block-text"></span>
                       </div>
                     </div>
+                    <div class="col-xs-12 col-sm-4">
+                      <div class="fun-fact gray-default">
+                        <i class="lnr lnr-rocket"></i>
+                        <span class="fun-fact-block-value"><a href="docs/dply.html" target="_blank">Deployment Manual</a></span>
+                        <span class="fun-fact-block-text"></span>
+                      </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-4">
+                      <div class="fun-fact gray-default">
+                        <i class="lnr lnr-user"></i>
+                        <span class="fun-fact-block-value"><a href="usermn.html" target="_blank">User Manual</a></span>
+                        <span class="fun-fact-block-text"></span>
+                      </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-4 ">
+                      <div class="fun-fact gray-default">
+                        <i class="lnr lnr-mustache"></i>
+                        <span class="fun-fact-block-value">Legal Statement</span>
+                        <span class="fun-fact-block-text"></span>
+                      </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-4 ">
+                      <div class="fun-fact gray-default">
+                        <i class="lnr lnr-smile"></i>
+                        <span class="fun-fact-block-value"><a href="eula.html" target="_blank">EULA</a></span>
+                        <span class="fun-fact-block-text"></span>
+                      </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-4 ">
+                      <div class="fun-fact gray-default">
+                        <i class="lnr lnr-license"></i>
+                        <span class="fun-fact-block-value"><a href="cc.html" target="_blank">CC License</a></span>
+                        <span class="fun-fact-block-text"></span>
+                      </div>
+                    </div>
+                  
+                  
+                  
                   </div>
-                  <p>
-                    <br />
-                    Activities arrive at the bot from the Bot Framework Service
-                    via an HTTP POST request. Activities sent from the bot to
-                    the channel are sent on a separate HTTP POST, both with a
-                    200 HTTP status code. In the diagram, the bot replied to the
-                    “hi” with another message activity containing “hi” as well.
-                    The activity is carried as JSON in the HTTP POST body. This
-                    JSON is deserialized to create the activity object that is
-                    then handed to the adapter through its process
-                    activity method. On receiving the activity, the adapter
-                    creates a turn context and calls the middleware. The turn
-                    context provides send, update, delete activity response
-                    methods for the bot to send outbound activities in response
-                    to an inbound activity. 
-                  </p>
-                  <a href="images/seq.png" class="image-popup">
-                    <div class="gallery-image">
-                      <img src="images/seq.png" />
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row justify-content-center">
-            <div class="col-xl-10">
-              <h4 class="mb-4">DialogueFlow Diagram</h4>
-              <!-- Bootstrap tabs-->
-              <div class="tabs-custom tabs-horizontal tabs-line" id="tabs-1">
-                <!-- Nav tabs-->
-                <!-- Tab panes-->
-                <div class="tab-content system-diagram">
-                  <p>
-                    AvaBot is born with multiple features, it is thus necessary
-                    to organize a reasonable way how users can choose to utilize
-                    its different functionalities. AvaBot’s dialogue flow was
-                    deliberately designed to make its communications with people
-                    as effective, as intuitive, as little of resistance as
-                    possible.
-                  </p>
-                  <a href="images/dialog.png" class="image-popup">
-                    <div class="gallery-image">
-                      <img src="images/dialog1.png" />
-                    </div>
-                  </a>
                 </div>
               </div>
             </div>
@@ -438,7 +349,7 @@
                     <li><a href="our-team.html">implementation</a></li>
                     <li><a href="faq.html">Testing</a></li>
                     <li><a href="error.html">evaluation</a></li>
-                    <li><a href="append.html">Appendices</a></li>
+                    <li><a href="typography.html">Appendices</a></li>
                   </ul>
                 </div>
               </div>
@@ -464,8 +375,7 @@
                   <div class="col-md-6">
                     <p class="mb-md-0 text-center text-md-left">
                       © 2020 All Rights
-                      <a href="http://www.bootstrapmb.com/">Reserved</a> by UCL
-                      TEAM8.
+                      <a href="http://www.bootstrapmb.com/">Reserved</a>.
                     </p>
                   </div>
                 </div>

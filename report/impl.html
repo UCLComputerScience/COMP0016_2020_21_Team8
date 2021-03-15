@@ -173,7 +173,11 @@
                         </ul>
                       </li>
                       <li class="dropdown">
-                        <a href="javascript:void(0)">testing</a>
+                        <a
+                          href="javascript:void(0)"
+                          onclick="window.open('test.html','_self')"
+                          >Testing</a
+                        >
                         <ul>
                           <li><a href="blog.html">Blog</a></li>
                           <li><a href="blog-detail.html">Blog Detail</a></li>
@@ -186,7 +190,7 @@
                           <li><a href="blog-detail.html">Blog Detail</a></li>
                         </ul>
                       </li>
-                      <li><a href="index.html">Appendices</a></li>
+                      <li><a href="append.html">Appendices</a></li>
                     </ul>
                   </div>
                 </nav>
@@ -307,13 +311,13 @@
                   </div>
                   <p><br />2. how AvaBot interacts with user</p>
                   <p>
-                    AvaBot implements the bot handler class, <mark>ActivityHandler</mark>,
+                    AvaBot implements the bot handler class, <code>ActivityHandler</code>,
                     which uses an event emitter and listener pattern. It has two
-                    listener methods, the <mark>onMessage()</mark> registers a listener
+                    listener methods, the <code>onMessage()</code> registers a listener
                     in response to messages and calls the run method of the
                     bot’s dialog to start or continue the dialog, the
-                    <mark>onMembersAdded()</mark> listener is active when a first member joins
-                    the conversation. Each method ends by calling <mark>next()</mark> to
+                    <code>onMembersAdded()</code> listener is active when a first member joins
+                    the conversation. Each method ends by calling <code>next()</code> to
                     ensure that the next listener is run.
                   </p>
                   <div>
@@ -349,9 +353,9 @@
                     needs and serve their demands. It is implemented with
                     multi-turn and multi-branch conversation flows by creating
                     prompts and calling them from waterfall dialogs. It contains
-                    3 dialogs, the <mark>MainDialog</mark> for users to choose which feature
+                    3 dialogs, the <code>MainDialog</code> for users to choose which feature
                     to use and ask for necessary document uploading, the
-                    <mark>AnswerDialog</mark> to do QnA, and the <mark>DocDialog</mark> for users to
+                    <code>AnswerDialog</code> to do QnA, and the <code>DocDialog</code> for users to
                     obtain document processing results. Here is a piece of code
                     from the mainDialog class, showing how bot’s dialog jumps
                     from one step to the next:
@@ -433,10 +437,10 @@
                     TextSum API will return the summary result, QA-system API
                     will return the pre-processing status, and Form-Recog API
                     will return table data. To optimize the overall processing
-                    time, we applied <mark>Promised.allSettled()</mark> method, which allows
+                    time, we applied <code>Promised.allSettled()</code> method, which allows
                     the requests to be sent simultaneously and halts the dialog
                     until it has successfully obtained all the three results
-                    regardless of status (Other similar methods like <mark>Axios.all()</mark>
+                    regardless of status (Other similar methods like <code>Axios.all()</code>
                     would fail if any of the request failed).
                   </p>
                   <div>
@@ -470,7 +474,7 @@
                     </pre>
                   </div>
                   <p>
-                    The processing results will be directed to <mark>DocDialog</mark> as the dialog branch begins, when the user will be asked whether
+                    The processing results will be directed to <code>DocDialog</code> as the dialog branch begins, when the user will be asked whether
                     they want doc-summary, table data or to do doc-query. The
                     advantage of performing the requests before actually letting
                     users to choose which document processing features they
@@ -502,7 +506,7 @@
                     pages, support websites, product manuals, etc.. In
                     AnswerDialog, AvaBot uses the connection information
                     provided by the .env file to establish a connection to the
-                    QnA Maker service: <mark>this.qnaMaker</mark>.
+                    QnA Maker service: <code>this.qnaMaker</code>.
                   </p>
                   <pre><code>
                   class AnswerDialog extends ComponentDialog {
@@ -686,7 +690,7 @@ Before the summarization, the document is pre-processed with text split into sen
                   </div>
                   <p><br />2. get the recognition results</p>
                   <p>
-                    The recognition results for an image of a certain model is obtained by calling the corresponding recognizing method, in this case, <mark>form_recognizer_client.begin_recognize_business_cards()</mark> is called. Having secured the recognition results, all the possible fields are iterated by using <mark>business_card.fields.get(INFO_FIELD)</mark>, where available ones are collected, reformatted and returned.</p>
+                    The recognition results for an image of a certain model is obtained by calling the corresponding recognizing method, in this case, <code>form_recognizer_client.begin_recognize_business_cards()</code> is called. Having secured the recognition results, all the possible fields are iterated by using <code>business_card.fields.get(INFO_FIELD)</code>, where available ones are collected, reformatted and returned.</p>
                   <div>
                     <pre>
                       <code class="lang-python">
@@ -712,7 +716,7 @@ Before the summarization, the document is pre-processed with text split into sen
                   </div>
                   <p><br />3. connect to AvaBot via http requests</p>
                   <p>
-                    Every time a request is sent from AvaBot with the document provided by the user to the python function, which was deployed on Azure cloud, the <mark>main()</mark> method will generate and give back the recognition result in response.
+                    Every time a request is sent from AvaBot with the document provided by the user to the python function, which was deployed on Azure cloud, the <code>main()</code> method will generate and give back the recognition result in response.
                   </p>
                       <div>
                         <pre>
@@ -737,7 +741,170 @@ Before the summarization, the document is pre-processed with text split into sen
             </div>
           </div>
         </div>
+
+
+      <!-- QA system-->
+      <!---->
+          <div class="row justify-content-center">
+            <div class="col-xl-10">
+              <h4 class="mb-4">Question-Answering System</h4>
+              <!-- Bootstrap tabs-->
+              <div class="tabs-custom tabs-horizontal tabs-line" id="tabs-1">
+                <!-- Nav tabs-->
+                <!-- Tab panes-->
+                <div class="tab-content">
+                  <h5>Tools & Dependencies<br /><br /></h5>
+                  <div class="row row-no-gutter">
+                    <div class="col-4">
+                      <img src="images/haystack.png" width="200" />
+                      <p>
+                      <br>
+                        A open domain QA system framework
+                      </p>
+                    </div>
+                    <div class="col-4">
+                      <img src="images/gunicorn.png" width="100" />
+                      <p>
+                        <br />An application server to host the system
+                      </p>
+                    </div>
+                    <div class="col-4">
+                      <img src="images/nginx.png" width="100" />
+                      <p>
+                        <br/>Reverse Proxy to buffer the file transfering
+                      </p>
+                    </div>
+                  </div>
+                  <h5><br /><br />Impl. Overview</h5>
+                  <p>
+                   The implementation of the QA system is separated into two parts: document retrieval and natural-language question processing. 
+                  </p>
+                  <p><b>Document retrieval<br></b>
+                  </p>
+                  <p>When a POST request arrives, the program first pre-processes the text.<br>
+ The preprocessing includes <br>
+1.  Extracting the text from the file attached with the request to the Document object accepted by Haystack<br>
+2.  Cleaning the text by removing numeric tables, header and footers that are repeated on each page, normalizing empty lines and white spaces<br>
+3.  Splitting the text into smaller chunks to optimize retrieval 
+</p>
+                  <div>
+                    <pre>
+                      <code class="lang-python">
+def file_upload(file):
+    try:
+        file_path = '/tmp/' + file.name + '_tmp'
+        with open(file_path, "wb") as buffer:
+            buffer.write(file.read())
+
+        if file.filename.split(".")[-1].lower() == "pdf":
+            pdf_converter = PDFToTextConverter(
+                remove_numeric_tables=True, valid_languages=["en"]
+            )
+            document = pdf_converter.convert(file_path)
+        elif file.filename.split(".")[-1].lower() == "txt":
+            txt_converter = TextConverter(
+                remove_numeric_tables=True, valid_languages=["en"],
+            )
+            document = txt_converter.convert(file_path)
+        else:
+            raise HTTPException(status_code=415, detail=f"Only .pdf and .txt file formats are supported.")
+
+        document = {TEXT_FIELD_NAME: document["text"], "name": file.filename}
+
+        preprocessor = PreProcessor(
+            clean_whitespace=REMOVE_WHITESPACE,
+            clean_header_footer=REMOVE_HEADER_FOOTER,
+            clean_empty_lines=REMOVE_EMPTY_LINES,
+            split_by=SPLIT_BY,
+            split_length=SPLIT_LENGTH,
+            split_overlap=SPLIT_OVERLAP,
+            split_respect_sentence_boundary=SPLIT_RESPECT_SENTENCE_BOUNDARY,
+        )
+
+        documents = preprocessor.process(document)
+                      </code>
+                    </pre>
+                  </div>
+                  <p><br />After that, the document is sent to the document store for indexing and generating a pipeline. Pipeline sticks powerful building blocks together, which are retriever and reader in our case. We keep this object in the memory which will find answers when questions are given.  The QA model <code>deepset/roberta-base-squad2</code> is used here as it has a quick retrieving speed compared with the others. (I also listed several alternatives in the comment) We sacrifice a little accuracy to have a fast processing speed. Also, as we don't have a GPU on our virtual machine so we have turn the option off. This option will tell pytorch to stop using GPU acceleration.<br></p>
+                    
+                  <div>
+                    <pre>
+                      <code class="lang-python">
+    retriever = ElasticsearchRetriever(document_store=document_store)
+    reader = FARMReader(model_name_or_path="deepset/roberta-base-squad2", use_gpu=False, context_window_size=500)
+    p = ExtractiveQAPipeline(reader, retriever)
+                      </code>
+                    </pre>
+                  </div>
+ 
+                  <p><br /><b> natural-language question processing<br> </b></p>
+                  <p>
+                    When a GET request is sent to the system, the query will be extracted from the http arguments. Key extraction is performed to identify the question type. "When", "Who","What" will refer to time, person and description respectively. This part is conducted by Haystack framework, what we do is simply send the question to the pipe and return back a few top-rated answers. <br>
+Here is the pipeline structure: 
+
+                  </p>
+                  <div class="row row-no-gutter">
+                    <div class="col-11">
+                        <img src="images/pipeline_struct.png" width="300" />
+                    </div>
+                  </div>
+                      
+              <p><b> <br>Elasticseach<br> </b></p>
+              <p>There are several options to start the ES on the machine. We run it by using docker image as a daemon as it is easy to configure. <br></p>
+
+              <div>
+                    <pre>
+                      <code class="lang-bash">
+    docker run -d -p 9200:9200 -e "discovery.type=single-node" elasticsearch:7.6.2
+                      </code>
+                    </pre>
+                  </div>
+              </div>
+
+              <p><b> Nginx & Gunicorn<br> </b></p>
+              <p>Gunicorn is using bio concurrency model, which means the worker process will be blocked when a file with large size is sent. As our machine has one-core only CPU, we set the number of worker processes to 2. Hence, it is likely to timeout a connection when several TCP connections flood in together, just because the worker processes are waiting for receiving large files. This is actually a famous disadvantage of Gunicorn.<br></p>
+
+              <div>
+                    <pre>
+                      <code class="lang-python">
+bind = "0.0.0.0:5000"
+timeout = 120
+loglevel = "debug"
+preload = True
+workers = 2
+                      </code>
+                    </pre>
+              </div>
+              <p><br>We then added a reverse proxy in front of our application server to get rid of this problem. The buffering reverse proxy will wait until it gets the entire request, then it will pass this request to the application server, which will just process it and deliver the response back to the reverse proxy, being free to receive new requests. <br></p>
+              
+              <div>
+                    <pre>
+                      <code class="lang-bash">
+server {
+    listen 80;
+    server_name {DOMAIN_NAME};
+
+    location / {
+        include proxy_params;
+        proxy_pass {FILE_PATH};
+    }
+}
+                      </code>
+                    </pre>
+              </div>
+
+
+
+              </div>
+
+            </div>
+          </div>
+        </div>
       </section>
+
+      
+
+
       <!-- Start Footer Area -->
       <footer class="footer_dark">
         <div class="footer_top">
