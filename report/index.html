@@ -32,18 +32,19 @@
     <div class="page-wrapper">
       <!-- Preloader -->
       <div id="dvLoading"></div>
+      
       <header class="main-header">
         <!--Header Top-->
-        <section id="topbar" class="d-none d-lg-block">
+        <section id="topbar" class="top-bar-test">
           <div class="container clearfix">
             <div class="contact-info float-left">
               <i class="fa fa-home"></i>
               <a href="index.html">COMP0016-Team8: Avanade2 COVID19 changes</a>
             </div>
             <div class="social-links float-right">
-              <a href="#" class="twitter"><i class="fa fa-github"></i></a>
-              <a href="#" class="facebook"><i class="fa fa-youtube"></i></a>
-              <a href="#" class="instagram"><i class="fa fa-wordpress"></i></a>
+              <a href="https://github.com/UCLComputerScience/COMP0016_2020_21_Team8" target='_blank'><i class="fa fa-github"></i></a>
+              <a href="https://www.youtube.com/embed/-TL-8Baj2eU" target='_blank'><i class="fa fa-youtube"></i></a>
+              <a href="https://chaozyhaha.wordpress.com/blog/" target='_blank'><i class="fa fa-wordpress"></i></a>
             </div>
           </div>
         </section>
@@ -55,12 +56,11 @@
               <!--Info-->
               <div class="logo-outer">
                 <div class="logo logo-1">
-                  <a href="index.html">
+                  <a href="https://www.avanade.com/en" target='_blank'>
                     <img
                       src="images/avanade.png"
-                      height="70"
-                      width="260"
-                      alt=""
+                      height="60"
+                      width="220"
                     />
                   </a>
                 </div>
@@ -72,20 +72,6 @@
                   <span class="icon flaticon-menu"></span>
                 </div>
                 <nav class="main-menu navbar-expand-md navbar-light">
-                  <div class="navbar-header">
-                    <!-- Toggle Button -->
-                    <button
-                      class="navbar-toggler"
-                      type="button"
-                      data-toggle="collapse"
-                      data-target="#navbarSupportedContent"
-                      aria-controls="navbarSupportedContent"
-                      aria-expanded="false"
-                      aria-label="Toggle navigation"
-                    >
-                      <span class="icon flaticon-menu"></span>
-                    </button>
-                  </div>
                   <div
                     class="collapse navbar-collapse clearfix"
                     id="navbarSupportedContent"
@@ -98,11 +84,11 @@
                           >home</a
                         >
                         <ul>
-                          <li><a href="accourdions-tabs.html">Abstract</a></li>
-                          <li><a href="typography.html">Features</a></li>
-                          <li><a href="forms.html">Video</a></li>
-                          <li><a href="buttons.html">Team Members</a></li>
-                          <li><a href="grid.html">Project Timeline</a></li>
+                          <li><a href="index.html#abstract">Abstract</a></li>
+                          <li><a href="index.html#feature">Features</a></li>
+                          <li><a href="index.html#video">Video</a></li>
+                          <li><a href="index.html#team">Team Members</a></li>
+                          <li><a href="index.html#g-chart">Project Timeline</a></li>
                         </ul>
                       </li>
                       <li class="dropdown">
@@ -113,17 +99,19 @@
                         >
                         <ul>
                           <li>
-                            <a href="accourdions-tabs.html"
+                            <a href="require.html#background"
                               >Project Background</a
                             >
                           </li>
-                          <li><a href="typography.html">Project Goal</a></li>
+                          <li><a href="require.html#client">Client Requirements</a></li>
                           <li>
-                            <a href="forms.html">Requirement Gathering</a>
+                          <li><a href="require.html#goal">Project Goal</a></li>
+                          <li>
+                            <a href="require.html#interview">User Interviews</a>
                           </li>
-                          <li><a href="buttons.html">Personas</a></li>
-                          <li><a href="grid.html">Use Cases</a></li>
-                          <li><a href="icons.html">MOSCOW List</a></li>
+                          <li><a href="require.html#psna">Personas</a></li>
+                          <li><a href="require.html#usecase">Use Cases</a></li>
+                          <li><a href="require.html#moscow">MoSCoW List</a></li>
                         </ul>
                       </li>
                       <li class="dropdown">
@@ -133,18 +121,20 @@
                           >Research</a
                         >
                         <ul>
-                          <li><a href="about-us.html">Project Review</a></li>
-                          <li><a href="our-team.html">Technology Review</a></li>
-                          <li><a href="faq.html">Technical Decisions</a></li>
-                          <li><a href="gallery.html">References</a></li>
+                          <li><a href="research.html#prorsch">Project Research</a></li>
+                          <li><a href="research.html#techrsch">Technology Research</a></li>
+                          <li><a href="research.html#decision">Technical Decisions</a></li>
                         </ul>
                       </li>
                       <li class="dropdown">
-                        <a href="javascript:void(0)">HCI</a>
+                        <a href="javascript:void(0)" onclick="window.open('ui.html','_self')">HCI</a>
                         <ul>
-                          <li><a href="services.html">Services</a></li>
+                          <li><a href="ui.html#principle">Design Principles</a></li>
                           <li>
-                            <a href="service-details.html">Service Details</a>
+                            <a href="ui.html#sketch">Sketch</a>
+                          </li>
+                          <li>
+                            <a href="ui.html#proto">Prototype</a>
                           </li>
                         </ul>
                       </li>
@@ -155,19 +145,23 @@
                           >System Design</a
                         >
                         <ul>
-                          <li><a href="blog.html">Blog</a></li>
-                          <li><a href="blog-detail.html">Blog Detail</a></li>
+                          <li><a href="system.html#arch">System Architecture</a></li>
+                          <li><a href="system.html#seq">Sequence Diagram</a></li>
+                          <li><a href="system.html#flow">DialogFlow Diagram</a></li>
                         </ul>
                       </li>
                       <li class="dropdown">
                         <a
                           href="javascript:void(0)"
                           onclick="window.open('impl.html','_self')"
-                          >Implementation</a
+                          >Impl.</a
                         >
                         <ul>
-                          <li><a href="blog.html">Blog</a></li>
-                          <li><a href="blog-detail.html">Blog Detail</a></li>
+                          <li><a href="impl.html#bot">Bot Structure Impl.</a></li>
+                          <li><a href="impl.html#qna">QnA Maker Impl.</a></li>
+                          <li><a href="impl.html#sum">Text-Summary Impl.</a></li>
+                          <li><a href="impl.html#recog">Image Recognition Impl.</a></li>
+                          <li><a href="impl.html#qasys">QA System Impl.</a></li>
                         </ul>
                       </li>
                       <li class="dropdown">
@@ -177,18 +171,22 @@
                           >Testing</a
                         >
                         <ul>
-                          <li><a href="blog.html">Blog</a></li>
-                          <li><a href="blog-detail.html">Blog Detail</a></li>
+                          <li><a href="test.html#strate">Testing Strategy</a></li>
+                          <li><a href="test.html#automate">Automate Testing</a></li>
+                          <li><a href="test.html#acceptance">User Acceptance Testing</a></li>
                         </ul>
                       </li>
                       <li class="dropdown">
-                        <a href="javascript:void(0)">evaluation</a>
+                        <a href="javascript:void(0)" onclick="window.open('eval.html','_self')">evaluation</a>
                         <ul>
-                          <li><a href="blog.html">Blog</a></li>
-                          <li><a href="blog-detail.html">Blog Detail</a></li>
+                          <li><a href="eval.html#checkmoscow">MoSCoW Evaluation</a></li>
+                          <li><a href="eval.html#individual">Individual Contribution</a></li>
+                          <li><a href="eval.html#critical">Critical Evaluation</a></li>
+                          <li><a href="eval.html#buglist">Bug List</a></li>
+                          <li><a href="eval.html#future">Future Work</a></li>
                         </ul>
                       </li>
-                      <li><a href="append.html">Appendices</a></li>
+                      <li><a href="append.html">Appendix</a></li>
                     </ul>
                   </div>
                 </nav>
@@ -209,7 +207,7 @@
           <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
           <nav class="menu-box">
             <div class="nav-logo">
-              <a href="index.html"
+              <a href="https://www.avanade.com/en" target='_blank'
                 ><img src="images/avanade.png" alt="" title=""
               /></a>
             </div>
@@ -231,18 +229,18 @@
             <div class="row">
               <div class="col-lg-1">
               </div>
-              <div class="col-lg-5 col-sm-8">
-                <div class="top_left_cont zoomIn wow animated">
+              <div class="col-lg-5 col-md-5 col-sm-5">
+                <div class="top_left_cont zoomIn wow animated page-title">
                   <h2>
                     <strong>AVABOT</strong> helps you work <br /><strong
                       >R</strong
                     >emotely, <strong>S</strong>martly,
                     <strong>P</strong>roductively
                   </h2>
-                  <a href="#123" class="read_more2">explore</a>
+                  <a href="#abstract" class="read_more2">explore</a>
                 </div>
               </div>
-              <div class="col-lg-6 col-sm-4">
+              <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="white_pad zoomIn wow animated">
                   <img src="images/bot3.png" alt="" />
                 </div>
@@ -254,6 +252,7 @@
       <!--Hero_Section-->
       <!-- Start Abstract Section -->
       <section class="abstract-sec">
+      <div class="placeholder" id="abstract"></div>
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-8 col-md-8">
@@ -330,6 +329,7 @@
       <!-- End Fun Facts Area -->
       <!-- Start Feature Area -->
       <section class="services-sec">
+      <div class="placeholder" id="feature"></div>
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-8 col-md-8">
@@ -358,7 +358,7 @@
                     questions like 'how is it?' serving as your consultant and
                     your companion.
                   </p>
-                  <a class="thm-btn" href="#">Read More</a>
+                  <a class="thm-btn" href="impl.html#qna">Read More</a>
                 </div>
               </div>
             </div>
@@ -377,7 +377,7 @@
                     powerful on-cloud QA system is behind the bot and ready to
                     answer all your queries over the document.
                   </p>
-                  <a class="thm-btn" href="#">Read More</a>
+                  <a class="thm-btn" href="impl.html#sum">Read More</a>
                 </div>
               </div>
             </div>
@@ -396,7 +396,7 @@
                     leave the pic to AvaBot, then you can do the
                     copy-and-paste.<br />
                   </p>
-                  <a class="thm-btn" href="#">Read More</a>
+                  <a class="thm-btn" href="impl.html#recog">Read More</a>
                 </div>
               </div>
             </div>
@@ -409,6 +409,7 @@
       <!-- Start Services Area -->
       <!-- Start Testimonials Area -->
       <section class="testimonials-sec">
+      <div class="placeholder2" id="video"></div>
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-8 col-md-8">
@@ -439,6 +440,7 @@
       <!-- End Testimonials Area -->
       <!-- Start Our Team Area -->
       <section class="our-team-sec">
+      <div class="placeholder2" id="team"></div>
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-8 col-md-8">
@@ -452,25 +454,24 @@
             <div class="col-lg-4 col-md-6">
               <!-- Single Our Team Area -->
               <div class="our-team">
-                <img src="images/team-img1.jpg" alt="" />
+                <img src="images/zzh.jpg" alt="" />
                 <h4><a href="#">Zihan Zhu</a></h4>
                 <span class="designation bg-theme">Team Leader</span>
                 <p>
-                  At vero eos et accusamus et iusto odio dignissimos ducimus qui
-                  blanditiis praesentium
+                  A second-year student at UCL<br> Bot developer, text-summary researcher, tester and website designer
                 </p>
                 <ul class="our-team-profile">
                   <li>
-                    <a href="#"><i class="fa fa-github"></i></a>
+                    <a href="https://github.com/zhuzihan728" target='_blank'><i class="fa fa-github"></i></a>
                   </li>
                   <li>
-                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="mailto:zcabhub@ucl.ac.uk"><i class="fa fa-envelope"></i></a>
                   </li>
                   <li>
-                    <a href="#"><i class="fa fa-linkedin"></i></a>
+                    <a href="https://www.linkedin.com/in/zihan-zhu-54a689209/" target='_blank'><i class="fa fa-linkedin"></i></a>
                   </li>
                   <li>
-                    <a href="#"><i class="fa fa-instagram"></i></a>
+                    <a href="https://www.instagram.com/zzh_nevergiveup/" target='_blank'><i class="fa fa-instagram"></i></a>
                   </li>
                 </ul>
               </div>
@@ -478,25 +479,24 @@
             <div class="col-lg-4 col-md-6">
               <!-- Single Our Team Area -->
               <div class="our-team">
-                <img src="images/team-img2.jpg" alt="" />
+                <img src="images/chaozy.jpg" alt="" />
                 <h4><a href="#">Chaozy Zhu</a></h4>
                 <span class="designation bg-theme">Team Member</span>
                 <p>
-                  At vero eos et accusamus et iusto odio dignissimos ducimus qui
-                  blanditiis praesentium
+                  A second-year student at UCL<br> QA-system and API developer, researcher, video editor and client liaison
                 </p>
                 <ul class="our-team-profile">
                   <li>
-                    <a href="#"><i class="fa fa-github"></i></a>
+                    <a href="https://github.com/chaozy" target='_blank'><i class="fa fa-github"></i></a>
                   </li>
                   <li>
-                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="mailto:chaozy.zhu.19@ucl.ac.uk"><i class="fa fa-envelope"></i></a>
                   </li>
                   <li>
-                    <a href="#"><i class="fa fa-linkedin"></i></a>
+                    <a href="https://www.linkedin.com/in/qiuer-zhu-23166319b?originalSubdomain=uk" target='_blank'><i class="fa fa-linkedin"></i></a>
                   </li>
                   <li>
-                    <a href="#"><i class="fa fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=100012687977526" target='_blank'><i class="fa fa-facebook"></i></a>
                   </li>
                 </ul>
               </div>
@@ -504,25 +504,24 @@
             <div class="col-lg-4 col-md-6">
               <!-- Single Our Team Area -->
               <div class="our-team">
-                <img src="images/team-img3.jpg" alt="" />
+                <img src="images/davit.jpg" alt="" />
                 <h4><a href="#">Davit Mirzoyan</a></h4>
                 <span class="designation bg-theme">Team Member</span>
                 <p>
-                  At vero eos et accusamus et iusto odio dignissimos ducimus qui
-                  blanditiis praesentium
+                  A second-year student at UCL<br> Programmer and form-recognizer researcher
                 </p>
                 <ul class="our-team-profile">
                   <li>
-                    <a href="#"><i class="fa fa-github"></i></a>
+                    <a href="https://github.com/DavitMirzoyan" target='_blank'><i class="fa fa-github"></i></a>
                   </li>
                   <li>
-                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="mailto:davit.mirzoyan.19@ucl.ac.uk"><i class="fa fa-envelope"></i></a>
                   </li>
                   <li>
-                    <a href="#"><i class="fa fa-linkedin"></i></a>
+                    <a href="https://www.linkedin.com/in/davit-mirzoyan-855844208/zh-cn?trk=people-guest_people_search-card" target='_blank'><i class="fa fa-linkedin"></i></a>
                   </li>
                   <li>
-                    <a href="#"><i class="fa fa-instagram"></i></a>
+                    <a href="https://www.instagram.com/mirzoyan__davit/" target='_blank'><i class="fa fa-instagram"></i></a>
                   </li>
                 </ul>
               </div>
@@ -531,7 +530,7 @@
         </div>
       </section>
       <!-- End Our Team Area -->
-      <section class="quotation-sec">
+      <section class="quotation-sec" id="g-chart">
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-8 col-md-8">
@@ -577,17 +576,17 @@
                   </p>
                   <ul class="social_icons social_white">
                     <li>
-                      <a href="#"
+                      <a href="https://github.com/UCLComputerScience/COMP0016_2020_21_Team8" target="_blank"
                         ><i class="fa fa-github" aria-hidden="true"></i
                       ></a>
                     </li>
                     <li>
-                      <a href="#"
+                      <a href="https://www.youtube.com/embed/-TL-8Baj2eU" target='_blank'
                         ><i class="fa fa-youtube" aria-hidden="true"></i
                       ></a>
                     </li>
                     <li>
-                      <a href="#"
+                      <a href="https://chaozyhaha.wordpress.com/blog/" target="_blank"
                         ><i class="fa fa-wordpress" aria-hidden="true"></i
                       ></a>
                     </li>
@@ -598,11 +597,11 @@
                 <div class="widget">
                   <h6 class="widget_title">Site Menu</h6>
                   <ul class="widget_links">
-                    <li><a href="about-us.html">Home</a></li>
-                    <li><a href="services.html">Requirements</a></li>
-                    <li><a href="blog.html">Research</a></li>
-                    <li><a href="gallery.html">Algorithms</a></li>
-                    <li><a href="contact.html">Design</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="require.html">Requirements</a></li>
+                    <li><a href="research.html">Research</a></li>
+                    <li><a href="ui.html">HCI</a></li>
+                    <li><a href="system.html">System Design</a></li>
                   </ul>
                 </div>
               </div>
@@ -610,18 +609,18 @@
                 <div class="widget">
                   <h6 class="widget_title"><br></h6>
                   <ul class="widget_links">
-                    <li><a href="our-team.html">implementation</a></li>
-                    <li><a href="faq.html">Testing</a></li>
-                    <li><a href="error.html">evaluation</a></li>
-                    <li><a href="typography.html">Appendices</a></li>
+                    <li><a href="impl.html">implementation</a></li>
+                    <li><a href="test.html">Testing</a></li>
+                    <li><a href="eval.html">evaluation</a></li>
+                    <li><a href="append.html">Appendix</a></li>
                   </ul>
                 </div>
               </div>
               <div class="col-lg-4 col-md-12 col-sm-12">
                 <div class="widget">
                   <h6 class="widget_title">Project Supporters</h6>
-                  <img src="images/avanade.png" width="50%"/><br>
-                  <img src="images/ucl.png" width="30%"/>
+                  <a href="https://www.avanade.com/en" target='_blank'><img src="images/avanade.png" width="50%"/></a><br>
+                  <a href="https://www.ucl.ac.uk/" target='_blank'><img src="images/ucl.png" width="30%"/></a>
                   <p>
                     A lot of thanks to our company partner Avanade and Mr. Fergus Kidd especially.
                   </p>
@@ -637,9 +636,8 @@
                 <div class="row">
                   <div class="col-md-6">
                     <p class="mb-md-0 text-center text-md-left">
-                      © 2020 All Rights
-                      <a href="http://www.bootstrapmb.com/">Reserved</a> by
-                      UCL TEAM8.
+                      © 2021 All Rights
+                      Reserved
                     </p>
                   </div>
                 </div>
@@ -680,5 +678,21 @@
     <script src="js/venobox.min.js"></script>
     <!-- Custom JS -->
     <script src="js/custom.js"></script>
+    <script src="js/scrolltosmooth.min.js"></script>
+    <script>
+        var smoothScroll = new scrollToSmooth('a', {
+            easing: 'easeInOutSine',
+            //easing: 'linear',
+            duration: 600,
+            durationRelative: true,
+            updateURL: true,
+            onScrollStart: (data) => { console.log(data); },
+        onScrollUpdate: (data) => { console.log(data); },
+        onScrollEnd: (data) => { console.log(data) }
+        })
+        smoothScroll.init();
+        
+    </script>
+
   </body>
 </html>

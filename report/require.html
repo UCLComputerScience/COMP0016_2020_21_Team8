@@ -29,18 +29,18 @@
     <div class="page-wrapper">
       <!-- Preloader -->
       <div id="dvLoading"></div>
-      <header class="main-header">
+            <header class="main-header">
         <!--Header Top-->
-        <section id="topbar" class="d-none d-lg-block">
+        <section id="topbar" class="top-bar-test">
           <div class="container clearfix">
             <div class="contact-info float-left">
               <i class="fa fa-home"></i>
               <a href="index.html">COMP0016-Team8: Avanade2 COVID19 changes</a>
             </div>
             <div class="social-links float-right">
-              <a href="#" class="twitter"><i class="fa fa-github"></i></a>
-              <a href="#" class="facebook"><i class="fa fa-youtube"></i></a>
-              <a href="#" class="instagram"><i class="fa fa-wordpress"></i></a>
+              <a href="https://github.com/UCLComputerScience/COMP0016_2020_21_Team8" target='_blank'><i class="fa fa-github"></i></a>
+              <a href="https://www.youtube.com/embed/-TL-8Baj2eU" target='_blank'><i class="fa fa-youtube"></i></a>
+              <a href="https://chaozyhaha.wordpress.com/blog/" target='_blank'><i class="fa fa-wordpress"></i></a>
             </div>
           </div>
         </section>
@@ -52,12 +52,11 @@
               <!--Info-->
               <div class="logo-outer">
                 <div class="logo logo-1">
-                  <a href="index.html">
+                  <a href="https://www.avanade.com/en" target='_blank'>
                     <img
                       src="images/avanade.png"
-                      height="70"
-                      width="260"
-                      alt=""
+                      height="60"
+                      width="220"
                     />
                   </a>
                 </div>
@@ -69,20 +68,6 @@
                   <span class="icon flaticon-menu"></span>
                 </div>
                 <nav class="main-menu navbar-expand-md navbar-light">
-                  <div class="navbar-header">
-                    <!-- Toggle Button -->
-                    <button
-                      class="navbar-toggler"
-                      type="button"
-                      data-toggle="collapse"
-                      data-target="#navbarSupportedContent"
-                      aria-controls="navbarSupportedContent"
-                      aria-expanded="false"
-                      aria-label="Toggle navigation"
-                    >
-                      <span class="icon flaticon-menu"></span>
-                    </button>
-                  </div>
                   <div
                     class="collapse navbar-collapse clearfix"
                     id="navbarSupportedContent"
@@ -95,32 +80,34 @@
                           >home</a
                         >
                         <ul>
-                          <li><a href="accourdions-tabs.html">Abstract</a></li>
-                          <li><a href="typography.html">Features</a></li>
-                          <li><a href="forms.html">Video</a></li>
-                          <li><a href="buttons.html">Team Members</a></li>
-                          <li><a href="grid.html">Project Timeline</a></li>
+                          <li><a href="index.html#abstract">Abstract</a></li>
+                          <li><a href="index.html#feature">Features</a></li>
+                          <li><a href="index.html#video">Video</a></li>
+                          <li><a href="index.html#team">Team Members</a></li>
+                          <li><a href="index.html#g-chart">Project Timeline</a></li>
                         </ul>
                       </li>
                       <li class="dropdown">
                         <a
                           href="javascript:void(0)"
-                          onclick="window.open('forms.html','_self')"
+                          onclick="window.open('require.html','_self')"
                           >Requirements</a
                         >
                         <ul>
                           <li>
-                            <a href="accourdions-tabs.html"
+                            <a href="require.html#background"
                               >Project Background</a
                             >
                           </li>
-                          <li><a href="typography.html">Project Goal</a></li>
+                          <li><a href="require.html#client">Client Requirements</a></li>
                           <li>
-                            <a href="forms.html">Requirement Gathering</a>
+                          <li><a href="require.html#goal">Project Goal</a></li>
+                          <li>
+                            <a href="require.html#interview">User Interviews</a>
                           </li>
-                          <li><a href="buttons.html">Personas</a></li>
-                          <li><a href="grid.html">Use Cases</a></li>
-                          <li><a href="icons.html">MOSCOW List</a></li>
+                          <li><a href="require.html#psna">Personas</a></li>
+                          <li><a href="require.html#usecase">Use Cases</a></li>
+                          <li><a href="require.html#moscow">MoSCoW List</a></li>
                         </ul>
                       </li>
                       <li class="dropdown">
@@ -130,18 +117,20 @@
                           >Research</a
                         >
                         <ul>
-                          <li><a href="about-us.html">Project Review</a></li>
-                          <li><a href="our-team.html">Technology Review</a></li>
-                          <li><a href="faq.html">Technical Decisions</a></li>
-                          <li><a href="gallery.html">References</a></li>
+                          <li><a href="research.html#prorsch">Project Research</a></li>
+                          <li><a href="research.html#techrsch">Technology Research</a></li>
+                          <li><a href="research.html#decision">Technical Decisions</a></li>
                         </ul>
                       </li>
                       <li class="dropdown">
-                        <a href="javascript:void(0)">HCI</a>
+                        <a href="javascript:void(0)" onclick="window.open('ui.html','_self')">HCI</a>
                         <ul>
-                          <li><a href="services.html">Services</a></li>
+                          <li><a href="ui.html#principle">Design Principles</a></li>
                           <li>
-                            <a href="service-details.html">Service Details</a>
+                            <a href="ui.html#sketch">Sketch</a>
+                          </li>
+                          <li>
+                            <a href="ui.html#proto">Prototype</a>
                           </li>
                         </ul>
                       </li>
@@ -152,19 +141,23 @@
                           >System Design</a
                         >
                         <ul>
-                          <li><a href="blog.html">Blog</a></li>
-                          <li><a href="blog-detail.html">Blog Detail</a></li>
+                          <li><a href="system.html#arch">System Architecture</a></li>
+                          <li><a href="system.html#seq">Sequence Diagram</a></li>
+                          <li><a href="system.html#flow">DialogFlow Diagram</a></li>
                         </ul>
                       </li>
                       <li class="dropdown">
                         <a
                           href="javascript:void(0)"
                           onclick="window.open('impl.html','_self')"
-                          >Implementation</a
+                          >Impl.</a
                         >
                         <ul>
-                          <li><a href="blog.html">Blog</a></li>
-                          <li><a href="blog-detail.html">Blog Detail</a></li>
+                          <li><a href="impl.html#bot">Bot Structure Impl.</a></li>
+                          <li><a href="impl.html#qna">QnA Maker Impl.</a></li>
+                          <li><a href="impl.html#sum">Text-Summary Impl.</a></li>
+                          <li><a href="impl.html#recog">Image Recognition Impl.</a></li>
+                          <li><a href="impl.html#qasys">QA System Impl.</a></li>
                         </ul>
                       </li>
                       <li class="dropdown">
@@ -174,18 +167,22 @@
                           >Testing</a
                         >
                         <ul>
-                          <li><a href="blog.html">Blog</a></li>
-                          <li><a href="blog-detail.html">Blog Detail</a></li>
+                          <li><a href="test.html#strate">Testing Strategy</a></li>
+                          <li><a href="test.html#automate">Automate Testing</a></li>
+                          <li><a href="test.html#acceptance">User Acceptance Testing</a></li>
                         </ul>
                       </li>
                       <li class="dropdown">
-                        <a href="javascript:void(0)">evaluation</a>
+                        <a href="javascript:void(0)" onclick="window.open('eval.html','_self')">evaluation</a>
                         <ul>
-                          <li><a href="blog.html">Blog</a></li>
-                          <li><a href="blog-detail.html">Blog Detail</a></li>
+                          <li><a href="eval.html#checkmoscow">MoSCoW Evaluation</a></li>
+                          <li><a href="eval.html#individual">Individual Contribution</a></li>
+                          <li><a href="eval.html#critical">Critical Evaluation</a></li>
+                          <li><a href="eval.html#buglist">Bug List</a></li>
+                          <li><a href="eval.html#future">Future Work</a></li>
                         </ul>
                       </li>
-                      <li><a href="append.html">Appendices</a></li>
+                      <li><a href="append.html">Appendix</a></li>
                     </ul>
                   </div>
                 </nav>
@@ -206,7 +203,7 @@
           <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
           <nav class="menu-box">
             <div class="nav-logo">
-              <a href="index.html"
+              <a href="https://www.avanade.com/en" target='_blank'
                 ><img src="images/avanade.png" alt="" title=""
               /></a>
             </div>
@@ -217,6 +214,7 @@
         </div>
         <!-- End Mobile Menu -->
         <!-- Quote Section -->
+
       </header>
       <!-- End Main Header -->
       <!-- Page Title -->
@@ -238,6 +236,7 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-xl-10">
+            <div class="placeholder" id="background"></div>
               <h4 class="mb-4">Project Background</h4>
               <!-- Bootstrap tabs-->
               <div class="tabs-custom tabs-horizontal tabs-line" id="tabs-1">
@@ -281,7 +280,7 @@
                           </li>
                           <li>Low productivity</li>
                           <li>No right telecommuting tools and methodology</li>
-                        </ul>
+                        </ul><br>
                       </div>
                       <div class="col-sm-8 col-md-7 col-lg-6 col-xl-5 left">
                         <h4 class="mb-3">
@@ -305,6 +304,7 @@
           </div>
           <div class="row justify-content-center">
             <div class="col-xl-10">
+            <div class="placeholder" id="client"></div>
               <h4 class="mb-4">Client Requirements</h4>
               <!-- Bootstrap tabs-->
               <div class="tabs-custom tabs-horizontal tabs-line" id="tabs-1">
@@ -347,6 +347,7 @@
           </div>
           <div class="row justify-content-center">
             <div class="col-xl-10">
+            <div class="placeholder" id="goal"></div>
               <h4 class="mb-4">Project Goal</h4>
               <!-- Bootstrap tabs-->
               <div class="tabs-custom tabs-horizontal tabs-line" id="tabs-1">
@@ -377,6 +378,7 @@
 
           <div class="row justify-content-center">
             <div class="col-xl-10 tab-change">
+            <div class="placeholder" id="interview"></div>
               <h4 class="mb-4">User Interviews</h4>
               <!-- Bootstrap tabs-->
               <div class="tabs-custom tabs-horizontal tabs-line" id="tabs-1">
@@ -391,20 +393,20 @@
                   <!-- Nav tabs-->
                   <ul class="nav nav-tabs">
                     <li class="nav-item" role="presentation">
-                      <a
+                      <c
                         class="nav-link active"
                         href="#tabs-1-1"
                         data-toggle="tab"
-                        ><span>Interview 1</span></a
+                        ><span>Interview 1</span></c
                       >
                     </li>
                     <li class="nav-item" role="presentation">
-                      <a class="nav-link" href="#tabs-1-2" data-toggle="tab"
-                        ><span>Interview 2</span></a
+                      <c class="nav-link" href="#tabs-1-2" data-toggle="tab"
+                        ><span>Interview 2</span></c
                       >
                     </li>
                   </ul>
-                  <div class="tab-pane fade show active" id="tabs-1-1">
+                  <div class="tab-pane fade show active interv" id="tabs-1-1">
                     <p>
                       <br />
                       Q: people have been working remotely due to the spreading
@@ -428,11 +430,11 @@
                       application?
                     </p>
                     <p class="text-theme">
-                      A: web-browser chatbot is a good option. <br /><br />
+                      A: Web-browser chatbot is a good option. We are also envisaging an app on Teams <br /><br />
                     </p>
                     <p>Q: What feature would you like to have in it?</p>
                     <p class="text-theme">
-                      A: The bots AI functionality should focus on helping
+                      A: The bot's AI functionality should focus on helping
                       employees with documents in particular, giving them
                       information about a document, allowing natural language
                       search questions, or being able to search through multiple
@@ -443,7 +445,7 @@
                       they can sense the company culture and atmosphere.
                     </p>
                   </div>
-                  <div class="tab-pane fade" id="tabs-1-2">
+                  <div class="tab-pane fade interv" id="tabs-1-2">
                     <p>
                       <br />
                       Q: How do you like your new company? <br />
@@ -491,6 +493,7 @@
           </div>
           <div class="row justify-content-center">
             <div class="col-xl-10">
+            <div class="placeholder" id="psna"></div>
               <h4 class="mb-4">Personas</h4>
               <!-- Bootstrap tabs-->
               <div class="tabs-custom tabs-horizontal tabs-line" id="tabs-1">
@@ -504,16 +507,16 @@
                   <!-- Nav tabs-->
                   <ul class="nav nav-tabs">
                     <li class="nav-item" role="presentation">
-                      <a
+                      <c
                         class="nav-link active"
                         href="#tabs-2-1"
                         data-toggle="tab"
-                        ><span>Persona 1</span></a
+                        ><span>Persona 1</span></c
                       >
                     </li>
                     <li class="nav-item" role="presentation">
-                      <a class="nav-link" href="#tabs-2-2" data-toggle="tab"
-                        ><span>Persona 2</span></a
+                      <c class="nav-link" href="#tabs-2-2" data-toggle="tab"
+                        ><span>Persona 2</span></c
                       >
                     </li>
                   </ul>
@@ -539,6 +542,7 @@
 
           <div class="row justify-content-center">
             <div class="col-xl-10">
+            <div class="placeholder" id="usecase"></div>
               <h4 class="mb-4">Use Cases</h4>
               <!-- Bootstrap tabs-->
               <div class="tabs-custom tabs-horizontal tabs-line" id="tabs-1">
@@ -562,7 +566,8 @@
           </div>
           <div class="row justify-content-center">
             <div class="col-xl-10">
-              <h4 class="mb-4">MOSCOW List</h4>
+            <div class="placeholder" id="moscow"></div>
+              <h4 class="mb-4">MoSCoW List</h4>
               <!-- Bootstrap tabs-->
               <div class="tabs-custom tabs-horizontal tabs-line" id="tabs-1">
                 <!-- Nav tabs-->
@@ -571,20 +576,20 @@
                   <p>
                     Having finished the research of the requirements of our
                     project while considering as many cases including edge ones,
-                    we held a meeting with our client with the final MOSCOW
+                    we held a meeting with our client with the final MoSCoW
                     list: <br /><br />
                   </p>
-                  <div class="panel-group" id="accordion">
+                  <div class="panel-group col-12" id="accordion">
                     <div class="panel panel-theme">
                       <div class="panel-heading">
                         <h7 class="panel-title">
-                          <a
+                          <c
                             class="collapsed"
                             data-toggle="collapse"
                             href="#moscow-must-have"
                           >
                             <strong>Must Have</strong>
-                          </a>
+                          </c>
                         </h7>
                       </div>
                       <div
@@ -612,13 +617,13 @@
                     <div class="panel panel-theme">
                       <div class="panel-heading">
                         <h7 class="panel-title">
-                          <a
+                          <c
                             class="collapsed"
                             data-toggle="collapse"
                             href="#moscow-should-have"
                           >
                             <strong>Should Have</strong>
-                          </a>
+                          </c>
                         </h7>
                       </div>
                       <div
@@ -660,13 +665,13 @@
                     <div class="panel panel-theme">
                       <div class="panel-heading">
                         <h7 class="panel-title">
-                          <a
+                          <c
                             class="collapsed"
                             data-toggle="collapse"
                             href="#moscow-could-have"
                           >
                             <strong>Could Have</strong>
-                          </a>
+                          </c>
                         </h7>
                       </div>
                       <div
@@ -689,13 +694,13 @@
                     <div class="panel panel-theme">
                       <div class="panel-heading">
                         <h7 class="panel-title">
-                          <a
+                          <c
                             class="collapsed"
                             data-toggle="collapse"
                             href="#moscow-wont-have"
                           >
                             <strong>Won't Have</strong>
-                          </a>
+                          </c>
                         </h7>
                       </div>
                       <div
@@ -740,26 +745,24 @@
             </div>
             <div class="row">
               <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="widget">
+                <div class="widget">  
                   <h6 class="widget_title">Site Info</h6>
                   <p>
-                    This is the website for UCL Year2 2020-2021 COMP0016 Team8:
-                    Avanade2 COVID19 changes, which introduces the team project
-                    and contains all the portfolios.
+                    This is the website for UCL Year2 2020-2021 COMP0016 Team8: Avanade2 COVID19 changes, which introduces the team project and contains all the portfolios. 
                   </p>
                   <ul class="social_icons social_white">
                     <li>
-                      <a href="#"
+                      <a href="https://github.com/UCLComputerScience/COMP0016_2020_21_Team8" target="_blank"
                         ><i class="fa fa-github" aria-hidden="true"></i
                       ></a>
                     </li>
                     <li>
-                      <a href="#"
+                      <a href="https://www.youtube.com/embed/-TL-8Baj2eU" target='_blank'
                         ><i class="fa fa-youtube" aria-hidden="true"></i
                       ></a>
                     </li>
                     <li>
-                      <a href="#"
+                      <a href="https://chaozyhaha.wordpress.com/blog/" target="_blank"
                         ><i class="fa fa-wordpress" aria-hidden="true"></i
                       ></a>
                     </li>
@@ -770,33 +773,32 @@
                 <div class="widget">
                   <h6 class="widget_title">Site Menu</h6>
                   <ul class="widget_links">
-                    <li><a href="about-us.html">Home</a></li>
-                    <li><a href="services.html">Requirements</a></li>
-                    <li><a href="blog.html">Research</a></li>
-                    <li><a href="gallery.html">Algorithms</a></li>
-                    <li><a href="contact.html">Design</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="require.html">Requirements</a></li>
+                    <li><a href="research.html">Research</a></li>
+                    <li><a href="ui.html">HCI</a></li>
+                    <li><a href="system.html">System Design</a></li>
                   </ul>
                 </div>
               </div>
               <div class="col-lg-2 col-md-3 col-6">
                 <div class="widget">
-                  <h6 class="widget_title"><br /></h6>
+                  <h6 class="widget_title"><br></h6>
                   <ul class="widget_links">
-                    <li><a href="our-team.html">implementation</a></li>
-                    <li><a href="faq.html">Testing</a></li>
-                    <li><a href="error.html">evaluation</a></li>
-                    <li><a href="typography.html">Appendices</a></li>
+                    <li><a href="impl.html">implementation</a></li>
+                    <li><a href="test.html">Testing</a></li>
+                    <li><a href="eval.html">evaluation</a></li>
+                    <li><a href="append.html">Appendix</a></li>
                   </ul>
                 </div>
               </div>
               <div class="col-lg-4 col-md-12 col-sm-12">
                 <div class="widget">
                   <h6 class="widget_title">Project Supporters</h6>
-                  <img src="images/avanade.png" width="50%" /><br />
-                  <img src="images/ucl.png" width="30%" />
+                  <a href="https://www.avanade.com/en" target='_blank'><img src="images/avanade.png" width="50%"/></a><br>
+                  <a href="https://www.ucl.ac.uk/" target='_blank'><img src="images/ucl.png" width="30%"/></a>
                   <p>
-                    A lot of thanks to our company partner Avanade and Mr.
-                    Fergus Kidd especially.
+                    A lot of thanks to our company partner Avanade and Mr. Fergus Kidd especially.
                   </p>
                 </div>
               </div>
@@ -810,9 +812,8 @@
                 <div class="row">
                   <div class="col-md-6">
                     <p class="mb-md-0 text-center text-md-left">
-                      © 2020 All Rights
-                      <a href="http://www.bootstrapmb.com/">Reserved</a> by UCL
-                      TEAM8.
+                      © 2021 All Rights
+                      Reserved
                     </p>
                   </div>
                 </div>
@@ -853,5 +854,20 @@
     <script src="js/venobox.min.js"></script>
     <!-- Custom JS -->
     <script src="js/custom.js"></script>
+     <script src="js/scrolltosmooth.min.js"></script>
+    <script>
+        var smoothScroll = new scrollToSmooth('a', {
+            easing: 'easeInOutSine',
+            //easing: 'linear',
+            duration: 600,
+            durationRelative: true,
+            updateURL: true,
+            onScrollStart: (data) => { console.log(data); },
+        onScrollUpdate: (data) => { console.log(data); },
+        onScrollEnd: (data) => { console.log(data) }
+        })
+        smoothScroll.init();
+        
+    </script>
   </body>
 </html>

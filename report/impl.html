@@ -22,6 +22,12 @@
     <script>
       hljs.highlightAll();
     </script>
+    <style type='text/css'>
+      .hljs {
+        padding: 0.5em;
+        padding-left: 10%;
+      }
+    </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -34,18 +40,18 @@
     <div class="page-wrapper">
       <!-- Preloader -->
       <div id="dvLoading"></div>
-      <header class="main-header">
+            <header class="main-header">
         <!--Header Top-->
-        <section id="topbar" class="d-none d-lg-block">
+        <section id="topbar" class="top-bar-test">
           <div class="container clearfix">
             <div class="contact-info float-left">
               <i class="fa fa-home"></i>
               <a href="index.html">COMP0016-Team8: Avanade2 COVID19 changes</a>
             </div>
             <div class="social-links float-right">
-              <a href="#" class="twitter"><i class="fa fa-github"></i></a>
-              <a href="#" class="facebook"><i class="fa fa-youtube"></i></a>
-              <a href="#" class="instagram"><i class="fa fa-wordpress"></i></a>
+              <a href="https://github.com/UCLComputerScience/COMP0016_2020_21_Team8" target='_blank'><i class="fa fa-github"></i></a>
+              <a href="https://www.youtube.com/embed/-TL-8Baj2eU" target='_blank'><i class="fa fa-youtube"></i></a>
+              <a href="https://chaozyhaha.wordpress.com/blog/" target='_blank'><i class="fa fa-wordpress"></i></a>
             </div>
           </div>
         </section>
@@ -57,12 +63,11 @@
               <!--Info-->
               <div class="logo-outer">
                 <div class="logo logo-1">
-                  <a href="index.html">
+                  <a href="https://www.avanade.com/en" target='_blank'>
                     <img
                       src="images/avanade.png"
-                      height="70"
-                      width="260"
-                      alt=""
+                      height="60"
+                      width="220"
                     />
                   </a>
                 </div>
@@ -74,20 +79,6 @@
                   <span class="icon flaticon-menu"></span>
                 </div>
                 <nav class="main-menu navbar-expand-md navbar-light">
-                  <div class="navbar-header">
-                    <!-- Toggle Button -->
-                    <button
-                      class="navbar-toggler"
-                      type="button"
-                      data-toggle="collapse"
-                      data-target="#navbarSupportedContent"
-                      aria-controls="navbarSupportedContent"
-                      aria-expanded="false"
-                      aria-label="Toggle navigation"
-                    >
-                      <span class="icon flaticon-menu"></span>
-                    </button>
-                  </div>
                   <div
                     class="collapse navbar-collapse clearfix"
                     id="navbarSupportedContent"
@@ -100,11 +91,11 @@
                           >home</a
                         >
                         <ul>
-                          <li><a href="accourdions-tabs.html">Abstract</a></li>
-                          <li><a href="typography.html">Features</a></li>
-                          <li><a href="forms.html">Video</a></li>
-                          <li><a href="buttons.html">Team Members</a></li>
-                          <li><a href="grid.html">Project Timeline</a></li>
+                          <li><a href="index.html#abstract">Abstract</a></li>
+                          <li><a href="index.html#feature">Features</a></li>
+                          <li><a href="index.html#video">Video</a></li>
+                          <li><a href="index.html#team">Team Members</a></li>
+                          <li><a href="index.html#g-chart">Project Timeline</a></li>
                         </ul>
                       </li>
                       <li class="dropdown">
@@ -115,17 +106,19 @@
                         >
                         <ul>
                           <li>
-                            <a href="accourdions-tabs.html"
+                            <a href="require.html#background"
                               >Project Background</a
                             >
                           </li>
-                          <li><a href="typography.html">Project Goal</a></li>
+                          <li><a href="require.html#client">Client Requirements</a></li>
                           <li>
-                            <a href="forms.html">Requirement Gathering</a>
+                          <li><a href="require.html#goal">Project Goal</a></li>
+                          <li>
+                            <a href="require.html#interview">User Interviews</a>
                           </li>
-                          <li><a href="buttons.html">Personas</a></li>
-                          <li><a href="grid.html">Use Cases</a></li>
-                          <li><a href="icons.html">MOSCOW List</a></li>
+                          <li><a href="require.html#psna">Personas</a></li>
+                          <li><a href="require.html#usecase">Use Cases</a></li>
+                          <li><a href="require.html#moscow">MoSCoW List</a></li>
                         </ul>
                       </li>
                       <li class="dropdown">
@@ -135,18 +128,20 @@
                           >Research</a
                         >
                         <ul>
-                          <li><a href="about-us.html">Project Review</a></li>
-                          <li><a href="our-team.html">Technology Review</a></li>
-                          <li><a href="faq.html">Technical Decisions</a></li>
-                          <li><a href="gallery.html">References</a></li>
+                          <li><a href="research.html#prorsch">Project Research</a></li>
+                          <li><a href="research.html#techrsch">Technology Research</a></li>
+                          <li><a href="research.html#decision">Technical Decisions</a></li>
                         </ul>
                       </li>
                       <li class="dropdown">
-                        <a href="javascript:void(0)">HCI</a>
+                        <a href="javascript:void(0)" onclick="window.open('ui.html','_self')">HCI</a>
                         <ul>
-                          <li><a href="services.html">Services</a></li>
+                          <li><a href="ui.html#principle">Design Principles</a></li>
                           <li>
-                            <a href="service-details.html">Service Details</a>
+                            <a href="ui.html#sketch">Sketch</a>
+                          </li>
+                          <li>
+                            <a href="ui.html#proto">Prototype</a>
                           </li>
                         </ul>
                       </li>
@@ -157,19 +152,23 @@
                           >System Design</a
                         >
                         <ul>
-                          <li><a href="blog.html">Blog</a></li>
-                          <li><a href="blog-detail.html">Blog Detail</a></li>
+                          <li><a href="system.html#arch">System Architecture</a></li>
+                          <li><a href="system.html#seq">Sequence Diagram</a></li>
+                          <li><a href="system.html#flow">DialogFlow Diagram</a></li>
                         </ul>
                       </li>
                       <li class="dropdown">
                         <a
                           href="javascript:void(0)"
                           onclick="window.open('impl.html','_self')"
-                          >Implementation</a
+                          >Impl.</a
                         >
                         <ul>
-                          <li><a href="blog.html">Blog</a></li>
-                          <li><a href="blog-detail.html">Blog Detail</a></li>
+                          <li><a href="impl.html#bot">Bot Structure Impl.</a></li>
+                          <li><a href="impl.html#qna">QnA Maker Impl.</a></li>
+                          <li><a href="impl.html#sum">Text-Summary Impl.</a></li>
+                          <li><a href="impl.html#recog">Image Recognition Impl.</a></li>
+                          <li><a href="impl.html#qasys">QA System Impl.</a></li>
                         </ul>
                       </li>
                       <li class="dropdown">
@@ -179,18 +178,22 @@
                           >Testing</a
                         >
                         <ul>
-                          <li><a href="blog.html">Blog</a></li>
-                          <li><a href="blog-detail.html">Blog Detail</a></li>
+                          <li><a href="test.html#strate">Testing Strategy</a></li>
+                          <li><a href="test.html#automate">Automate Testing</a></li>
+                          <li><a href="test.html#acceptance">User Acceptance Testing</a></li>
                         </ul>
                       </li>
                       <li class="dropdown">
-                        <a href="javascript:void(0)">evaluation</a>
+                        <a href="javascript:void(0)" onclick="window.open('eval.html','_self')">evaluation</a>
                         <ul>
-                          <li><a href="blog.html">Blog</a></li>
-                          <li><a href="blog-detail.html">Blog Detail</a></li>
+                          <li><a href="eval.html#checkmoscow">MoSCoW Evaluation</a></li>
+                          <li><a href="eval.html#individual">Individual Contribution</a></li>
+                          <li><a href="eval.html#critical">Critical Evaluation</a></li>
+                          <li><a href="eval.html#buglist">Bug List</a></li>
+                          <li><a href="eval.html#future">Future Work</a></li>
                         </ul>
                       </li>
-                      <li><a href="append.html">Appendices</a></li>
+                      <li><a href="append.html">Appendix</a></li>
                     </ul>
                   </div>
                 </nav>
@@ -211,7 +214,7 @@
           <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
           <nav class="menu-box">
             <div class="nav-logo">
-              <a href="index.html"
+              <a href="https://www.avanade.com/en" target='_blank'
                 ><img src="images/avanade.png" alt="" title=""
               /></a>
             </div>
@@ -222,6 +225,7 @@
         </div>
         <!-- End Mobile Menu -->
         <!-- Quote Section -->
+
       </header>
       <!-- End Main Header -->
       <!-- Page Title -->
@@ -243,6 +247,7 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-xl-10">
+            <div class="placeholder" id="bot"></div>
               <h4 class="mb-4">Bot Structure Implementation</h4>
               <!-- Bootstrap tabs-->
               <div class="tabs-custom tabs-horizontal tabs-line" id="tabs-1">
@@ -251,28 +256,28 @@
                 <div class="tab-content">
                   <h5>Tools & Dependencies<br /><br /></h5>
                   <div class="row row-no-gutter">
-                    <div class="col-3">
+                    <div class="col-lg-3 col-sm-12">
                       <br />
                       <img src="images/bf.png" width="200" />
                       <p>
                         MS Bot Framework SDK is used for building up AvaBot.
                       </p>
                     </div>
-                    <div class="col-3">
+                    <div class="col-lg-3 col-sm-12">
                       <img src="images/node.png" width="200" />
                       <p>
                         <br />The language for AvaBot structure and logic is
                         node.js
                       </p>
                     </div>
-                    <div class="col-3">
+                    <div class="col-lg-3 col-sm-12">
                       <img src="images/rest.png" width="200" />
                       <p>
                         Restify is a Node.js web service framework for creating
                         web service for AvaBot.
                       </p>
                     </div>
-                    <div class="col-3">
+                    <div class="col-lg-3 col-sm-12">
                       <br />
                       <img src="images/axios.png" width="200" />
                       <p>
@@ -294,18 +299,18 @@
                   <div>
                     <pre>
                       <code class="lang-javascript">
-                        // Create HTTP server.
-                        const server = restify.createServer();
-                        server.listen(process.env.port || process.env.PORT || 3978, function() {
-                            console.log(`\n${ server.name } listening to ${ server.url }.`);
-                        });
-                        // Listen for incoming requests.
-                        server.post('/api/messages', (req, res) => {
-                            adapter.processActivity(req, res, async (context) => {
-                                // Route the message to the bot's main handler.
-                                await bot.run(context);
-                            });
-                        });
+// Create HTTP server.
+const server = restify.createServer();
+server.listen(process.env.port || process.env.PORT || 3978, function() {
+    console.log(`\n${ server.name } listening to ${ server.url }.`);
+});
+// Listen for incoming requests.
+server.post('/api/messages', (req, res) => {
+    adapter.processActivity(req, res, async (context) => {
+        // Route the message to the bot's main handler.
+        await bot.run(context);
+    });
+});
                       </code>
                     </pre>
                   </div>
@@ -323,27 +328,27 @@
                   <div>
                     <pre>
                       <code class="lang-javascript">
-                        class AvaBot extends ActivityHandler {
-                          constructor(conversationState, userState, dialog) {
-                            super();
-                            ...
-                            this.onMessage(async (context, next) => {
-                              console.log('Running dialog with Message Activity.');
-                                // Run the Dialog with the new message Activity.
-                                await this.dialog.run(context, this.dialogState);
-                                await next();
-                            });
-                            this.onMembersAdded(async (context, next) => {
-                              const membersAdded = context.activity.membersAdded;
-                              for (let cnt = 0; cnt < membersAdded.length; cnt++) {
-                                  if (membersAdded[cnt].id == context.activity.recipient.id) {
-                                      await this.sendSuggestedActions(context);
-                                  }
-                              }
-                              await next();
-                            });
-                          }
-                          ...
+class AvaBot extends ActivityHandler {
+  constructor(conversationState, userState, dialog) {
+    super();
+    ...
+    this.onMessage(async (context, next) => {
+      console.log('Running dialog with Message Activity.');
+        // Run the Dialog with the new message Activity.
+        await this.dialog.run(context, this.dialogState);
+        await next();
+    });
+    this.onMembersAdded(async (context, next) => {
+      const membersAdded = context.activity.membersAdded;
+      for (let cnt = 0; cnt < membersAdded.length; cnt++) {
+          if (membersAdded[cnt].id == context.activity.recipient.id) {
+              await this.sendSuggestedActions(context);
+          }
+      }
+      await next();
+    });
+  }
+  ...
                       </code>
                     </pre>
                   </div>
@@ -361,35 +366,36 @@
                     from one step to the next:
                   </p>
                   <div class="row row-no-gutter">
-                    <div class="col-6">
+                    <div class="col-lg-6 col-sm-12">
                       <div>
                         <pre>
                           <code class="lang-javascript">
-    async startStep(step) {
-  /* WaterfallStep always finishes with the end of the Waterfall or with another dialog; */
-  /* Running a prompt here means the next WaterfallStep will be run when the user's response is received.*/
-      const msg = step.options.restartMsg ? 
-                  step.options.restartMsg : 
-                  'What can I do for you?';
-      return await step.prompt(CHOICE_PROMPT, {
-        prompt: msg,
-        choices: ChoiceFactory.toChoices([
-          'ask a question', 
-          'process a document', 
-          'recognize an image'
-        ])
-      });
-    }
-    async chooseStep(step) {
-      const choice = step.result.value;
-      ...	
-    }
+async startStep(step) {
+/* WaterfallStep always finishes with the end of the Waterfall or with another dialog; */
+/* Running a prompt here means the next WaterfallStep will be run when the user's response is received.*/
+  const msg = step.options.restartMsg ? 
+              step.options.restartMsg : 
+              'What can I do for you?';
+  return await step.prompt(CHOICE_PROMPT, {
+    prompt: msg,
+    choices: ChoiceFactory.toChoices([
+      'ask a question', 
+      'process a document', 
+      'recognize an image'
+    ])
+  });
+}
+async chooseStep(step) {
+  const choice = step.result.value;
+  ...	
+}
                           </code>
                         </pre>
                       </div>
                     </div>
-                    <div class="col-6 botsample1">
-                      <img src="images/sample1.png" width="400px"/>
+                    
+                    <div class="col-lg-6 col-sm-12 botsample1">
+                      <a href="images/sample1.png" class="image-popup"><img src="images/sample1.png" width="100%"/></a>
                     </div>
                   </div>
                   <p>
@@ -402,33 +408,34 @@
                     document-processing APIs via HTTP POST request.
                   </p>
                   <div class="row row-no-gutter">
-                    <div class="col-6">
+                    <div class="col-lg-6 col-sm-12">
                       <div>
                         <pre>
                           <code class="lang-javascript">
-  async docStep(step) {
-    if (step.result && step.result[0].contentUrl) {
-      var type = step.result[0].contentType;
-      var path = await this.handleIncomingAttachment(
-        step.context);
-      if (path) {
-        await step.context.sendActivity(
-          'Processing the document, please wait');
-        var data = await this.sendReq(path);
-        return await step.beginDialog(DOC_DIALOG, {
-          sum: data[0], 
-          query: data[1], 
-          form: data[2], 
-          filepath: path 
-        });
-      }
-      ...	
+async docStep(step) {
+  if (step.result && step.result[0].contentUrl) {
+    var type = step.result[0].contentType;
+    var path = await this.handleIncomingAttachment(
+      step.context);
+    if (path) {
+      await step.context.sendActivity(
+        'Processing the document, please wait');
+      var data = await this.sendReq(path);
+      return await step.beginDialog(DOC_DIALOG, {
+        sum: data[0], 
+        query: data[1], 
+        form: data[2], 
+        filepath: path 
+      });
+    }
+    ...	
                           </code>
                         </pre>
                       </div>
                     </div>
-                    <div class="col-6 botsample1">
-                      <img src="images/sample2.png" width="400px"/>
+                    <div class="col-lg-6 col-sm-12 botsample1">
+                    <a href="images/sample2.png" class="image-popup">
+                      <img src="images/sample2.png" width="100%"/></a>
                     </div>
                   </div>
                   <p><br />5. how AvaBot makes http requests</p>
@@ -446,30 +453,30 @@
                   <div>
                     <pre>
                       <code class="lang-javascript">
-                              async sendReq(path) {
-                                ...
-                                let reqArr = [axios({
-                                    method: "post",
-                                    …
-                                }), axios({
-                                    method: "post",
-                                    …
-                                }), axios({
-                                    method: "post",
-                                    …
-                                })];
-                                var output = [];
-                                await Promise.allSettled(reqArr).then(results => {
-                                  results.forEach(result => {
-                                    if (result.status == 'fulfilled') {
-                                      output.push(result.value.data);
-                                    } else {
-                                      output.push(0);
-                                    }
-                                  })
-                                })
-                                return output;
-                              }
+async sendReq(path) {
+  ...
+  let reqArr = [axios({
+      method: "post",
+      …
+  }), axios({
+      method: "post",
+      …
+  }), axios({
+      method: "post",
+      …
+  })];
+  var output = [];
+  await Promise.allSettled(reqArr).then(results => {
+    results.forEach(result => {
+      if (result.status == 'fulfilled') {
+        output.push(result.value.data);
+      } else {
+        output.push(0);
+      }
+    })
+  })
+  return output;
+}
                       </code>
                     </pre>
                   </div>
@@ -491,6 +498,7 @@
           </div>
           <div class="row justify-content-center">
             <div class="col-xl-10">
+            <div class="placeholder" id="qna"></div>
               <h4 class="mb-4">Question Answering Implementation</h4>
               <!-- Bootstrap tabs-->
               <div class="tabs-custom tabs-horizontal tabs-line" id="tabs-1">
@@ -509,17 +517,17 @@
                     QnA Maker service: <code>this.qnaMaker</code>.
                   </p>
                   <pre><code>
-                  class AnswerDialog extends ComponentDialog {
-                    constructor() {
-                      super(ANSWER_DIALOG);
-                      try {
-                        this.qnaMaker = new QnAMaker({
-                          knowledgeBaseId: process.env.QnAKnowledgebaseId,
-                          endpointKey: process.env.QnAEndpointKey,
-                          host: process.env.QnAEndpointHostName
-                        });
-                      }
-                    ...
+class AnswerDialog extends ComponentDialog {
+  constructor() {
+    super(ANSWER_DIALOG);
+    try {
+      this.qnaMaker = new QnAMaker({
+        knowledgeBaseId: process.env.QnAKnowledgebaseId,
+        endpointKey: process.env.QnAEndpointKey,
+        host: process.env.QnAEndpointHostName
+      });
+    }
+  ...
                    </code></pre>
 
                   <p><br />2. get answer for a question</p>
@@ -530,20 +538,20 @@
                     will be sent back to the user.
                   </p>
                   <pre><code>
-                  const qnaResults = await this.qnaMaker.getAnswers(stepContext.context);
-                  var msg = '';
-                  if (qnaResults[0]) {
-                    msg = qnaResults[0].answer;
-                  } else {
-                    msg = 'No QnA Maker answers were found.';
-                  }
+const qnaResults = await this.qnaMaker.getAnswers(stepContext.context);
+var msg = '';
+if (qnaResults[0]) {
+  msg = qnaResults[0].answer;
+} else {
+  msg = 'No QnA Maker answers were found.';
+}
                   </code></pre>
                   <p>The QnA Maker is able to
                     parse and interpret the question intent for one question
                     asked in different formats.</p>
                     <div class="row row-no-gutter">
                       <div class="col-12 onlycode">
-                        <img src="images/sample3.png" width="600px"/>
+                        <a href="images/sample3.png" class="image-popup"><img src="images/sample3.png" width="70%"/></a>
                       </div>
                     </div>
                 </div>
@@ -552,6 +560,7 @@
           </div>
           <div class="row justify-content-center">
             <div class="col-xl-10">
+              <div class="placeholder" id='sum'></div>
               <h4 class="mb-4">Text Summarization Implementation</h4>
               <!-- Bootstrap tabs-->
               <div class="tabs-custom tabs-horizontal tabs-line" id="tabs-1">
@@ -560,20 +569,20 @@
                 <div class="tab-content">
                   <h5>Tools & Dependencies<br /><br /></h5>
                   <div class="row row-no-gutter">
-                    <div class="col-4 firstpy">
+                    <div class="col-lg-4 col-sm-6 firstpy">
                     <br>
                       <img src="images/python.png" width="220"/>
                       <p>
                         <br>The text-summary function is written in python.
                       </p>
                     </div>
-                    <div class="col-4">
+                    <div class="col-lg-4 col-sm-6">
                       <img src="images/nltk.png" width="90" />
                       <p>
                         <br>NLTK: a python package for natural language processing
                       </p>
                     </div>
-                    <div class="col-4">
+                    <div class="col-lg-4 col-sm-6">
                       <div class="pyLogo">
                         <img src="images/pypack.png" width="100"/>
                        <p>
@@ -606,11 +615,11 @@ Before the summarization, the document is pre-processed with text split into sen
 <p><br />2. algorithm walk-through</p><p>TextRank is a graph-based ranking model for text processing. The vertices are the sentences in the text, and the edges between the vertices (sentences) are of a similarity weight of the two sentences, which is calculated by
                   </p>
                               <div class="row row-no-gutter">
-                      <div class="col-5 formula">
-                        <img src="images/sim.png" width="400px"/>
+                      <div class="col-lg-5 col-sm-12 formula"><a href="images/sim.png" class="image-popup">
+                        <img src="images/sim.png" width="400px"/></a>
                       </div>
-                      <div class="col-6">
-                        <img src="images/pysim.png" width="700px"/>
+                      <div class="col-lg-6 col-sm-12 onlycode"><a href="images/pysim.png" class="image-popup">
+                        <img src="images/pysim.png" width="100%"/></a>
                       </div>
                     </div>
                   <p>
@@ -622,19 +631,19 @@ Before the summarization, the document is pre-processed with text split into sen
                     >, 1998).
                   </p>
                   <div class="row row-no-gutter">
-                      <div class="col-5 formula">
-                        <img src="images/ws.png" width="400px"/>
+                      <div class="col-lg-5 col-sm-12 formula"><a href="images/ws.png" class="image-popup">
+                        <img src="images/ws.png" width="400px"/></a>
                       </div>
-                      <div class="col-6">
-                        <img src="images/pyws.png" width="700px"/>
+                      <div class="col-lg-6 col-sm-12 onlycode"><a href="images/pyws.png" class="image-popup">
+                        <img src="images/pyws.png" width="100%"/></a>
                       </div>
                     </div>
                   <p>
                     <br>The power_method manipulates the matrix to be a column stochastic matrix. Then the sentence rank is obtained by iteratively dot-producting the stochastic matrix with the rank matrix (initially as [1,1,…,1]) until the rank matrix converges, i.e., the dot-product result is similar to the rank matrix that produces it).
                   </p>
                   <div class="row row-no-gutter">
-                      <div class="col-12 onlycode">
-                        <img src="images/pm.png" width="600px"/>
+                      <div class="col-12 onlycode"><a href="images/pm.png" class="image-popup">
+                        <img src="images/pm.png" width="70%"/></a>
                       </div>
                     </div>
                   <p>
@@ -642,16 +651,17 @@ Before the summarization, the document is pre-processed with text split into sen
                   </p>
                   <div class="row row-no-gutter">
                       <div class="col-12 onlycode">
-                        <img src="images/sample4.png" width="750px"/>
+                        <a href="images/sample4.png" class="image-popup"><img src="images/sample4.png" width="80%"/></a>
                       </div>
                   </div>
                   <p><br><br><br></p>
               </div>
             </div>
-          </div>
-          <!---->>
+          </div></div></dive>
+          <!---->
           <div class="row justify-content-center">
             <div class="col-xl-10">
+            <div class="placeholder" id='recog'></div>
               <h4 class="mb-4">Table & Image Recognition Implementation</h4>
               <!-- Bootstrap tabs-->
               <div class="tabs-custom tabs-horizontal tabs-line" id="tabs-1">
@@ -684,7 +694,7 @@ Before the summarization, the document is pre-processed with text split into sen
                   <div>
                     <pre>
                       <code class="lang-python">
-                  form_recognizer_client = FormRecognizerClient(ENDPOINT, AzureKeyCredential(KEY))
+form_recognizer_client = FormRecognizerClient(ENDPOINT, AzureKeyCredential(KEY))
                       </code>
                     </pre>
                   </div>
@@ -694,23 +704,23 @@ Before the summarization, the document is pre-processed with text split into sen
                   <div>
                     <pre>
                       <code class="lang-python">
-                  def process(file_path):
-                    with open(file_path, "rb") as card:
-                      poller = form_recognizer_client.begin_recognize_business_cards(business_card=card, locale="en-GB")
-                      business_cards = poller.result()
-                    extractedInfo = []
-                    ...
-                    contact_names = business_card.fields.get("ContactNames")
-                    if contact_names:
-                      for contact_name in contact_names.value:
-                        extractedInfo.append("Contact First Name: {}\n".format(contact_name.value["FirstName"].value))
-                        extractedInfo.append("Contact First Name: {}\n".format(contact_name.value["LastName"].value))
-                    company_names = business_card.fields.get("CompanyNames")
-                    if company_names:
-                      ...
-                    ...
+def process(file_path):
+  with open(file_path, "rb") as card:
+    poller = form_recognizer_client.begin_recognize_business_cards(business_card=card, locale="en-GB")
+    business_cards = poller.result()
+  extractedInfo = []
+  ...
+  contact_names = business_card.fields.get("ContactNames")
+  if contact_names:
+    for contact_name in contact_names.value:
+      extractedInfo.append("Contact First Name: {}\n".format(contact_name.value["FirstName"].value))
+      extractedInfo.append("Contact First Name: {}\n".format(contact_name.value["LastName"].value))
+  company_names = business_card.fields.get("CompanyNames")
+  if company_names:
+    ...
+  ...
 
-                    return extractedInfo
+  return extractedInfo
                       </code>
                     </pre>
                   </div>
@@ -721,57 +731,54 @@ Before the summarization, the document is pre-processed with text split into sen
                       <div>
                         <pre>
                         <code>
-                  def main(req: func.HttpRequest) -> func.HttpResponse:
-                    file = req.files.get("file")
-                    ...
-                    result = recogBusinessCard.process(file_path)
-                    result_json = json.dumps(result)
-                    return func.HttpResponse(result_json)
+def main(req: func.HttpRequest) -> func.HttpResponse:
+  file = req.files.get("file")
+  ...
+  result = recogBusinessCard.process(file_path)
+  result_json = json.dumps(result)
+  return func.HttpResponse(result_json)
                           </code>
                         </pre>
                       </div>
                     <p>Here shows the demo of user requesting recognition of information from a business card: </p>
                     <div class="row row-no-gutter">
-                      <div class="col-12 onlycode">
-                        <img src="images/sample5.png" width="950px"/>
+                      <div class="col-12 onlycode"><a href="images/sample5.png" class="image-popup">
+                        <img src="images/sample5.png" width="90%"/></a>
                       </div>
                     </div>  
                 </div>
               </div>
             </div>
           </div>
-        </div>
-
-
-      <!-- QA system-->
-      <!---->
           <div class="row justify-content-center">
             <div class="col-xl-10">
-              <h4 class="mb-4">Question-Answering System</h4>
+            <div class="placeholder" id='qasys'></div>
+              <h4 class="mb-4">Question-Answering System for Documents</h4>
               <!-- Bootstrap tabs-->
               <div class="tabs-custom tabs-horizontal tabs-line" id="tabs-1">
                 <!-- Nav tabs-->
                 <!-- Tab panes-->
-                <div class="tab-content">
+                <div class="tab-content qa-sys">
                   <h5>Tools & Dependencies<br /><br /></h5>
                   <div class="row row-no-gutter">
-                    <div class="col-4">
+                    <div class="col-lg-4 col-sm-6">
                       <img src="images/haystack.png" width="200" />
                       <p>
                       <br>
                         A open domain QA system framework
                       </p>
                     </div>
-                    <div class="col-4">
-                      <img src="images/gunicorn.png" width="100" />
+                    <div class="col-lg-4 col-sm-6">
+                      <img src="images/gunicorn.png" width="110" />
                       <p>
-                        <br />An application server to host the system
+                        An application server to host the system
                       </p>
                     </div>
-                    <div class="col-4">
-                      <img src="images/nginx.png" width="100" />
+                    <div class="col-lg-4 col-sm-6">
+                      <img src="images/nginx.png" width="135" />
+                      <h6></h6>
                       <p>
-                        <br/>Reverse Proxy to buffer the file transfering
+                        Reverse Proxy to buffer the file transfering
                       </p>
                     </div>
                   </div>
@@ -779,9 +786,9 @@ Before the summarization, the document is pre-processed with text split into sen
                   <p>
                    The implementation of the QA system is separated into two parts: document retrieval and natural-language question processing. 
                   </p>
-                  <p><b>Document retrieval<br></b>
-                  </p>
-                  <p>When a POST request arrives, the program first pre-processes the text.<br>
+                  
+                  <p><span>Document retrieval<br></span>
+                  When a POST request arrives, the program first pre-processes the text.<br>
  The preprocessing includes <br>
 1.  Extracting the text from the file attached with the request to the Document object accepted by Haystack<br>
 2.  Cleaning the text by removing numeric tables, header and footers that are repeated on each page, normalizing empty lines and white spaces<br>
@@ -825,44 +832,43 @@ def file_upload(file):
                       </code>
                     </pre>
                   </div>
-                  <p><br />After that, the document is sent to the document store for indexing and generating a pipeline. Pipeline sticks powerful building blocks together, which are retriever and reader in our case. We keep this object in the memory which will find answers when questions are given.  The QA model <code>deepset/roberta-base-squad2</code> is used here as it has a quick retrieving speed compared with the others. (I also listed several alternatives in the comment) We sacrifice a little accuracy to have a fast processing speed. Also, as we don't have a GPU on our virtual machine so we have turn the option off. This option will tell pytorch to stop using GPU acceleration.<br></p>
+                  <p>After that, the document is sent to the document store for indexing and generating a pipeline. Pipeline sticks powerful building blocks together, which are retriever and reader in our case. We keep this object in the memory which will find answers when questions are given.  The QA model <code>deepset/roberta-base-squad2</code> is used here as it has a quick retrieving speed compared with the others. (I also listed several alternatives in the comment) We sacrifice a little accuracy to have a fast processing speed. Also, as we don't have a GPU on our virtual machine so we have turn the option off. This option will tell pytorch to stop using GPU acceleration.<br></p>
                     
                   <div>
                     <pre>
                       <code class="lang-python">
-    retriever = ElasticsearchRetriever(document_store=document_store)
-    reader = FARMReader(model_name_or_path="deepset/roberta-base-squad2", use_gpu=False, context_window_size=500)
-    p = ExtractiveQAPipeline(reader, retriever)
+retriever = ElasticsearchRetriever(document_store=document_store)
+reader = FARMReader(model_name_or_path="deepset/roberta-base-squad2", use_gpu=False, context_window_size=500)
+p = ExtractiveQAPipeline(reader, retriever)
                       </code>
                     </pre>
                   </div>
  
-                  <p><br /><b> natural-language question processing<br> </b></p>
-                  <p>
+                  <p><br /><span> natural-language question processing<br> </span>
                     When a GET request is sent to the system, the query will be extracted from the http arguments. Key extraction is performed to identify the question type. "When", "Who","What" will refer to time, person and description respectively. This part is conducted by Haystack framework, what we do is simply send the question to the pipe and return back a few top-rated answers. <br>
 Here is the pipeline structure: 
 
                   </p>
-                  <div class="row row-no-gutter">
-                    <div class="col-11">
-                        <img src="images/pipeline_struct.png" width="300" />
-                    </div>
-                  </div>
+                  <div class="col-12 onlycode"><a href="images/pipeline_struct.png" class="image-popup">
+                        <img src="images/pipeline_struct.png" width="150" /></a>
+                      </div>
+                   
+                        
+                    
                       
-              <p><b> <br>Elasticseach<br> </b></p>
-              <p>There are several options to start the ES on the machine. We run it by using docker image as a daemon as it is easy to configure. <br></p>
+              <p><br><span>Elasticseach</span><br>
+              There are several options to start the ES on the machine. We run it by using docker image as a daemon as it is easy to configure. <br></p>
 
               <div>
                     <pre>
-                      <code class="lang-bash">
-    docker run -d -p 9200:9200 -e "discovery.type=single-node" elasticsearch:7.6.2
+                      <code class="lang-python">
+docker run -d -p 9200:9200 -e "discovery.type=single-node" elasticsearch:7.6.2
                       </code>
                     </pre>
                   </div>
-              </div>
+             
 
-              <p><b> Nginx & Gunicorn<br> </b></p>
-              <p>Gunicorn is using bio concurrency model, which means the worker process will be blocked when a file with large size is sent. As our machine has one-core only CPU, we set the number of worker processes to 2. Hence, it is likely to timeout a connection when several TCP connections flood in together, just because the worker processes are waiting for receiving large files. This is actually a famous disadvantage of Gunicorn.<br></p>
+              <p><span> Nginx & Gunicorn</span><br>Gunicorn is using bio concurrency model, which means the worker process will be blocked when a file with large size is sent. As our machine has one-core only CPU, we set the number of worker processes to 2. Hence, it is likely to timeout a connection when several TCP connections flood in together, just because the worker processes are waiting for receiving large files. This is actually a famous disadvantage of Gunicorn.<br></p>
 
               <div>
                     <pre>
@@ -875,11 +881,11 @@ workers = 2
                       </code>
                     </pre>
               </div>
-              <p><br>We then added a reverse proxy in front of our application server to get rid of this problem. The buffering reverse proxy will wait until it gets the entire request, then it will pass this request to the application server, which will just process it and deliver the response back to the reverse proxy, being free to receive new requests. <br></p>
+              <p>We then added a reverse proxy in front of our application server to get rid of this problem. The buffering reverse proxy will wait until it gets the entire request, then it will pass this request to the application server, which will just process it and deliver the response back to the reverse proxy, being free to receive new requests. <br></p>
               
               <div>
                     <pre>
-                      <code class="lang-bash">
+                      <code class="lang-python">
 server {
     listen 80;
     server_name {DOMAIN_NAME};
@@ -916,26 +922,24 @@ server {
             </div>
             <div class="row">
               <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="widget">
+                <div class="widget">  
                   <h6 class="widget_title">Site Info</h6>
                   <p>
-                    This is the website for UCL Year2 2020-2021 COMP0016 Team8:
-                    Avanade2 COVID19 changes, which introduces the team project
-                    and contains all the portfolios.
+                    This is the website for UCL Year2 2020-2021 COMP0016 Team8: Avanade2 COVID19 changes, which introduces the team project and contains all the portfolios. 
                   </p>
                   <ul class="social_icons social_white">
                     <li>
-                      <a href="#"
+                      <a href="https://github.com/UCLComputerScience/COMP0016_2020_21_Team8" target="_blank"
                         ><i class="fa fa-github" aria-hidden="true"></i
                       ></a>
                     </li>
                     <li>
-                      <a href="#"
+                      <a href="https://www.youtube.com/embed/-TL-8Baj2eU" target='_blank'
                         ><i class="fa fa-youtube" aria-hidden="true"></i
                       ></a>
                     </li>
                     <li>
-                      <a href="#"
+                      <a href="https://chaozyhaha.wordpress.com/blog/" target="_blank"
                         ><i class="fa fa-wordpress" aria-hidden="true"></i
                       ></a>
                     </li>
@@ -946,33 +950,32 @@ server {
                 <div class="widget">
                   <h6 class="widget_title">Site Menu</h6>
                   <ul class="widget_links">
-                    <li><a href="about-us.html">Home</a></li>
-                    <li><a href="services.html">Requirements</a></li>
-                    <li><a href="blog.html">Research</a></li>
-                    <li><a href="gallery.html">Algorithms</a></li>
-                    <li><a href="contact.html">Design</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="require.html">Requirements</a></li>
+                    <li><a href="research.html">Research</a></li>
+                    <li><a href="ui.html">HCI</a></li>
+                    <li><a href="system.html">System Design</a></li>
                   </ul>
                 </div>
               </div>
               <div class="col-lg-2 col-md-3 col-6">
                 <div class="widget">
-                  <h6 class="widget_title"><br /></h6>
+                  <h6 class="widget_title"><br></h6>
                   <ul class="widget_links">
-                    <li><a href="our-team.html">implementation</a></li>
-                    <li><a href="faq.html">Testing</a></li>
-                    <li><a href="error.html">evaluation</a></li>
-                    <li><a href="typography.html">Appendices</a></li>
+                    <li><a href="impl.html">implementation</a></li>
+                    <li><a href="test.html">Testing</a></li>
+                    <li><a href="eval.html">evaluation</a></li>
+                    <li><a href="append.html">Appendix</a></li>
                   </ul>
                 </div>
               </div>
               <div class="col-lg-4 col-md-12 col-sm-12">
                 <div class="widget">
                   <h6 class="widget_title">Project Supporters</h6>
-                  <img src="images/avanade.png" width="50%" /><br />
-                  <img src="images/ucl.png" width="30%" />
+                  <a href="https://www.avanade.com/en" target='_blank'><img src="images/avanade.png" width="50%"/></a><br>
+                  <a href="https://www.ucl.ac.uk/" target='_blank'><img src="images/ucl.png" width="30%"/></a>
                   <p>
-                    A lot of thanks to our company partner Avanade and Mr.
-                    Fergus Kidd especially.
+                    A lot of thanks to our company partner Avanade and Mr. Fergus Kidd especially.
                   </p>
                 </div>
               </div>
@@ -986,9 +989,8 @@ server {
                 <div class="row">
                   <div class="col-md-6">
                     <p class="mb-md-0 text-center text-md-left">
-                      © 2020 All Rights
-                      <a href="http://www.bootstrapmb.com/">Reserved</a> by UCL
-                      TEAM8.
+                      © 2021 All Rights
+                      Reserved
                     </p>
                   </div>
                 </div>
@@ -1029,5 +1031,20 @@ server {
     <script src="js/venobox.min.js"></script>
     <!-- Custom JS -->
     <script src="js/custom.js"></script>
+     <script src="js/scrolltosmooth.min.js"></script>
+    <script>
+        var smoothScroll = new scrollToSmooth('a', {
+            easing: 'easeInOutSine',
+            //easing: 'linear',
+            duration: 600,
+            durationRelative: true,
+            updateURL: true,
+            onScrollStart: (data) => { console.log(data); },
+        onScrollUpdate: (data) => { console.log(data); },
+        onScrollEnd: (data) => { console.log(data) }
+        })
+        smoothScroll.init();
+        
+    </script>
   </body>
 </html>
