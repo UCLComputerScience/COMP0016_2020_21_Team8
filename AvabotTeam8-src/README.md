@@ -53,7 +53,7 @@
     
 - Launch Bot Framework Emulator
 - File -> Open Bot
-- Browse and choose `myBot.bot` in the `COMP0016_2020_21_Team8` repository
+- Browse and choose `AvaBot.bot` in the `COMP0016_2020_21_Team8` repository
 
 ## Test
 - In a terminal, navigate to `AvabotTeam8-src`

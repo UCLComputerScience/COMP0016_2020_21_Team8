@@ -62,7 +62,7 @@ describe('MainDialog', () => {
         );
         reply = await client.sendActivity('process a document');
         reply = await client.sendActivity(message);
-        assert.strictEqual(reply.text, 'That was not a document that I can help, please try again.')
+        assert.strictEqual(reply.text, 'That was not a document that I can help, please try again with a document in pdf.')
 
     });
 
@@ -80,7 +80,7 @@ describe('MainDialog', () => {
         );
         reply = await client.sendActivity('recognize an image');
         reply = await client.sendActivity(message);
-        assert.strictEqual(reply.text, 'That was not an image that I can help, please try again.')
+        assert.strictEqual(reply.text, 'That was not an image that I can help, please try again with an image in png/jpg.')
 
     });
 
@@ -100,7 +100,16 @@ describe('MainDialog', () => {
 
     it('tests sendReqMethod', async () => {
         const sut = new MainDialog();
-        let a = await sut.sendReq('./testData/test.txt');
+        const path = require("path");
+        const fs = require("fs");
+        var localFileName = path.join(path.resolve(__dirname, ".."), "dialogs");
+        localFileName = path.join(localFileName, "test.txt");
+        fs.writeFile(localFileName, "what", (fsError) => {
+        if (fsError) {
+          throw fsError;
+        }
+        });
+        let a = await sut.sendReq(localFileName);
         assert.strictEqual(a[0], 0);
         assert.strictEqual(a[1], 0);
 
@@ -216,13 +225,6 @@ describe('MainDialog', () => {
         const fs = require('fs');
         var localFileName = path.join(path.resolve(__dirname, '..'), 'dialogs');
         localFileName = path.join(localFileName, 'test.txt');
-        try{
-            fs.unlinkSync(localFileName);
-        }
-        catch(error){
-        }
-        var localFileName = path.join(path.resolve(__dirname, '..'), 'dialogs');
-        localFileName = path.join(localFileName, 'test.jpeg');
         try{
             fs.unlinkSync(localFileName);
         }

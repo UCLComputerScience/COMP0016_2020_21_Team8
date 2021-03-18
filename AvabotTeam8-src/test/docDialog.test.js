@@ -25,9 +25,12 @@ describe('DocDialog', () => {
     });
 
     it('tests FormOk', async () => {
-        sut.c = ['form'];
+        sut.c = ['{"0":{"0":"row1"}}', '{"0":{"0":"row1"}}'];
         let reply = await client.sendActivity('extract table');
-        assert.strictEqual(reply.text, 'form');
+        assert.strictEqual(
+          reply.text,
+          'Table 1: \r\nColumn 1: "row1" \r\nTable 2: \r\nColumn 1: "row1" \r\n'
+        );
     });
 
     it('tests FormOkNoTable', async () => {
@@ -39,7 +42,7 @@ describe('DocDialog', () => {
 
     it('tests FormFail', async () => {
         let reply = await client.sendActivity('extract table');
-        assert.strictEqual(reply.text, 'Form recognition failed.');
+        assert.strictEqual(reply.text, 'Table recognition failed.');
     });
 
     it('tests queryOk', async () => {
@@ -65,6 +68,7 @@ describe('DocDialog', () => {
         let reply = await client.sendActivity('QnA about it');
         reply = await client.sendActivity('What?');
         reply = client.getNextReply();
+        reply = client.getNextReply();
         assert.strictEqual(reply.text, 'Anything else for the document?\n\n   1. summarize it\n   2. extract table\n   3. QnA about it\n   4. no');
 
     });
@@ -73,6 +77,15 @@ describe('DocDialog', () => {
         const w = new DocDialog('WATERFALL_DIALOG');
         await w.beginStep({options:{sum:'sum',query:'query',form:'form',filepath:'path'},prompt: function(){return}})
         assert.strictEqual(w.sum, 'sum');
+    });
+
+    it("tests TableFormat", async () => {
+      const w = new DocDialog("WATERFALL_DIALOG");
+        const table = ['{"0":{"0":"row1"}}', '{"0":{"0":"row1"}}'];
+      assert.strictEqual(
+        w.formatTable(table),
+        'Table 1: \r\nColumn 1: "row1" \r\nTable 2: \r\nColumn 1: "row1" \r\n'
+      );
     });
 
     
