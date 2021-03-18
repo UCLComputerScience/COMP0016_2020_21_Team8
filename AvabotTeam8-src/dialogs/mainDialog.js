@@ -1,6 +1,3 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
 const path = require("path");
 const axios = require("axios");
 const fs = require("fs");
@@ -22,10 +19,14 @@ const ATTACHMENT_PROMPT = "ATTACHMENT_PROMPT";
 const CHOICE_PROMPT = "CHOICE_PROMPT";
 const WATERFALL_DIALOG = "WATERFALL_DIALOG";
 
+/**
+ * The bot's main dialog
+ * @class MainDialog
+ * @extends {ComponentDialog}
+ */
 class MainDialog extends ComponentDialog {
   constructor() {
     super("mainDialog");
-
     this.addDialog(new AnswerDialog());
     this.addDialog(new DocDialog(this.initialDialogId));
     this.addDialog(new ChoicePrompt(CHOICE_PROMPT));
@@ -62,6 +63,11 @@ class MainDialog extends ComponentDialog {
     }
   }
 
+  /**
+   * The waterfall step to let user choose which feature to use.
+   * @param {*} step
+   * @returns {*} a non-null DialogTurnResult
+   */
   async startStep(step) {
     // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
     // Running a prompt here means the next WaterfallStep will be run when the user's response is received.
@@ -79,6 +85,11 @@ class MainDialog extends ComponentDialog {
     });
   }
 
+  /**
+   * If user has chosen QnA, jump to question answering dialog; Otherwise, ask user to upload attachment.
+   * @param {*} step
+   * @returns {*} a non-null DialogTurnResult
+   */
   async chooseStep(step) {
     const choice = step.result.value;
     if (choice == "ask a question") {
@@ -97,14 +108,19 @@ class MainDialog extends ComponentDialog {
         retryPrompt:
           "That was not an image that I can help, please try again with an image in png/jpg.",
       };
-
       return await step.prompt(ATTACHMENT_PROMPT, promptOptions);
     }
   }
 
+  /**
+   * If received attachment is in pdf, jump to docDialog; Otherwise recognize the image for user.
+   * @param {*} step
+   * @returns {*} a non-null DialogTurnResult
+   */
   async docStep(step) {
     if (step.result && step.result[0].contentUrl) {
       var type = step.result[0].contentType;
+      //save attachment to the server, keep the path of the saved file.
       var path = await this.handleIncomingAttachment(step.context);
       console.log(path);
       if (path) {
@@ -112,10 +128,13 @@ class MainDialog extends ComponentDialog {
           await step.context.sendActivity(
             "Processing the document, please wait, it will take around 55 seconds"
           );
+          //perform HTTP requests for document here
           var req_results = await this.sendReq(path);
+          // delete user file after use
           try {
             fs.unlinkSync(path);
           } catch (error) {}
+          // start docDialog, passing the document processing results and the file path.
           return await step.beginDialog(DOC_DIALOG, {
             sum: req_results[0],
             query: req_results[1],
@@ -127,6 +146,7 @@ class MainDialog extends ComponentDialog {
           await step.context.sendActivity(
             "Processing the image, please wait, it will take around 15 seconds"
           );
+          // perform image recognition request
           var form = new FormData();
           form.append("file", fse.createReadStream(path));
           await axios({
@@ -145,9 +165,11 @@ class MainDialog extends ComponentDialog {
             .catch(function (error) {
               console.log(error);
             });
+          //delete user file after use
           try {
             fs.unlinkSync(path);
           } catch (error) {}
+          // send recognition result to user
           if (image_result) {
             await step.context.sendActivity(image_result);
           } else {
@@ -158,15 +180,26 @@ class MainDialog extends ComponentDialog {
         }
       }
     }
+    //If having not jumped to docDialog, go to the next step
     return await step.next();
   }
 
+  /**
+   * Replace the dialog with mainDialog, restart it with a restart msg.
+   * @param {*} step
+   * @returns {*} a non-null DialogTurnResult
+   */
   async repeatStep(step) {
     return await step.replaceDialog(this.initialDialogId, {
       restartMsg: "What else can I do for you?",
     });
   }
 
+  /**
+   * The method for performing three requests simultaneously via Axios for doc processing.
+   * @param {*} path
+   * @returns request results as an array
+   */
   async sendReq(path) {
     var form1 = new FormData();
     form1.append("file", fse.createReadStream(path));
@@ -197,9 +230,11 @@ class MainDialog extends ComponentDialog {
       }),
     ];
     var output = [];
+    // wait till the requests are completed
     await Promise.allSettled(reqArr).then((results) => {
       results.forEach((result) => {
         console.log(result.status);
+        //if status is fulfilled, record the result, if is failed, fill with 0
         if (result.status == "fulfilled") {
           output.push(result.value.data);
           console.log("first: " + result.value.data);
@@ -213,6 +248,11 @@ class MainDialog extends ComponentDialog {
     return output;
   }
 
+  /**
+   * The method to handle user attachment
+   * @param {*} turnContext
+   * @returns file path 
+   */
   async handleIncomingAttachment(turnContext) {
     // Prepare Promises to download each attachment and then execute each Promise.
     const promises = await turnContext.activity.attachments.map(
@@ -220,8 +260,7 @@ class MainDialog extends ComponentDialog {
     );
     const successfulSaves = await Promise.all(promises);
 
-    // Replies back to the user with information about where the attachment is stored on the bot's server,
-    // and what the name of the saved file is.
+    // Replies back to the user that the file has been received.
     async function replyForReceivedAttachments(localAttachmentData) {
       if (localAttachmentData) {
         // Because the TurnContext was bound to this function, the bot can call
@@ -245,6 +284,11 @@ class MainDialog extends ComponentDialog {
     return r;
   }
 
+  /**
+   * The method to download user attachment to the server.
+   * @param {*} attachment
+   * @returns {fileName, localPath}
+   */
   async downloadAttachmentAndWrite(attachment) {
     var name = attachment.name;
     // Retrieve the attachment via the attachment's contentUrl.
@@ -273,6 +317,11 @@ class MainDialog extends ComponentDialog {
     };
   }
 
+  /**
+   * The method to validate if the attachment type is acceptable
+   * @param {*} promptContext
+   * @returns boolean
+   */
   async promptValidator(promptContext) {
     if (promptContext.recognized.succeeded) {
       var docType = promptContext.options.prompt;
@@ -284,7 +333,6 @@ class MainDialog extends ComponentDialog {
           docType === "Please attach a document in pdf." &&
           attachment.contentType === "application/pdf"
         ) {
-          //|| attachment.contentType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'|| attachment.contentType === 'application/msword'
           validDoc.push(attachment);
         } else if (
           docType === "Please attach an image." &&
@@ -297,7 +345,7 @@ class MainDialog extends ComponentDialog {
 
       promptContext.recognized.value = validDoc;
 
-      // If none of the attachments are valid images, the retry prompt should be sent.
+      // If none of the attachments are valid, the retry prompt should be sent.
       return !!validDoc.length;
     } else {
       await promptContext.context.sendActivity("No attachments received.");

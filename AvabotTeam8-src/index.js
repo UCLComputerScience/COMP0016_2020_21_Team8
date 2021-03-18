@@ -1,6 +1,3 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
 const restify = require('restify');
 const path = require('path');
 
@@ -9,15 +6,14 @@ const ENV_FILE = path.join(__dirname, '.env');
 require('dotenv').config({ path: ENV_FILE });
 
 // Import required bot services.
-// See https://aka.ms/bot-services to learn more about the different parts of a bot.
 const { BotFrameworkAdapter, ConversationState, MemoryStorage, UserState } = require('botbuilder');
 
 // Import our custom bot class that provides a turn handling function.
+//Import the begin dialog to feed into our bot.
 const { AvaBot } = require('./bots/avaBot');
 const { MainDialog } = require('./dialogs/mainDialog');
 
-// Create the adapter. See https://aka.ms/about-bot-adapter to learn more about using information from
-// the .bot file when configuring your adapter.
+// Create the adapter using the AppId and AppKey configured.
 const adapter = new BotFrameworkAdapter({
     appId: process.env.MicrosoftAppId,
     appPassword: process.env.MicrosoftAppPassword
@@ -25,10 +21,7 @@ const adapter = new BotFrameworkAdapter({
 
 // Catch-all for errors.
 adapter.onTurnError = async (context, error) => {
-    // This check writes out errors to console log .vs. app insights.
-    // NOTE: In production environment, you should consider logging this to Azure
-    //       application insights. See https://aka.ms/bottelemetry for telemetry 
-    //       configuration instructions.
+    // This check writes out errors to console log 
     console.error(`\n [onTurnError] unhandled error: ${ error }`);
 
     // Send a trace activity, which will be displayed in Bot Framework Emulator
@@ -46,8 +39,7 @@ adapter.onTurnError = async (context, error) => {
     await conversationState.delete(context);
 };
 
-// Define the state store for your bot.
-// See https://aka.ms/about-bot-state to learn more about using MemoryStorage.
+// Define the state store for the bot.
 // A bot requires a state storage system to persist the dialog and user state between messages.
 const memoryStorage = new MemoryStorage();
 

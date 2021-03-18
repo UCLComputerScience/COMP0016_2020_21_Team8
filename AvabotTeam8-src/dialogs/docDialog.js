@@ -1,6 +1,3 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
 const axios = require("axios");
 const {
   ComponentDialog,
@@ -14,6 +11,11 @@ const WATERFALL_DIALOG = "WATERFALL_DIALOG";
 const TEXT_PROMPT = "TEXT_PROMPT";
 const CHOICE_PROMPT = "CHOICE_PROMPT";
 
+/**
+ * The dialog for user to choose what they want to do with the document that has been sent by them.
+ * @class DocDialog
+ * @extends {ComponentDialog}
+ */
 class DocDialog extends ComponentDialog {
   constructor(mainId) {
     super(DOC_DIALOG);
@@ -36,8 +38,15 @@ class DocDialog extends ComponentDialog {
     this.initialDialogId = WATERFALL_DIALOG;
   }
 
+  /**
+   * A waterfall step for user to choose what info they want
+   * @param {*} stepContext
+   * @return {*}
+   * @memberof DocDialog
+   */
   async beginStep(stepContext) {
     if (stepContext.options.restartMsg) {
+      // if the dialog was restarted, prompt directly.
       return await stepContext.prompt(CHOICE_PROMPT, {
         prompt: "Anything else for the document?",
         choices: ChoiceFactory.toChoices([
@@ -48,6 +57,7 @@ class DocDialog extends ComponentDialog {
         ]),
       });
     } else {
+      // if the dialog was initiated, collect info passed by mainDialog.
       this.sum = stepContext.options.sum ? stepContext.options.sum : this.sum;
       this.query = stepContext.options.query
         ? stepContext.options.query
@@ -69,6 +79,12 @@ class DocDialog extends ComponentDialog {
     }
   }
 
+  /**
+   * A waterfall step to send info that user has asker for
+   * @param {*} step
+   * @return {*}
+   * @memberof DocDialog
+   */
   async dealStep(step) {
     console.log(step.result.value);
     const choice = step.result.value;
@@ -90,6 +106,7 @@ class DocDialog extends ComponentDialog {
       }
     } else if (choice == "QnA about it") {
       if (this.query) {
+        //ask what the question is from the user
         return await step.prompt(TEXT_PROMPT, {
           prompt: "What is the question?",
         });
@@ -105,6 +122,12 @@ class DocDialog extends ComponentDialog {
     });
   }
 
+  /**
+   * A waterfall dialog to retrieve answer from QA system via HTTP GET request
+   * @param {*} step
+   * @return {*}
+   * @memberof DocDialog
+   */
   async answerStep(step) {
     var question = step.result;
     await step.context.sendActivity("Searching for the answer...");
@@ -124,6 +147,12 @@ class DocDialog extends ComponentDialog {
     });
   }
 
+  /**
+   * The method to parse the table data sent in json
+   * @param {*} tables as an array
+   * @return a string
+   * @memberof DocDialog
+   */
   formatTable(tables) {
     var formatted = "";
     var nth = 1;
@@ -135,6 +164,12 @@ class DocDialog extends ComponentDialog {
     return formatted;
   }
 
+  /**
+   * The method used to parse table data
+   * @param {*} string
+   * @return a string
+   * @memberof DocDialog
+   */
   columDivider(string) {
     var oneTable = "";
     var columns = [];
@@ -151,6 +186,12 @@ class DocDialog extends ComponentDialog {
     return oneTable;
   }
 
+  /**
+   * The method used to parse table data
+   * @param {*} string
+   * @return an array
+   * @memberof DocDialog
+   */
   divide(string) {
     var column = [];
     var arr = [];
@@ -164,16 +205,34 @@ class DocDialog extends ComponentDialog {
     return column;
   }
 
+  /**
+   * The method used to parse table data
+   * @param {*} str
+   * @return a string
+   * @memberof DocDialog
+   */
   getRidSides(str) {
     return str.slice(1, str.length - 1);
   }
 
+  /**
+   * setter for sum
+   * @memberof DocDialog
+   */
   set a(n) {
     this.sum = n;
   }
+  /**
+   * setter for query
+   * @memberof DocDialog
+   */
   set b(n) {
     this.query = n;
   }
+  /**
+   * setter for form
+   * @memberof DocDialog
+   */
   set c(n) {
     this.form = n;
   }

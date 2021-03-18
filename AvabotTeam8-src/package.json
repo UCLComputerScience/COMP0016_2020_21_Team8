@@ -9,7 +9,7 @@
         "start": "node ./index.js",
         "watch": "nodemon ./index.js",
         "lint": "eslint .",
-        "test": "mocha test --exit --timeout 100000",
+        "test": "./node_modules/.bin/mocha test --exit --timeout 100000",
         "cover": "./node_modules/.bin/nyc npm run test",
         "coverage": "./node_modules/.bin/nyc --reporter lcov npm run test"
     },
@@ -23,6 +23,7 @@
         "botbuilder-dialogs": "~4.11.0",
         "botbuilder-testing": "^4.11.1",
         "dotenv": "^8.2.0",
+        "mocha": "^8.3.2",
         "path": "^0.12.7",
         "restify": "~8.5.1"
     },
