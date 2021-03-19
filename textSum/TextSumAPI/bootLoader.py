@@ -18,21 +18,25 @@ outputTextPath = "/tmp/tmp.txt"
 
 def summary(path):
     installPunkt.downloadPunkt()
-    # url = "https://en.wikipedia.org/wiki/Automatic_summarization"
-    # parser = HtmlParser.from_url(url, Tokenizer(LANGUAGE))
     content = ""
     tup = read_file.readPdf(path, outputTextPath) 
+    # title of the doc
     title = tup[0]
+    # how many pages in the doc
     count = tup[1]
     if count == 0:
         return "Sorry, summarization failed, the document was not text based."
-    line = min(20,count*5) 
+    # How many lines to output
+    line = min(10,count*2) 
     content += "Title: " + title + "\n"
     content += " " + "\n"
     content += "Summary: " + "\n"
     content += " " + "\n"
-    # or for plain text files
     parser = PlaintextParser.from_file(outputTextPath, Tokenizer(LANGUAGE))
+    ## for parsing from url:
+    # url = "https://en.wikipedia.org/wiki/Automatic_summarization"
+    # parser = HtmlParser.from_url(url, Tokenizer(LANGUAGE))
+    ## for paring from string:
     # parser = PlaintextParser.from_string("Check this out.", Tokenizer(LANGUAGE))
     stemmer = Stemmer(LANGUAGE)
 

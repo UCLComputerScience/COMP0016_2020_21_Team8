@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <iframe id="chat" style="width: 70%; height: 600px; display: block; margin: 0 auto; src=""></iframe>
+  </body>
+  <script>
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://webchat.botframework.com/api/tokens", true);
+    xhr.setRequestHeader(
+      "Authorization",
+      "BotConnector " +
+        "3AH6wPAeY_Q.NwEUoOWMAfWgSIrUoyIJfbRKVXuItAVonHUWseMujhU"
+    );
+    xhr.send();
+    xhr.onreadystatechange = processRequest;
+
+    function processRequest(e) {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        var response = JSON.parse(xhr.responseText);
+        document.getElementById("chat").src =
+          "https://webchat.botframework.com/embed/AvabotTeam8?t=" + response;
+      }
+    }
+  </script>
+</html>

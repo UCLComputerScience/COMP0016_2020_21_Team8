@@ -1,6 +1,0 @@
-sumy==0.8.1
-pdftitle==0.8
-python_docx==0.8.10
-nltk==3.5
-pdfminer==20191125
-docx==0.2.4
