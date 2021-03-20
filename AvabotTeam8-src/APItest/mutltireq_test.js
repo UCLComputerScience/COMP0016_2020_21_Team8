@@ -9,7 +9,7 @@ form.append("file", fse.createReadStream(FileName));
 
 // const a = axios({
 //     method: "post",
-//     url: "https://textsumapi.azurewebsites.net/api/textsumapi",
+//     url: "https://textsumapi.azurewebsites.net/api/TextSummary",
 //     data: form,
 //     headers: form.getHeaders()
 // })
@@ -22,7 +22,7 @@ form.append("file", fse.createReadStream(FileName));
 
 // const b = axios({
 //     method: "post",
-//     url: "http://51.11.38.199:5000",
+//     url: "http://20.77.57.60:5000",
 //     data: form,
 //     headers: form.getHeaders()
 // })
@@ -36,12 +36,12 @@ form.append("file", fse.createReadStream(FileName));
 
 // axios.all([axios({
 //     method: "post",
-//     url: "https://textsumapi.azurewebsites.net/api/textsumapi",
+//     url: "https://textsumapi.azurewebsites.net/api/TextSummary",
 //     data: form,
 //     headers: form.getHeaders()
 // }), axios({
 //     method: "post",
-//     url: "http://51.11.38.199:5000",
+//     url: "http://20.77.57.60:5000",
 //     data: form,
 //     headers: form.getHeaders()
 // })]). then(axios.spread((data1, data2) => {
@@ -51,12 +51,12 @@ form.append("file", fse.createReadStream(FileName));
 
 let reqArr = [axios({
     method: "post",
-    url: "https://textsumapi.azurewebsites.net/api/textsumapi",
+    url: "https://textsumapi.azurewebsites.net/api/TextSummary",
     data: form,
     headers: form.getHeaders()
 }), axios({
     method: "post",
-    url: "http://51.11.38.199:5000",
+    url: "http://20.77.57.60:5000",
     data: form,
     headers: form.getHeaders()
 })];

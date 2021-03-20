@@ -1,8 +1,0 @@
-PDF1:
-Q1: Can I monitor who has access to data and applications, and monitor what they’re doing with them?
-A1: If you’re concerned that employees are using external file sharing services to work around internal IT limitations, you can monitor and assess this with Cloud App Security Broker, which can discover the cloud applications being used in your enterprise. 
-
-Q2: What security issues I should worry about when my employees are working remotely?
-A1: Provide guidance to employees on best practices regarding security on their home network. Understand the users who have increased requirements for security, such as those handling sensitive data. Help employees to control where data resides and is processed by considering what security policies should be extended to corporate-owned devices or even personal devices.
-
-PDF2:

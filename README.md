@@ -10,11 +10,11 @@
 
 ## System Architecture
 AvaBot application system consists of several components. <br>
-Users can interact with AvaBot as a REST API on web chat and multiple applications to which it is channeled.<br>
+Users can interact with AvaBot as a REST API on web chat and on multiple applications to which it is channeled.<br>
 The bot source code is deployed to Azure Cloud by using Azure Bot Service. The bot src can be found [./AvabotTeam8-src/](./AvabotTeam8-src).
 <br>
 AvaBot is connected to a QnA Maker with rich knowledge base that allows it to answer a variety of questions. The QnA Maker is configured in [./AvabotTeam8-src/dialogs/answerDialog.js](./AvabotTeam8-src/dialogs/answerDialog.js)<br> 
-Document processing functionalities are integrated to AvaBot by APIs, which can be accessed by performing http requests. The APIs are in [./formRecogFunction/](./formRecogFunction), [./QAsystem/](./QAsystem), and [./textSum/](./textSum) <br> 
+Document processing functionalities are integrated to AvaBot by APIs. The code of the APIs are in [./formRecogFunction/](./formRecogFunction), [./QAsystem/](./QAsystem), and [./textSum/](./textSum) <br> 
 Due to the high complexity and dependency on environment, QA system has been placed to a virtual machine in order to optimize its performance.<br><br>
 Below is the system architecture diagram for AvaBot:
 ![System Architecture Diagram](./docs/arch.png)
@@ -30,9 +30,9 @@ Below is the project tree showing the main files and their uses in the repositor
 ├── .vscode                # VS Code configuration for development
 ├── AvabotTeam8-src/       # The bot source code           
 │   ├── .vscode            # VS Code configuration for bot development
-│   ├── APItest/           # Demo code and test files for calling APIs via Axios
+│   ├── APItest/           # Demo code for calling APIs via Axios
 │   ├── bots/              
-│   ├── avabot.js      # The bot class
+│       └── avabot.js      # The bot class
 │   ├── coverage/          # Testing coverage report
 │   └── dialogs/           # The bot's dialog classes
 │       └── mainDialog.js
@@ -45,25 +45,25 @@ Below is the project tree showing the main files and their uses in the repositor
 │   ├── package.json       # Node.js package configuration file
 │   ├── web.config         # Configuration file if using iisnode behind Express
 │   └── ...
-├── docs/                  # Documentation files to illustrate the project
+├── docs/                  # Documentation files
 ├── formRecogFunction/     # Src and documents for Form Recognizer API
 ├── QAsystem/              # Src and documents for QA system API
-├── testAPI/               # Demo for calling APIs in python
+├── testAPI_example/       # Demo for calling APIs in python
 ├── textSum/               # Src and documents for Text Summarization API
 ├── WebBrowserBot/         # Demo for running AvaBot on a web browser
-├── AvaBot.bot             # Bot configuration file for ms bot emulator
-├── LICENCE                # license for the project
+├── AvaBot.bot             # Bot configuration file for running the bot on MS bot emulator
+├── LICENCE                # License for the project
 └── *.md                   # Project documentation files
 ```
 
 ## Deployment
-- See AvaBot Deployment Manual [here](https://github.com/UCLComputerScience/COMP0016_2020_21_Team8/blob/main/AvabotTeam8-src/README.md)
+- See AvaBot Deployment Manual [here](./AvabotTeam8-src/README.md)
 - See how to use the APIs for [Form Recognizer](./formRecogFunction/README.md), [QA System](./QAsystem/README.md) and [Text Summarization](./textSum/README.md)
 
 
 ## Usage
 AvaBot is hosted on the Azure Bot Service. The service defines a REST API and an activity protocol for how bots and channels or users can interact. AvaBot's messaging endpoint is at `https://avabotteam8.azurewebsites.net/api/messages`.<br>
-A demo for using the bot on a web browser can be found in [./WebBrowserBot/webbot.html](./WebBrowserBot/webbot.html).
+Demo for using the bot on a web browser can be found in [./WebBrowserBot/](./WebBrowserBot).
 
 ## ShowCase
 ### 1. AvaBot greets the user:<br><br>

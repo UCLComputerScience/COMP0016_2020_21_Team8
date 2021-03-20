@@ -24,6 +24,8 @@ def summary(path):
     title = tup[0]
     # how many pages in the doc
     count = tup[1]
+    if title == "":
+        title = 'n/a'
     if count == 0:
         return "Sorry, summarization failed, the document was not text based."
     # How many lines to output

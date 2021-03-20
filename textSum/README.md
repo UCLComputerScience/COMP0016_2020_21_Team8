@@ -1,3 +1,6 @@
-endpoint: https://textsumapi.azurewebsites.net/api/textsumapi
+# API for Text Summarization
 
-See [../testAPI/testTextSum/](../testAPI/testTextSum) for a detailed testing example 
+## Endpoint
+ https://textsumapi.azurewebsites.net/api/TextSummary
+
+<br>See [../testAPI_example/testTextSum/](../testAPI_example/testTextSum) for a detailed testing example 

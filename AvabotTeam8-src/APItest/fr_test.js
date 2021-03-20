@@ -9,7 +9,7 @@ form.append("file", fse.createReadStream(FileName));
 
 // axios({
 //     method: "post",
-//     url: "https://textsumapi.azurewebsites.net/api/textsumapi",
+//     url: "https://textsumapi.azurewebsites.net/api/TextSummary",
 //     data: form,
 //     headers: form.getHeaders()
 // })
