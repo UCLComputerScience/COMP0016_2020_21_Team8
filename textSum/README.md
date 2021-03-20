@@ -1,5 +1,8 @@
 # API for Text Summarization
 
+## Intro
+ This API takes a document and returns the summary.
+
 ## Endpoint
  https://textsumapi.azurewebsites.net/api/TextSummary
 

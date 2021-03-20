@@ -13,8 +13,8 @@ AvaBot application system consists of several components. <br>
 Users can interact with AvaBot as a REST API on web chat and on multiple applications to which it is channeled.<br>
 The bot source code is deployed to Azure Cloud by using Azure Bot Service. The bot src can be found [./AvabotTeam8-src/](./AvabotTeam8-src).
 <br>
-AvaBot is connected to a QnA Maker with rich knowledge base that allows it to answer a variety of questions. The QnA Maker is configured in [./AvabotTeam8-src/dialogs/answerDialog.js](./AvabotTeam8-src/dialogs/answerDialog.js)<br> 
-Document processing functionalities are integrated to AvaBot by APIs. The code of the APIs are in [./formRecogFunction/](./formRecogFunction), [./QAsystem/](./QAsystem), and [./textSum/](./textSum) <br> 
+AvaBot is connected to a QnA Maker with rich knowledge base that allows it to answer a variety of questions. The QnA Maker is configured in [./AvabotTeam8-src/dialogs/answerDialog.js](./AvabotTeam8-src/dialogs/answerDialog.js).<br> 
+Document processing functionalities are integrated to AvaBot by APIs. The code of the APIs are in [./textSum/](./textSum), [./QAsystem/](./QAsystem), and [./formRecogFunction/](./formRecogFunction). <br> 
 Due to the high complexity and dependency on environment, QA system has been placed to a virtual machine in order to optimize its performance.<br><br>
 Below is the system architecture diagram for AvaBot:
 ![System Architecture Diagram](./docs/arch.png)
@@ -58,7 +58,7 @@ Below is the project tree showing the main files and their uses in the repositor
 
 ## Deployment
 - See AvaBot Deployment Manual [here](./AvabotTeam8-src/README.md)
-- See how to use the APIs for [Form Recognizer](./formRecogFunction/README.md), [QA System](./QAsystem/README.md) and [Text Summarization](./textSum/README.md)
+- See how to use the APIs for [Text Summarization](./textSum/README.md), [QA System](./QAsystem/README.md) and [Form Recognizer](./formRecogFunction/README.md)
 
 
 ## Usage
