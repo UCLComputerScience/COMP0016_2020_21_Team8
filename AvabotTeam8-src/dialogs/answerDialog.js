@@ -87,7 +87,8 @@ class AnswerDialog extends ComponentDialog {
 
         // If no answers were returned from QnA Maker, reply with help.
       } else {
-        msg = "No QnA Maker answers were found.";
+        msg =
+          "Sorry, I haven't got this one. Please contact the administrator for feeding relevant material to my knowledge base at https://www.qnamaker.ai.";
       }
     } catch (error) {
       console.log(error);
