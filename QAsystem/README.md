@@ -1,19 +1,15 @@
-# API for QA system
-## Intro
- This API would take a document and pre-process it, and answer questions about the document.
+## Introduction
 
-## Endpoint
- http://20.77.57.60:5000
+The QA system builds model for one or multiple documents and answers NL queries about the docs. 
 
-## Usage
- POST: http://20.77.57.60:5000
- <br>GET: http://20.77.57.60:5000?query=YOUR_QUESTION
- 
- <br>See files under [../testAPI_example/testQA](../testAPI_example/testQA) for more testing examples
-## Deploy locally
 
-Build the python3.6 virtual env.
 
-Install gunicorn.
+## EndPoint
 
-Run with gunicorn: gunicorn -b 0.0.0.0:5000 --timeout=90 --debug_level='debug' wsgi:app
+Send the document in POST request to `http://20.77.57.60:5000`.
+
+Send the query in GET request to `url =http://20.77.57.60:5000?query={QUERY}`
+
+## Deployment
+
+The QA system is deployed on Azure linux virtual machine with `Gunicorn`. We also add `Nginx` as the reverse proxy. 
