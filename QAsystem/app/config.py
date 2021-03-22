@@ -5,7 +5,7 @@ REMOVE_WHITESPACE = os.getenv("REMOVE_WHITESPACE", "True").lower() == "true"
 REMOVE_EMPTY_LINES = os.getenv("REMOVE_EMPTY_LINES", "True").lower() == "true"
 REMOVE_HEADER_FOOTER = os.getenv("REMOVE_HEADER_FOOTER", "True").lower() == "true"
 SPLIT_BY = os.getenv("SPLIT_BY", "word")
-SPLIT_LENGTH = os.getenv("SPLIT_LENGTH", 1_000)
+SPLIT_LENGTH = os.getenv("SPLIT_LENGTH", 1_000_00)
 SPLIT_OVERLAP = os.getenv("SPLIT_OVERLAP", None)
 SPLIT_RESPECT_SENTENCE_BOUNDARY = os.getenv("SPLIT_RESPECT_SENTENCE_BOUNDARY", True)
 
