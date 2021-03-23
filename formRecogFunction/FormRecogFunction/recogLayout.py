@@ -137,3 +137,26 @@ def changeInfo(table_contents, required_row, required_column, required_word, tab
         return dataBase
     except:
         return "Wrong Input"
+    
+    def TableIntoExcel(table_contents,tableCount,changeColumnNames,fullTable):
+    dataBase = pd.DataFrame (table_contents)
+
+    if fullTable:
+        '''
+        Replace Columns Name with 1st Row
+        '''
+        dataBase = dataBase[1:]
+        dataBase.columns = changeColumnNames
+    else:
+        index_list = []
+        for i in range(len(table_contents)):
+            index_list.append(i+1)
+        dataBase.columns = changeColumnNames
+        dataBase.index = index_list
+    
+    #png = dataBase.dfi.export('tables {}.png'.format(tableCount))
+    excel = pd.ExcelWriter('Excel {}.xlsx'.format(tableCount))
+    dataBase.to_excel(excel, index = False)
+    excel.save()
+
+    return dataBase
