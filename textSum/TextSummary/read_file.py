@@ -13,25 +13,24 @@ import pdftitle
 
 def readPdf(pdfpath, txtpath):
     fp = open(pdfpath, 'rb')
-    # 来创建一个pdf文档分析器
+    # create a pdf parser
     parser = PDFParser(fp)
-    # 创建一个PDF文档对象存储文档结构
+    # create a PDFDocument object to store doc structure
     document = PDFDocument(parser)
-    # 检查文件是否允许文本提取
+    # check if text extraction is allowed
     if not document.is_extractable:
         raise PDFTextExtractionNotAllowed
     else:
-        # 创建一个PDF资源管理器对象来存储共赏资源
+        # create a PDFResourceManager() to store shared resource
         rsrcmgr = PDFResourceManager()
-        # 设定参数进行分析
+        # set a factor
         laparams = LAParams()
-        # 创建一个PDF设备对象
-        # device=PDFDevice(rsrcmgr)
+        # set a aggregator
         device = PDFPageAggregator(rsrcmgr, laparams=laparams)
-        # 创建一个PDF解释器对象
+        # set a interpreter
         interpreter = PDFPageInterpreter(rsrcmgr, device)
-        # 处理每一页
 
+        # get title
         try:
             title = pdftitle.get_title_from_file(pdfpath)
             if title is None:
@@ -39,18 +38,19 @@ def readPdf(pdfpath, txtpath):
         except:
             title = 'n/a'
 
+        # get content
         with open(txtpath, 'w') as f:
             count = 0
             content = ""
             for page in PDFPage.create_pages(document):
                 pageContent = ""
                 interpreter.process_page(page)
-                # 接受该页面的LTPage对象
                 layout = device.get_result()
                 for x in layout:
                     if(isinstance(x, LTTextBoxHorizontal)):
                         text = x.get_text()
-                        if re.search('[a-zA-Z]', text) == None or (text[0].isupper() and len(text)<=43):
+                        # if the text block contains no letter or is too short, skip
+                        if re.search('[a-zA-Z]', text) == None or (text[0].isupper() and len(text) <= 43):
                             continue
                         pageContent += text
                 content += pageContent.strip() + " "
