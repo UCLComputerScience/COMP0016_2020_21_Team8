@@ -37,14 +37,17 @@ describe("AnswerDialog", () => {
     const client = new DialogTestClient("test", sut, null, [
       new DialogTestLogger(),
     ]);
+    const path = require("path");
+    const ENV_FILE = path.join(path.resolve(__dirname, '..'), ".env");
+    require("dotenv").config({ path: ENV_FILE });
     sut.a = new QnAMaker({
-      knowledgeBaseId: "63a07915-3939-4f7e-845a-d8d4df62f969",
-      endpointKey: "dbdf58ac-5aa6-484d-944c-1aba8572a210",
-      host: "https://avabotqnamakerengine.azurewebsites.net/qnamaker",
+      knowledgeBaseId: process.env.QnAKnowledgebaseId,
+      endpointKey: process.env.QnAEndpointKey,
+      host: process.env.QnAEndpointHostName,
     });
     await client.sendActivity("hi");
     let reply = await client.sendActivity("Hi");
-    assertChai.typeOf(reply.text, "string");
+    assert.strictEqual(reply.text, "Hey.");
   });
 
   it("tests answerStepNoAnswer", async () => {
@@ -52,14 +55,20 @@ describe("AnswerDialog", () => {
     const client = new DialogTestClient("test", sut, null, [
       new DialogTestLogger(),
     ]);
+    const path = require("path");
+    const ENV_FILE = path.join(path.resolve(__dirname, ".."), ".env");
+    require("dotenv").config({ path: ENV_FILE });
     sut.a = new QnAMaker({
-      knowledgeBaseId: "63a07915-3939-4f7e-845a-d8d4df62f969",
-      endpointKey: "dbdf58ac-5aa6-484d-944c-1aba8572a210",
-      host: "https://avabotqnamakerengine.azurewebsites.net/qnamaker",
+      knowledgeBaseId: process.env.QnAKnowledgebaseId,
+      endpointKey: process.env.QnAEndpointKey,
+      host: process.env.QnAEndpointHostName,
     });
     await client.sendActivity("hi");
     let reply = await client.sendActivity("= =");
-    assertChai.typeOf(reply.text, "string");
+    assert.strictEqual(
+      reply.text,
+      "Sorry, I haven't got this one. Please contact the administrator for feeding relevant material to my knowledge base at https://www.qnamaker.ai."
+    );
   });
 
   it("tests noQnaMaker", async () => {
