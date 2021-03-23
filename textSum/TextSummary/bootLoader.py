@@ -1,5 +1,3 @@
-# # -*- coding: utf-8 -*-
-
 from __future__ import absolute_import
 from __future__ import division, print_function, unicode_literals
 
@@ -54,10 +52,3 @@ def summary(path):
     os.remove(outputTextPath)
 
     return content
-
-
-# if __name__ == "__main__":
-#     content = summary("text-summarizationFortest/test.pdf")
-#     print (content)
-    
-
