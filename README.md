@@ -27,10 +27,8 @@ Below is the project tree showing the main files and their uses in the repositor
 
 ```
 .    
-├── .vscode                # VS Code configuration for development
 ├── AvabotTeam8-src/       # The bot source code           
 │   ├── .vscode            # VS Code configuration for bot development
-│   ├── APItest/           # Demo code for calling APIs via Axios
 │   ├── bots/              
 │       └── avabot.js      # The bot class
 │   ├── coverage/          # Testing coverage report
