@@ -1,4 +1,4 @@
-bind = "0.0.0.0:5000"
+bind = "0.0.0.0:8000"
 timeout = 1000
 loglevel = "debug"
 preload = True

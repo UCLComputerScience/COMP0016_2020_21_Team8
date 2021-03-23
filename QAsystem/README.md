@@ -6,9 +6,9 @@ The QA system builds model for one or multiple documents and answers NL queries 
 
 ## EndPoint
 
-Send the document in POST request to `http://20.77.57.60:5000`.
+Send the document in POST request to `http://20.77.57.60:8000`.
 
-Send the query in GET request to `http://20.77.57.60:5000?query={QUERY}`
+Send the query in GET request to `http://20.77.57.60:8000?query={QUERY}`
 
 See files under [../testAPI_example/testQA](../testAPI_example/testQA) for more testing examples
 

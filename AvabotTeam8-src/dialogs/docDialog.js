@@ -133,7 +133,7 @@ class DocDialog extends ComponentDialog {
     await step.context.sendActivity("Searching for the answer...");
     console.log("question: " + question);
     let answer = await axios
-      .get("http://20.77.57.60:5000?query=" + question) //http://20.77.57.60:5000?query=Who is the founder of UCL?
+      .get("http://20.77.57.60:8000?query=" + question) //http://20.77.57.60:8000?query=Who is the founder of UCL?
       .then(
         (v) =>
           "answer: " + v.data.answer + " \r\n" + "context: " + v.data.context
