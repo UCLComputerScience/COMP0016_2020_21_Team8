@@ -73,9 +73,12 @@ def AddressLocation(addresses):
         return "With the given Address, Country is not found"
 
 def process(file_path):
-    with open(file_path, "rb") as b:
-        poller = form_recognizer_client.begin_recognize_business_cards(business_card=b, locale="en-GB")
-    business_cards = poller.result()
+    try:
+        with open(file_path, "rb") as b:
+            poller = form_recognizer_client.begin_recognize_business_cards(business_card=b, locale="en-GB")
+        business_cards = poller.result()
+    except:
+        return 'File Not Found'
 
     allInfo = False
 
