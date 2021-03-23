@@ -13,24 +13,25 @@ import pdftitle
 
 def readPdf(pdfpath, txtpath):
     fp = open(pdfpath, 'rb')
-    # create a pdf parser
+    # 来创建一个pdf文档分析器
     parser = PDFParser(fp)
-    # create a PDFDocument object to store doc structure
+    # 创建一个PDF文档对象存储文档结构
     document = PDFDocument(parser)
-    # check if text extraction is allowed
+    # 检查文件是否允许文本提取
     if not document.is_extractable:
         raise PDFTextExtractionNotAllowed
     else:
-        # create a PDFResourceManager() to store shared resource
+        # 创建一个PDF资源管理器对象来存储共赏资源
         rsrcmgr = PDFResourceManager()
-        # set a factor
+        # 设定参数进行分析
         laparams = LAParams()
-        # set a aggregator
+        # 创建一个PDF设备对象
+        # device=PDFDevice(rsrcmgr)
         device = PDFPageAggregator(rsrcmgr, laparams=laparams)
-        # set a interpreter
+        # 创建一个PDF解释器对象
         interpreter = PDFPageInterpreter(rsrcmgr, device)
-       
-        # get title
+        # 处理每一页
+
         try:
             title = pdftitle.get_title_from_file(pdfpath)
             if title is None:
@@ -38,19 +39,17 @@ def readPdf(pdfpath, txtpath):
         except:
             title = 'n/a'
 
-
-        # get content 
         with open(txtpath, 'w') as f:
             count = 0
             content = ""
             for page in PDFPage.create_pages(document):
                 pageContent = ""
                 interpreter.process_page(page)
+                # 接受该页面的LTPage对象
                 layout = device.get_result()
                 for x in layout:
                     if(isinstance(x, LTTextBoxHorizontal)):
                         text = x.get_text()
-                        # if the text block contains no letter or is too short, skip
                         if re.search('[a-zA-Z]', text) == None or (text[0].isupper() and len(text)<=43):
                             continue
                         pageContent += text

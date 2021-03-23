@@ -26,7 +26,6 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     f.close()
 
     result = bootLoader.summary(filePath)
-
     logging.info(result)
     a = json.dumps(result)
 
