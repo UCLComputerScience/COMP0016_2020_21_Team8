@@ -14,7 +14,14 @@ form_training_client = FormTrainingClient(ENDPOINT, AzureKeyCredential(KEY))
 pages_tables_info = '-1'
 specificInformation = 'allInfo'
 
-def process():
+def process(form_path):
+    try:
+        with open(form_path, "rb") as f:
+            poller = form_recognizer_client.begin_recognize_content(form=f)
+            page = poller.result()
+    except:
+        return "File Not Found"
+
     if isinstance(CheckPagesTables(page), str): # to see whether the output is an error string
         return CheckPagesTables(page)
     tables = CheckPagesTables(page) # list of Tables
