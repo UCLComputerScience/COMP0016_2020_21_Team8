@@ -8,3 +8,4 @@ azure-ai-formrecognizer==3.1.0b3
 azure-cosmosdb-table
 dataframe_image
 pandas
+geopy
