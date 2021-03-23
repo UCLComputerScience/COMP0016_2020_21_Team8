@@ -45,7 +45,27 @@ def CheckPagesTables(page):
 
     try:
         multipleTables = []
-        if len(quantity_of_pages_tables)==1:
+        
+        if len(quantity_of_pages_tables)==2:
+            page_count = int (quantity_of_pages_tables[0])
+            table_count = int (quantity_of_pages_tables[1])
+
+            if len(page) < page_count or page_count < 1:
+                return "Wrong Page wanted"
+            if len(page[page_count-1].tables) < table_count or (table_count < 1 and table_count != -1):
+                return "Wrong Table wanted or There is no Table in Document"
+            if table_count!=-1:
+                table = page[page_count-1].tables[table_count-1]
+                multipleTables.append(table)
+                return multipleTables
+            for each_table in range(len(page[page_count-1].tables)):
+                table = page[page_count-1].tables[each_table-1]
+                multipleTables.append(table)
+            return multipleTables
+        
+        if int (quantity_of_pages_tables[0])!=-1 and len(quantity_of_pages_tables)==1:
+            return "Wrong Value Entered"    
+        elif len(quantity_of_pages_tables)==1:
             for each_page in range(len(page)):
                 for each_table in range(len(page[each_page-1].tables)):
                     table = page[each_page-1].tables[each_table-1]
@@ -76,11 +96,49 @@ def GetAllValues(table_contents, table):
 
     return table_contents
 
-def ChooseSpecificInfo(table_contents):
+def ChooseSpecificInfo(table_contents, tableCount):
     specificValues = specificInformation.split(',')
 
-    if(specificValues[0]=="allInfo"):
-        dataBase = DataFrame(table_contents)
+    if(specificValues[0]=="edit"):
+        return changeInfo(table_contents,specificValues[1],specificValues[2],specificValues[3], tableCount)
+    elif(specificValues[0]=="search"):
+        return GetRequirements(table_contents,specificValues[1], tableCount)
+    elif(specificValues[0]=="allInfo"):
+        dataBase = DataFrame (table_contents)
         # png = dataBase.dfi.export('tables {}.png'.format(tableCount))
         return dataBase
     return "Wrong Requirement"
+
+def GetRequirements(table_contents, searchInfoRow, tableCount):
+    allFoundRows = []
+    found = False
+    for i in range(len(table_contents)):
+        for j in range(len(table_contents[i])):
+            if table_contents[i][j]==searchInfoRow:
+                found = True
+                allFoundRows.append(table_contents[i])
+                #return table_contents[i]
+    if found==True:
+        dataBase = DataFrame (allFoundRows)
+        # png = dataBase.dfi.export('tables {}.png'.format(tableCount))
+        return dataBase
+    return "In the table {}, there is no such information".format(tableCount)       
+
+def changeInfo(table_contents, required_row, required_column, required_word, tableCount):
+    try:
+        row = int(required_row)
+        column = int(required_column)
+
+        if len(table_contents) < row or row < 1:
+            return "No such row"
+        if len(table_contents[row-1]) < column or column < 1:
+            return "No such column"
+
+        table_contents[row-1].pop(column-1)
+        table_contents[row-1].insert(column-1,required_word)
+        dataBase = DataFrame (table_contents)
+        # png = dataBase.dfi.export('tables {}.png'.format(tableCount))
+
+        return dataBase
+    except:
+        return "Wrong Input"

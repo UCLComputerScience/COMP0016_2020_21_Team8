@@ -29,7 +29,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     
     elif recog_type == BUSINESSCARD:
         result = recogBusinessCard.process(file_path)
-
+    print("oiooooooooo")
     print(result)
     result_json = json.dumps(result)
 
