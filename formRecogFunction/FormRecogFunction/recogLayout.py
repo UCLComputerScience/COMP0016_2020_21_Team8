@@ -119,44 +119,27 @@ def GetRequirements(table_contents, searchInfoRow, tableCount):
         return dataBase
     return "In the table {}, there is no such information".format(tableCount)       
 
-def changeInfo(table_contents, required_row, required_column, required_word, tableCount):
-    try:
-        row = int(required_row)
-        column = int(required_column)
 
-        if len(table_contents) < row or row < 1:
-            return "No such row"
-        if len(table_contents[row-1]) < column or column < 1:
-            return "No such column"
-
-        table_contents[row-1].pop(column-1)
-        table_contents[row-1].insert(column-1,required_word)
-        dataBase = DataFrame (table_contents)
-        # png = dataBase.dfi.export('tables {}.png'.format(tableCount))
-
-        return dataBase
-    except:
-        return "Wrong Input"
     
-    def TableIntoExcel(table_contents,tableCount,changeColumnNames,fullTable):
-        dataBase = pd.DataFrame (table_contents)
+def TableIntoExcel(table_contents,tableCount,changeColumnNames,fullTable):
+    dataBase = pd.DataFrame (table_contents)
 
-        if fullTable:
-            '''
-            Replace Columns Name with 1st Row
-            '''
-            dataBase = dataBase[1:]
-            dataBase.columns = changeColumnNames
-        else:
-            index_list = []
-            for i in range(len(table_contents)):
-                index_list.append(i+1)
-            dataBase.columns = changeColumnNames
-            dataBase.index = index_list
+    if fullTable:
+        '''
+        Replace Columns Name with 1st Row
+        '''
+        dataBase = dataBase[1:]
+        dataBase.columns = changeColumnNames
+    else:
+        index_list = []
+        for i in range(len(table_contents)):
+            index_list.append(i+1)
+        dataBase.columns = changeColumnNames
+        dataBase.index = index_list
+    
+    #png = dataBase.dfi.export('tables {}.png'.format(tableCount))
+    excel = pd.ExcelWriter('Excel {}.xlsx'.format(tableCount))
+    dataBase.to_excel(excel, index = False)
+    excel.save()
 
-        #png = dataBase.dfi.export('tables {}.png'.format(tableCount))
-        excel = pd.ExcelWriter('Excel {}.xlsx'.format(tableCount))
-        dataBase.to_excel(excel, index = False)
-        excel.save()
-
-        return dataBase
+    return dataBase
