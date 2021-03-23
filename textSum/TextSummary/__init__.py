@@ -3,7 +3,7 @@ import logging
 import azure.functions as func
 import json
 
-from TextSummary import bootLoader
+from . import bootLoader
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
@@ -14,12 +14,12 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         return func.HttpResponse(f"Missing doc")
 
     filePath = '/tmp/tmpFile'
-    # add extension
-    if (file.filename.endswith('.pdf')):
+
+    if file.filename.endswith('.pdf'):
         filePath += '.pdf'
     elif file.filename.endswith('.txt'):
         filePath += '.txt'
-    elif file.filename.endswtih('.doc'):
+    elif file.filename.endswith('.doc'):
         filePath += '.doc'
     f = open(filePath, 'wb')
     f.write(file.read())

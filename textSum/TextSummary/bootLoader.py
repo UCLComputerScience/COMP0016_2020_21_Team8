@@ -14,10 +14,11 @@ from . import installPunkt
 LANGUAGE = "english"
 outputTextPath = "/tmp/tmp.txt"
 
+
 def summary(path):
     installPunkt.downloadPunkt()
     content = ""
-    tup = read_file.readPdf(path, outputTextPath) 
+    tup = read_file.readPdf(path, outputTextPath)
     # title of the doc
     title = tup[0]
     # how many pages in the doc
@@ -27,28 +28,26 @@ def summary(path):
     if count == 0:
         return "Sorry, summarization failed, the document was not text based."
     # How many lines to output
-    line = min(10,count*2) 
+    line = min(10, count*2)
     content += "Title: " + title + "\n"
     content += " " + "\n"
     content += "Summary: " + "\n"
     content += " " + "\n"
     parser = PlaintextParser.from_file(outputTextPath, Tokenizer(LANGUAGE))
-    ## for parsing from url:
+    # for parsing from url:
     # url = "https://en.wikipedia.org/wiki/Automatic_summarization"
     # parser = HtmlParser.from_url(url, Tokenizer(LANGUAGE))
-    ## for paring from string:
+    # for paring from string:
     # parser = PlaintextParser.from_string("Check this out.", Tokenizer(LANGUAGE))
     stemmer = Stemmer(LANGUAGE)
-
-
     summarizer = Summarizer(stemmer)
     summarizer.stop_words = get_stop_words(LANGUAGE)
 
     for sentence in summarizer(parser.document, line):
         content += str(sentence) + "\n"
         content += " " + "\n"
-    
-    content += "(in " + str(line) + " sentences)"  + "\n"
+
+    content += "(in " + str(line) + " sentences)" + "\n"
     os.remove(outputTextPath)
 
     return content
