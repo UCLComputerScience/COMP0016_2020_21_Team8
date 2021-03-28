@@ -5,6 +5,8 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 pipe = None
 
 # The preprocessing of document is needed, which will assign values to pipe
+
+
 def processQuery(query):
     if pipe is None:
         raise Exception("Preprocessing of document is needed!")

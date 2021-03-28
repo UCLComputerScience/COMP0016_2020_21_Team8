@@ -10,6 +10,7 @@ from haystack.retriever.sparse import ElasticsearchRetriever
 
 from . import query_Handler
 
+
 def process(document_store):
 
     logger = logging.getLogger(__name__)
@@ -42,8 +43,8 @@ def process(document_store):
     # **Alternatives (Models):** e.g. "distilbert-base-uncased-distilled-squad" (fast) or
     #                            "deepset/bert-large-uncased-whole-word-masking-squad2" (good accuracy)
 
-    reader = FARMReader(model_name_or_path="deepset/roberta-base-squad2", use_gpu=False, context_window_size=500)
-
+    reader = FARMReader(model_name_or_path="deepset/roberta-base-squad2",
+                        use_gpu=False, context_window_size=500)
 
     # Some default pipes that can be chosen from
     # Extractive QA
@@ -62,4 +63,3 @@ def process(document_store):
 
     p = ExtractiveQAPipeline(reader, retriever)
     query_Handler.pipe = p
-

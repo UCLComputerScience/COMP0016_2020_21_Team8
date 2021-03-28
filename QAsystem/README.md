@@ -1,8 +1,6 @@
 ## Introduction
 
-The QA system builds model for one or multiple documents and answers NL queries about the docs. 
-
-
+The QA system builds model for one or multiple documents and answers NL queries about the docs.
 
 ## EndPoint
 
@@ -14,4 +12,4 @@ See files under [../testAPI_example/testQA](../testAPI_example/testQA) for more 
 
 ## Deployment
 
-The QA system is deployed on Azure linux virtual machine with `Gunicorn`. `Nginx` is utilized as the reverse proxy. 
+The QA system is deployed on Azure linux virtual machine with `Gunicorn`. `Nginx` is utilized as the reverse proxy.

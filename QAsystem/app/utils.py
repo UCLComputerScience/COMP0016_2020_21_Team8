@@ -23,5 +23,7 @@ def get_answers(results: dict, details: str = "all"):
         return results
 
 # Keep only the full sentences
-def truncate(res:str):
+
+
+def truncate(res: str):
     return re.search("[.?!,](.*)[.?!,]", res).group()

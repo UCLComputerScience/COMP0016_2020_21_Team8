@@ -9,6 +9,7 @@ from . import utils
 
 app = Flask(__name__)
 
+
 @app.route('/', methods=['POST'])
 def upload():
     app.logger.info("Receiving a POST request")
@@ -22,6 +23,7 @@ def upload():
     print("enter pre_process.process")
     pre_process.process(document_store)
     return "successfully uploaded"
+
 
 @app.route('/', methods=['GET'])
 def query():

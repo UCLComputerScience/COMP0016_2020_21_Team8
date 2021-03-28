@@ -34,7 +34,6 @@ document_store = ElasticsearchDocumentStore(
 )
 
 
-
 def file_upload(file):
     try:
         file_path = '/tmp/' + file.name + '_tmp'
@@ -52,7 +51,8 @@ def file_upload(file):
             )
             document = txt_converter.convert(file_path)
         else:
-            raise HTTPException(status_code=415, detail=f"Only .pdf and .txt file formats are supported.")
+            raise HTTPException(
+                status_code=415, detail=f"Only .pdf and .txt file formats are supported.")
 
         document = {TEXT_FIELD_NAME: document["text"], "name": file.filename}
 
@@ -66,7 +66,6 @@ def file_upload(file):
         )
 
         documents = preprocessor.process(document)
-
 
         # write the docs to the DB.
         document_store.write_documents(documents)

@@ -3,11 +3,13 @@ import os
 
 REMOVE_WHITESPACE = os.getenv("REMOVE_WHITESPACE", "True").lower() == "true"
 REMOVE_EMPTY_LINES = os.getenv("REMOVE_EMPTY_LINES", "True").lower() == "true"
-REMOVE_HEADER_FOOTER = os.getenv("REMOVE_HEADER_FOOTER", "True").lower() == "true"
+REMOVE_HEADER_FOOTER = os.getenv(
+    "REMOVE_HEADER_FOOTER", "True").lower() == "true"
 SPLIT_BY = os.getenv("SPLIT_BY", "word")
 SPLIT_LENGTH = os.getenv("SPLIT_LENGTH", 1_000_00)
 SPLIT_OVERLAP = os.getenv("SPLIT_OVERLAP", None)
-SPLIT_RESPECT_SENTENCE_BOUNDARY = os.getenv("SPLIT_RESPECT_SENTENCE_BOUNDARY", True)
+SPLIT_RESPECT_SENTENCE_BOUNDARY = os.getenv(
+    "SPLIT_RESPECT_SENTENCE_BOUNDARY", True)
 
 # DB
 DB_HOST = os.getenv("DB_HOST", "localhost")
@@ -25,4 +27,5 @@ EMBEDDING_FIELD_NAME = os.getenv("EMBEDDING_FIELD_NAME", "embedding")
 EMBEDDING_DIM = int(os.getenv("EMBEDDING_DIM", 768))
 VECTOR_SIMILARITY_METRIC = os.getenv("VECTOR_SIMILARITY_METRIC", "dot_product")
 CREATE_INDEX = os.getenv("CREATE_INDEX", "True").lower() == "true"
-UPDATE_EXISTING_DOCUMENTS = os.getenv("UPDATE_EXISTING_DOCUMENTS", "False").lower() == "true"
+UPDATE_EXISTING_DOCUMENTS = os.getenv(
+    "UPDATE_EXISTING_DOCUMENTS", "False").lower() == "true"

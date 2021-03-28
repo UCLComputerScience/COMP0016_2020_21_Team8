@@ -8,6 +8,7 @@ from . import recogBusinessCard
 LAYOUT = 'Layout'
 BUSINESSCARD = 'BusinessCard'
 
+
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Form Recognizer processed a request.')
 
@@ -17,7 +18,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     if not file:
         return func.HttpResponse(f"Missing image")
 
-    file_path  = '/tmp/tmpFile'
+    file_path = '/tmp/tmpFile'
 
     f = open(file_path, 'wb')
     f.write(file.read())
@@ -26,10 +27,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     result = []
     if (recog_type == LAYOUT):
         result = recogLayout.process(file_path)
-    
+
     elif recog_type == BUSINESSCARD:
         result = recogBusinessCard.process(file_path)
-    print("oiooooooooo")
     print(result)
     result_json = json.dumps(result)
 
