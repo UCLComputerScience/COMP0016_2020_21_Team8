@@ -132,7 +132,6 @@ describe("MainDialog", () => {
     });
     let a = await sut.sendReq(localFileName);
     assert.strictEqual(a[0], 0);
-    assert.strictEqual(a[1], "successfully uploaded");
   });
 
   it("tests downloadAttach", async () => {
@@ -315,7 +314,7 @@ describe("MainDialog", () => {
             {
               contentType: "application/jpeg",
               contentUrl:
-                "https://github.com/Azure-Samples/cognitive-services-REST-api-samples/blob/master/curl/form-recognizer/business-card-english.jpg",
+                "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-REST-api-samples/master/curl/form-recognizer/business-card-english.jpg",
               name: "test.jpg",
             },
           ],
