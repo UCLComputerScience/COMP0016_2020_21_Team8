@@ -38,7 +38,7 @@ describe("AnswerDialog", () => {
       new DialogTestLogger(),
     ]);
     const path = require("path");
-    const ENV_FILE = path.join(path.resolve(__dirname, '..'), ".env");
+    const ENV_FILE = path.join(path.resolve(__dirname, ".."), ".env");
     require("dotenv").config({ path: ENV_FILE });
     sut.a = new QnAMaker({
       knowledgeBaseId: process.env.QnAKnowledgebaseId,

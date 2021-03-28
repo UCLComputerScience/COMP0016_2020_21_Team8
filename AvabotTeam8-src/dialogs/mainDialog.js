@@ -251,7 +251,7 @@ class MainDialog extends ComponentDialog {
   /**
    * The method to handle user attachment
    * @param {*} turnContext
-   * @returns file path 
+   * @returns file path
    */
   async handleIncomingAttachment(turnContext) {
     // Prepare Promises to download each attachment and then execute each Promise.

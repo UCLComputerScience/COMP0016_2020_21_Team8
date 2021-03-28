@@ -10,7 +10,6 @@ const { DialogSet, DialogTurnStatus, Dialog } = require("botbuilder-dialogs");
 const { AvaBot } = require("../bots/avaBot");
 const assert = require("assert");
 
-
 class MockRootDialog extends Dialog {
   constructor() {
     super("mockRootDialog");
