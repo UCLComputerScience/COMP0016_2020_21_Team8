@@ -4,8 +4,8 @@
     "services": [
         {
             "type": "endpoint",
-            "appId": "36cec99b-cf9d-497b-91db-8721edfee994",
-            "appPassword": "6Z;+Bczn+FzSl;Zv*Q2A[3};45",
+            "appId": "",
+            "appPassword": "",
             "endpoint": "http://localhost:3978/api/messages",
             "id": "b17d3fc0-50cf-11eb-a960-a72bce0f4789",
             "name": "http://localhost:3978/api/messages"
